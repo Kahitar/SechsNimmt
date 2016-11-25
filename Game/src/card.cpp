@@ -11,7 +11,7 @@ card::card()
     pSprite         = new sf::Sprite;
 
     pBlackTexture   = new sf::Texture;
-    pBlackTexture->loadFromFile("CardBlack.png");
+    pBlackTexture->loadFromFile("Resources\\CardBlack.png");
     pBlackSprite    = new sf::Sprite;
     pBlackSprite->setTexture(*pBlackTexture);
 }
@@ -61,6 +61,7 @@ void card::render(sf::RenderWindow *rw)
 void card::LoadCardTexture(int CardValue)
 {
     std::string File;
+    std::string Filedirectory = "Resources\\";
     std::string FileType = ".png";
 
     int coordsx=0,coordsy=0;
@@ -166,7 +167,7 @@ void card::LoadCardTexture(int CardValue)
     }
 
     std::stringstream ssfilename;
-    ssfilename << File << FileType;
+    ssfilename << Filedirectory << File << FileType;
     std::string filename = ssfilename.str();
 
     pTexture->loadFromFile(filename);

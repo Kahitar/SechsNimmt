@@ -45,23 +45,24 @@
 			<Add directory="E:/OneDrive/c++/SFML-2.4.1/lib" />
 			<Add directory="C:/Users/Nik-Netbook/OneDrive/c++/SFML-2.4.1/lib" />
 		</Linker>
-		<Unit filename="Framework.cpp" />
-		<Unit filename="Framework.hpp" />
-		<Unit filename="GameManager.cpp" />
-		<Unit filename="GameManager.hpp" />
-		<Unit filename="KI_Spieler.cpp" />
-		<Unit filename="KI_Spieler.hpp" />
-		<Unit filename="Reihen.cpp" />
-		<Unit filename="Reihen.hpp" />
-		<Unit filename="Spieler.cpp" />
-		<Unit filename="Spieler.hpp" />
-		<Unit filename="card.cpp" />
-		<Unit filename="card.hpp" />
-		<Unit filename="deck.cpp" />
-		<Unit filename="deck.hpp" />
-		<Unit filename="functions.cpp" />
-		<Unit filename="functions.hpp" />
-		<Unit filename="main.cpp" />
+		<Unit filename="include/Framework.hpp" />
+		<Unit filename="include/GameManager.hpp" />
+		<Unit filename="include/KI_Spieler.hpp" />
+		<Unit filename="include/Reihen.hpp" />
+		<Unit filename="include/Spieler.hpp" />
+		<Unit filename="include/card.hpp" />
+		<Unit filename="include/deck.hpp" />
+		<Unit filename="include/functions.hpp" />
+		<Unit filename="src/Framework.cpp" />
+		<Unit filename="src/GameManager.cpp" />
+		<Unit filename="src/KI_Spieler.cpp" />
+		<Unit filename="src/Matrix.cpp" />
+		<Unit filename="src/Reihen.cpp" />
+		<Unit filename="src/Spieler.cpp" />
+		<Unit filename="src/card.cpp" />
+		<Unit filename="src/deck.cpp" />
+		<Unit filename="src/functions.cpp" />
+		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
