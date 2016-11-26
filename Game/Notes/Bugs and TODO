@@ -1,0 +1,12 @@
+TODO:
+	
+	Allow to choose which row to take when difference < 0 (currently always Row 1 is taken)
+
+
+
+
+
+Bugs:
+	
+	When adding more cards to a row sometimes earlier appended cards change their Sprite (but not the value in cmd).
+		The Cards Sprite changes by increments of 10 (2->12->22 etc.)

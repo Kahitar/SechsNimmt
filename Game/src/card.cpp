@@ -34,8 +34,8 @@ card::~card()
 }
 
 card::card(const card& other)
-    :pPosition(new sf::Vector2f),pTexture(new sf::Texture),pSprite(new sf::Sprite),pBlackTexture(new sf::Texture),pBlackSprite(new sf::Sprite),mMouseOnCard(other.mMouseOnCard)
-    ,mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr),played(other.played)
+    :pPosition(new sf::Vector2f),pTexture(new sf::Texture),pSprite(new sf::Sprite),pBlackTexture(new sf::Texture),pBlackSprite(new sf::Sprite)
+    ,mMouseOnCard(other.mMouseOnCard),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr),played(other.played)
 {
     *pPosition = *other.pPosition;
     *pTexture = *other.pTexture;
