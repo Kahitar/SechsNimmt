@@ -35,7 +35,7 @@ void Reihen::getReihen(card MultiArr[4*5], int arr[4]){
     }
 }
 
-int Reihen::anlegen(card &play){
+int Reihen::anlegen(card play){
     int difference[4];
     int mindiff_index = 0;
     int mieseHornochsen = 0;
@@ -58,7 +58,10 @@ int Reihen::anlegen(card &play){
             int a;
             std::cout << "Your Card is to low to append to a row! Choose the row (by number) you want to take: \n\n";
             this->printReihen();
-            std::cout << "Take Row number: "; std::cin >> a; std::cout << std::endl;
+            std::cout << "Take Row number: 1\n";
+            a = 1;
+//            std::cin >> a;
+//            std::cout << std::endl;
 
             //Hornochsen der Reihe ausrechnen, Reihe "löschen" und mit gespielter Karte neu starten
             for(int j=0;j<Reihenlaenge[a-1];j++){
@@ -78,7 +81,8 @@ int Reihen::anlegen(card &play){
                     HornochsenGesamt[j] += ReihenKarten[j*5+k].getHornochsen();
                 }
             }
-            int minHornochsen = HornochsenGesamt[0];
+            //TODO (???): Schleife, um Reihe mit kleinsten Hornochsen zu finden?!
+//            int minHornochsen = HornochsenGesamt[0];
             int minHornochsen_index = 0;
             std::cout << "KI-" << play.getSpielerNr()-1 << " took Row " << minHornochsen_index+1 << "\n";
 
@@ -101,7 +105,7 @@ int Reihen::anlegen(card &play){
             }
         }
         if(Reihenlaenge[mindiff_index] != 5){
-            ReihenKarten[mindiff_index*5 + Reihenlaenge[mindiff_index]++] = play; //<---------------------------
+            ReihenKarten[mindiff_index*5 + Reihenlaenge[mindiff_index]++] = play;
         } else {
             for(int i=0;i<Reihenlaenge[mindiff_index];i++){
                 mieseHornochsen+= ReihenKarten[mindiff_index*5+i].getHornochsen();
@@ -132,7 +136,6 @@ void Reihen::update()
 
 void Reihen::handle(sf::Event *event)
 {
-
 }
 
 void Reihen::render(sf::RenderWindow *rw)
@@ -140,18 +143,19 @@ void Reihen::render(sf::RenderWindow *rw)
     //Reihenkarten zeichnen
     for(int i = 0;i<4;i++){
         for(int j = 0; j<Reihenlaenge[i];j++){
+//            ReihenKarten[i*5+j].setPosition(CalculateCardPosition(i,j));
             ReihenKarten[i*5+j].render(rw);
         }
     }
+//    printReihen();
 }
 
-sf::Vector2f Reihen::GetCardPosition(int CardRow, int CardColumn)
+sf::Vector2f Reihen::CalculateCardPosition(int CardRow, int CardColumn)
 {
     float CardW = 134, CardH = 205, WindowW = 1600, WindowH = 900;
     float SpacingW = 1.5, SpacingH = 0.8;
 
     sf::Vector2f Position;
-//    Position = new sf::Vector2f;
     Position.x = (WindowW-5.0*CardW*SpacingW)/2.0 + CardColumn*CardW*SpacingW;
     Position.y = (WindowH-4.0*CardH*SpacingH-CardH/2.0)/5.0 + CardRow*CardH*SpacingH;
 
@@ -161,7 +165,8 @@ sf::Vector2f Reihen::GetCardPosition(int CardRow, int CardColumn)
 void Reihen::setRowCardPositions(){
     for(int i = 0;i<4;i++){
         for(int j = 0; j<Reihenlaenge[i];j++){
-            ReihenKarten[i*5+j].setPosition(GetCardPosition(i,j));
+
+            ReihenKarten[i*5+j].setPosition(CalculateCardPosition(i,j));
         }
     }
 }

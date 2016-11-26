@@ -40,6 +40,7 @@
 			<Add option="-Wall" />
 			<Add directory="E:/OneDrive/c++/SFML-2.4.1/include" />
 			<Add directory="C:/Users/Nik-Netbook/OneDrive/c++/SFML-2.4.1/include" />
+			<Add directory="C:/Users/Niklas/Documents/GitHub/SechsNimmt/Game/include" />
 		</Compiler>
 		<Linker>
 			<Add directory="E:/OneDrive/c++/SFML-2.4.1/lib" />
@@ -53,6 +54,7 @@
 		<Unit filename="include/card.hpp" />
 		<Unit filename="include/deck.hpp" />
 		<Unit filename="include/functions.hpp" />
+		<Unit filename="main.cpp" />
 		<Unit filename="src/Framework.cpp" />
 		<Unit filename="src/GameManager.cpp" />
 		<Unit filename="src/KI_Spieler.cpp" />
@@ -62,7 +64,6 @@
 		<Unit filename="src/card.cpp" />
 		<Unit filename="src/deck.cpp" />
 		<Unit filename="src/functions.cpp" />
-		<Unit filename="src/main.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

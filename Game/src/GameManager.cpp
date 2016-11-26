@@ -13,8 +13,8 @@ GameManager::GameManager()//:pSpieler1("Niklas",1)
     pSpieler1       = new Spieler("Niklas",1);
     pKI             = new KI_Spieler[AnzahlKIs];
 
-    SpielerWantPlay = new card;
-    SpielerPlay     = new card;
+//    SpielerWantPlay = new card;
+//    SpielerPlay     = new card;
     KIPlay          = new card[AnzahlKIs];
     reihenKarten    = new card[4*5];
     Reihenlaenge    = new int[4];
@@ -55,15 +55,10 @@ GameManager::GameManager()//:pSpieler1("Niklas",1)
 void GameManager::update()
 {
 
-
-    // Karten von KI anzeigen:
-    /*for(int i = 0;i<AnzahlKIs;i++){
-        KI[i].giveUpdate();
-    }*/
-
+    // KI Spielen lassen und Karten anlegen, wenn der Spieler NICHT am Zug ist, danach ist der Spieler wieder am Zug.
     if(!pSpieler1->getPlayerTurn())
     {
-        KITurn();
+//        KITurn();
         EvaluatePlayed();
 
         // Sieger ausgeben
@@ -81,19 +76,23 @@ void GameManager::update()
         pSpieler1->giveUpdate();
     }
 
+
     pSpieler1->update();
     pSpiel1->update();
 }
 
 void GameManager::handle(sf::Event *event)
 {
-    if(pSpieler1->getPlayerTurn()){
+    // Wenn der Spieler klickt, überprüfen ob die Maus auf einer Karte war und wenn ja diese Karte Spielen
+    if(pSpieler1->getPlayerTurn() && event->type == sf::Event::MouseButtonPressed && event->mouseButton.button == sf::Mouse::Left){
         // Nach zu spielenden Karten fragen
-        *SpielerWantPlay = pSpieler1->askCard(event);
-        if(SpielerWantPlay->getPlayed()){
-            *SpielerPlay = *SpielerWantPlay;
+        SpielerWantPlay = pSpieler1->askCard(event);
+        if(!pSpieler1->getPlayerTurn()){
+            SpielerPlay = SpielerWantPlay;
         }
     }
+    // Wenn Spieler keine neue Karte gespielt hat, ist nach handle() noch die ALTE Karte im Zeiger "SpielerPlay" und der Spieler ist noch am Zug
+
 
     pSpieler1->handle(event);
     pSpiel1->handle(event);
@@ -114,17 +113,18 @@ void GameManager::KITurn(){
 }
 
 void GameManager::EvaluatePlayed(){
+
     //Zu spielende Karten nach Value (aufsteigend) sortieren
-    card sortiert[AnzahlKIs + 1];
+    card sortiert[AnzahlKIs+1];
+//    sortiert = new card[AnzahlKIs + 1];
     for(int i = 0;i<AnzahlKIs+1;i++){
         if(i<AnzahlKIs) {
             sortiert[i] = KIPlay[i];
         } else {
-            sortiert[i] = *SpielerPlay;
+            sortiert[i] = SpielerPlay;
         }
     }
     sort(sortiert,sortiert+AnzahlKIs+1,sort_ByValue);
-
     cout << endl;
 
     for(int i = 0;i<AnzahlKIs+1;i++){

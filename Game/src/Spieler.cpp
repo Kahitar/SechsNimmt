@@ -36,8 +36,10 @@ card Spieler::askCard(sf::Event *event){
 
     int a;
     int play_index = 0;
+
+    // Wenn die Maus auf einer Karte war, diese Karte zurückgeben und Spieler ist nicht mehr am Zug
     for(int i = 0;i<mNumberCards;i++){
-        if(mHandkarten[i].getMouseOnCard() && event->type == sf::Event::MouseButtonPressed && event->mouseButton.button == sf::Mouse::Left){
+        if(mHandkarten[i].getMouseOnCard()){
             a = mHandkarten[i].getValue();
             play_index = i;
             for(int i = play_index; i < mNumberCards;i++){
@@ -50,13 +52,12 @@ card Spieler::askCard(sf::Event *event){
 
             play->setCard(a);
             play->setSpielerNr(mSpielerNr);
-            play->setPlayed(true);
             std::cout << "You should play " << play->getValue() << endl;
             return *play;
         }
     }
 
-    play->setPlayed(false);
+    // Wenn die Maus auf keiner Karte war, eine Dummy-Karte zurückgeben
     return *play;
 }
 
@@ -93,10 +94,9 @@ sf::Vector2f Spieler::GetCardPosition(int CardIndex)
     float CardW = 134.0, CardH = 205.0, WindowW = 1600.0, WindowH = 900.0;
     float SpacingW = 1.0;
 
-    sf::Vector2f *Position;
-    Position = new sf::Vector2f;
-    Position->x = (WindowW-10.0*CardW*SpacingW)/2.0 + CardIndex*CardW*SpacingW;
-    Position->y = WindowH-CardH/2;
+    sf::Vector2f Position;
+    Position.x = (WindowW-10.0*CardW*SpacingW)/2.0 + CardIndex*CardW*SpacingW;
+    Position.y = WindowH-CardH/2;
 
-    return *Position;
+    return Position;
 }

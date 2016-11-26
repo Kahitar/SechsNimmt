@@ -10,7 +10,7 @@ class Reihen{
 		Reihen();
 		~Reihen();
 
-        int anlegen(card &play);
+        int anlegen(card play);
 
 		void printReihen();
 
@@ -22,7 +22,7 @@ class Reihen{
         void handle(sf::Event *event);
         void render(sf::RenderWindow *rw);
 
-        sf::Vector2f GetCardPosition(int CardRow, int CardPosition);
+        sf::Vector2f CalculateCardPosition(int CardRow, int CardPosition);
         void         setRowCardPositions();
 
 	private:

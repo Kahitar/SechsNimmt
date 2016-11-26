@@ -40,8 +40,8 @@ private:
     Spieler         *pSpieler1;
     KI_Spieler      *pKI;
 
-    card            *SpielerWantPlay;
-    card            *SpielerPlay;
+    card            SpielerWantPlay;
+    card            SpielerPlay;
     card            *KIPlay;
     card            *reihenKarten;
     int             *Reihenlaenge;

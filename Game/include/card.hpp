@@ -11,17 +11,19 @@ class card
 public:
     card();
     ~card();
+    card(const card& other);
+//    card& operator=(const card& other);
 
     void            update();
     void            handle(sf::Event *Event);
     void            render(sf::RenderWindow *rw);
 
-    sf::Vector2f    getPosition()   {return *pPosition;};
-    int             getValue()      {return mValue;};
-    int             getHornochsen() {return mHornochsen;};
-    int             getSpielerNr()  {return mSpielerNr;};
-    bool            getMouseOnCard(){return mMouseOnCard;};
-    bool            getPlayed()     {return played;};
+    const sf::Vector2f    getPosition()   {return *pPosition;};
+    const int             getValue()      {return mValue;};
+    const int             getHornochsen() {return mHornochsen;};
+    const int             getSpielerNr()  {return mSpielerNr;};
+    const bool            getMouseOnCard(){return mMouseOnCard;};
+    const bool            getPlayed()     {return played;};
 
     void            setSpielerNr(int SpielerNr);
     void            setPosition(sf::Vector2f Position);

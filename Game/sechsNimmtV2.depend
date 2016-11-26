@@ -494,21 +494,21 @@
 	"Reihen.hpp"
 	"GameManager.hpp"
 
-1479917216 c:\users\niklas\documents\github\sechsnimmt\game\include\card.hpp
+1480193244 c:\users\niklas\documents\github\sechsnimmt\game\include\card.hpp
 	<iostream>
 	<string>
 	<sstream>
 	<SFML/Graphics.hpp>
 
-1480009056 c:\users\niklas\documents\github\sechsnimmt\game\include\spieler.hpp
+1480189660 c:\users\niklas\documents\github\sechsnimmt\game\include\spieler.hpp
 	<iostream>
 	"card.hpp"
 
-1480098669 c:\users\niklas\documents\github\sechsnimmt\game\include\reihen.hpp
+1480189045 c:\users\niklas\documents\github\sechsnimmt\game\include\reihen.hpp
 	<iostream>
 	"card.hpp"
 
-1480010472 c:\users\niklas\documents\github\sechsnimmt\game\include\gamemanager.hpp
+1480188034 c:\users\niklas\documents\github\sechsnimmt\game\include\gamemanager.hpp
 	<iostream>
 	<cstdlib>
 	<ctime>
@@ -533,7 +533,7 @@
 	"Spieler.hpp"
 	"card.hpp"
 
-1479905308 c:\users\niklas\documents\github\sechsnimmt\game\include\functions.hpp
+1480157447 c:\users\niklas\documents\github\sechsnimmt\game\include\functions.hpp
 	<iostream>
 	"card.hpp"
 
@@ -544,14 +544,14 @@
 	"card.hpp"
 	"deck.hpp"
 
-1480086269 source:c:\users\niklas\documents\github\sechsnimmt\game\src\framework.cpp
+1480163265 source:c:\users\niklas\documents\github\sechsnimmt\game\src\framework.cpp
 	"Framework.hpp"
 
 1479905166 source:c:\users\niklas\documents\github\sechsnimmt\game\src\functions.cpp
 	<iostream>
 	"functions.hpp"
 
-1480106757 source:c:\users\niklas\documents\github\sechsnimmt\game\src\gamemanager.cpp
+1480193283 source:c:\users\niklas\documents\github\sechsnimmt\game\src\gamemanager.cpp
 	"GameManager.hpp"
 
 1480013008 source:c:\users\niklas\documents\github\sechsnimmt\game\src\ki_spieler.cpp
@@ -564,13 +564,16 @@
 
 1480012303 source:c:\users\niklas\documents\github\sechsnimmt\game\src\matrix.cpp
 
-1480099002 source:c:\users\niklas\documents\github\sechsnimmt\game\src\reihen.cpp
+1480189068 source:c:\users\niklas\documents\github\sechsnimmt\game\src\reihen.cpp
 	"Reihen.hpp"
 
-1480106776 source:c:\users\niklas\documents\github\sechsnimmt\game\src\spieler.cpp
+1480189660 source:c:\users\niklas\documents\github\sechsnimmt\game\src\spieler.cpp
 	<iostream>
 	<algorithm>
 	"Spieler.hpp"
 	"functions.hpp"
+	"card.hpp"
+
+1480193244 source:c:\users\niklas\documents\github\sechsnimmt\game\src\card.cpp
 	"card.hpp"
 

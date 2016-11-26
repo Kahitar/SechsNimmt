@@ -11,7 +11,7 @@ Framework::Framework(){
     mRun            = true;
 
     pBackground     = new sf::Texture;
-    pBackground->loadFromFile("background.png");
+    pBackground->loadFromFile("Resources\\background.png");
     pBackSprite     = new sf::Sprite;
     pBackSprite->setTexture(*pBackground);
 
@@ -50,8 +50,6 @@ void Framework::handleEvents()
 {
     while(pRenderWindow->pollEvent(*pMainEvent))
     {
-
-
         pGM->handle(pMainEvent);
 
         if(pMainEvent->type == sf::Event::Closed)
