@@ -14,6 +14,8 @@ card::card()
     pBlackTexture->loadFromFile("Resources\\CardBlack.png");
     pBlackSprite    = new sf::Sprite;
     pBlackSprite->setTexture(*pBlackTexture);
+
+    std::cout << "Constructed!\n";
 }
 
 card::~card()
@@ -29,12 +31,12 @@ card::~card()
     pBlackTexture = NULL;
     delete pPosition;
     pPosition = NULL;
-    std::cout << "Deleted\n";
+    std::cout << "Deleted!\n";
 }
 
 card::card(const card& other)
     :pPosition(new sf::Vector2f),pTexture(new sf::Texture),pSprite(new sf::Sprite),pBlackTexture(new sf::Texture),pBlackSprite(new sf::Sprite)
-    ,mMouseOnCard(other.mMouseOnCard),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr),played(other.played)
+    ,mMouseOnCard(other.mMouseOnCard),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr)
 {
     *pPosition = *other.pPosition;
     *pTexture = *other.pTexture;
@@ -68,7 +70,6 @@ card& card::operator=(const card& other) // other = old card objekt
         mValue          = other.mValue;
         mHornochsen     = other.mHornochsen;
         mSpielerNr      = other.mSpielerNr;
-        played          = other.played;
 
         std::cout << "Assigned!\n";
     }
@@ -108,8 +109,8 @@ void card::render(sf::RenderWindow *rw)
 
 void card::LoadCardTexture(int CardValue)
 {
-    std::string File;
     std::string Filedirectory = "Resources\\";
+    std::string File;
     std::string FileType = ".png";
 
     int coordsx=0,coordsy=0;

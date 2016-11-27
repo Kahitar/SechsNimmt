@@ -23,12 +23,10 @@ public:
     const int             getHornochsen() {return mHornochsen;};
     const int             getSpielerNr()  {return mSpielerNr;};
     const bool            getMouseOnCard(){return mMouseOnCard;};
-    const bool            getPlayed()     {return played;};
 
     void            setSpielerNr(int SpielerNr);
     void            setPosition(sf::Vector2f Position);
     void            setCard(int value);
-    void            setPlayed(bool setter) {played = setter;};
 
 private:
     void            LoadCardTexture(int CardValue);
@@ -45,9 +43,6 @@ private:
     int             mValue;
     int             mHornochsen;
     int             mSpielerNr;
-
-    int             played;
-
 };
 
 #endif // CARD_HPP

@@ -70,6 +70,7 @@ int Reihen::anlegen(card play){
             ReihenKarten[(a-1)*5+0] = play;
             Reihenlaenge[a-1] = 1;
             angelegt = true;
+            setRowCardPositions();
             break;
 
         // KI muss Reihe nehmen
@@ -92,6 +93,7 @@ int Reihen::anlegen(card play){
             }
             ReihenKarten[minHornochsen_index*5+0] = play;
             Reihenlaenge[minHornochsen_index] = 1;
+            setRowCardPositions();
             angelegt = true;
             break;
         }
@@ -106,6 +108,7 @@ int Reihen::anlegen(card play){
         }
         if(Reihenlaenge[mindiff_index] != 5){
             ReihenKarten[mindiff_index*5 + Reihenlaenge[mindiff_index]++] = play;
+            setRowCardPositions();
         } else {
             for(int i=0;i<Reihenlaenge[mindiff_index];i++){
                 mieseHornochsen+= ReihenKarten[mindiff_index*5+i].getHornochsen();
@@ -117,6 +120,7 @@ int Reihen::anlegen(card play){
             }
             ReihenKarten[mindiff_index*5+0] = play;
             Reihenlaenge[mindiff_index] = 1;
+            setRowCardPositions();
         }
     }
     return mieseHornochsen;
@@ -127,15 +131,17 @@ void Reihen::setFirst(card ErsteSpalte[4]){
         Reihenlaenge[i] = 1;
         ReihenKarten[i*5+0] = ErsteSpalte[i];
     }
+    setRowCardPositions();
 }
 
 void Reihen::update()
 {
-    setRowCardPositions();
+
 }
 
 void Reihen::handle(sf::Event *event)
 {
+
 }
 
 void Reihen::render(sf::RenderWindow *rw)
@@ -143,7 +149,6 @@ void Reihen::render(sf::RenderWindow *rw)
     //Reihenkarten zeichnen
     for(int i = 0;i<4;i++){
         for(int j = 0; j<Reihenlaenge[i];j++){
-//            ReihenKarten[i*5+j].setPosition(CalculateCardPosition(i,j));
             ReihenKarten[i*5+j].render(rw);
         }
     }

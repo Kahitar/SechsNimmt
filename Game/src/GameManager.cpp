@@ -20,7 +20,7 @@ GameManager::GameManager()//:pSpieler1("Niklas",1)
     Reihenlaenge    = new int[4];
 
     // Deck initialisieren und mischen
-    //pGameDeck->mischen();
+    pGameDeck->mischen();
     for(int i = 0;i<AnzahlKIs;i++){
         pKI[i].setnr(i);
         pKI[i].setSpielerNr(i+2);
