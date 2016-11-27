@@ -4,7 +4,7 @@
 GameManager::GameManager()//:pSpieler1("Niklas",1)
 {
     cout << "Mit wie vielen KI-Gegnern moechtest du spielen? (0-9): ";
-    AnzahlKIs = 0;//cin >> AnzahlKIs;
+    AnzahlKIs = 1;//cin >> AnzahlKIs;
     cout << AnzahlKIs << endl << endl;
     AnzahlStartkarten = 10;
 
@@ -58,7 +58,7 @@ void GameManager::update()
     // KI Spielen lassen und Karten anlegen, wenn der Spieler NICHT am Zug ist, danach ist der Spieler wieder am Zug.
     if(!pSpieler1->getPlayerTurn())
     {
-//        KITurn();
+        KITurn();
         EvaluatePlayed();
 
         // Sieger ausgeben

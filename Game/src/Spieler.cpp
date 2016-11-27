@@ -10,7 +10,6 @@ Spieler::Spieler(string name="KI", int SpielerNr = 0)
 {
     play        = new card;
     mHandkarten = new card[10];
-    mNumberCards = 0;
 }
 
 
@@ -76,7 +75,6 @@ void Spieler::update()
 }
 
 void Spieler::handle(sf::Event *event)
-
 {
     for(int i = 0;i<mNumberCards;i++)
         mHandkarten[i].handle(event);

@@ -9,10 +9,21 @@
 
 using namespace std;
 
+//KI_Spieler::KI_Spieler()
+//{
+//    mNumberCards = 0;
+//}
+
 KI_Spieler::KI_Spieler()
 {
+    mName = "KI";
+    mHornochsen = 0;
     mNumberCards = 0;
+    mSpielerNr = 0;
+    play        = new card;
+    mHandkarten = new card[10];
 }
+
 
 void KI_Spieler::giveUpdate(){
     cout <<  "KI-" << mKInr+1 << ": ";
@@ -57,7 +68,7 @@ card KI_Spieler::askCard(card Reihen[4*5], int Reihenlaenge[]){
     }
 
     // Zu spielende Karte aus der Hand löschen
-    for(int i = play_index; i < mNumberCards;i++){
+    for(int i = play_index; i < mNumberCards-1;i++){
         if(i!=mNumberCards){
             mHandkarten[i] = mHandkarten[i+1];
         }
