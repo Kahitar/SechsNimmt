@@ -42,12 +42,12 @@ card Spieler::askCard(sf::Event *event){
         if(mHandkarten[i].getMouseOnCard()){
             a = mHandkarten[i].getValue();
             play_index = i;
-            for(int i = play_index; i < mNumberCards;i++){
-                mHandkarten[i] = mHandkarten[i+1];
+            for(int j = play_index; j < mNumberCards-1;j++){
+                mHandkarten[j] = mHandkarten[j+1];
             }
             this->mNumberCards--;
-            for(int i = 0;i<mNumberCards;i++)
-                mHandkarten[i].setPosition(GetCardPosition(i));
+            for(int j = 0;j<mNumberCards;j++)
+                mHandkarten[j].setPosition(GetCardPosition(j));
             this->PlayerTurn = false;
 
             play->setCard(a);

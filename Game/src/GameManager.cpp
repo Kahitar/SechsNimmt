@@ -20,7 +20,7 @@ GameManager::GameManager()//:pSpieler1("Niklas",1)
     Reihenlaenge    = new int[4];
 
     // Deck initialisieren und mischen
-    pGameDeck->mischen();
+    //pGameDeck->mischen();
     for(int i = 0;i<AnzahlKIs;i++){
         pKI[i].setnr(i);
         pKI[i].setSpielerNr(i+2);
@@ -30,16 +30,16 @@ GameManager::GameManager()//:pSpieler1("Niklas",1)
     card *ForRows;
     ForRows = new card[4];
     for(int i = 0;i<AnzahlStartkarten;i++){
-        pSpieler1->giveCard(pGameDeck->austeilen());
+        pSpieler1->giveCard(pGameDeck->austeilen()); //Copy, Assign, Delete
         for(int j = 0;j < AnzahlKIs;j++){
             pKI[j].giveCard(pGameDeck->austeilen());
         }
         if(i<4){
-            ForRows[i] = pGameDeck->austeilen();
+            ForRows[i] = pGameDeck->austeilen(); //Copy, Assign, Delete
         }
     }
     pSpiel1->setFirst(ForRows);
-    delete ForRows;
+    delete[] ForRows;
     ForRows = NULL;
 
     for(int i = 0;i<AnzahlKIs;i++){

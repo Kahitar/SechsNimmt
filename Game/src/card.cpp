@@ -18,19 +18,18 @@ card::card()
 
 card::~card()
 {
-
 // Deleting these will result in program crash. Why?? - Weil ich das Wissen um den Copy-Constructor noch nicht überall eingebaut habe??
-//    delete pSprite;
-//    pSprite = NULL;
-//    delete pTexture;
-//    pTexture = NULL;
-//    delete pBlackSprite;
-//    pBlackSprite = NULL;
-//    delete pBlackTexture;
-//    pBlackTexture = NULL;
-//    delete pPosition;
-//    pPosition = NULL;
-//    std::cout << "Deleted\n";
+    delete pSprite;
+    pSprite = NULL;
+    delete pTexture;
+    pTexture = NULL;
+    delete pBlackSprite;
+    pBlackSprite = NULL;
+    delete pBlackTexture;
+    pBlackTexture = NULL;
+    delete pPosition;
+    pPosition = NULL;
+    std::cout << "Deleted\n";
 }
 
 card::card(const card& other)
@@ -48,34 +47,34 @@ card::card(const card& other)
 }
 
 //Copy assignment operator?! Is this right?
-//card& card::operator=(const card& other)
-//{
-//    if (this != &other) // protect against invalid self-assignment
-//    {
-//        pPosition       = new sf::Vector2f;
-//        pTexture        = new sf::Texture;
-//        pSprite         = new sf::Sprite;
-//        pBlackTexture   = new sf::Texture;
-//        pBlackSprite    = new sf::Sprite;
-//
-//        *pPosition      = *other.pPosition;
-//        *pTexture       = *other.pTexture;
-//        *pSprite        = *other.pSprite;
-//
-//        *pBlackTexture  = *other.pBlackTexture;
-//        *pBlackSprite   = *other.pBlackSprite;
-//
-//        mMouseOnCard    = other.mMouseOnCard;
-//        mValue          = other.mValue;
-//        mHornochsen     = other.mHornochsen;
-//        mSpielerNr      = other.mSpielerNr;
-//        played          = other.played;
-//
-//        std::cout << "Assigned!\n";
-//    }
-//
-//    return *this;
-//}
+card& card::operator=(const card& other) // other = old card objekt
+{
+    if (this != &other) // protect against invalid self-assignment
+    {
+        pPosition       = new sf::Vector2f;
+        pTexture        = new sf::Texture;
+        pSprite         = new sf::Sprite;
+        pBlackTexture   = new sf::Texture;
+        pBlackSprite    = new sf::Sprite;
+
+        *pPosition      = *other.pPosition;
+        *pTexture       = *other.pTexture;
+        *pSprite        = *other.pSprite;
+
+        *pBlackTexture  = *other.pBlackTexture;
+        *pBlackSprite   = *other.pBlackSprite;
+
+        mMouseOnCard    = other.mMouseOnCard;
+        mValue          = other.mValue;
+        mHornochsen     = other.mHornochsen;
+        mSpielerNr      = other.mSpielerNr;
+        played          = other.played;
+
+        std::cout << "Assigned!\n";
+    }
+
+    return *this;
+}
 
 void card::update()
 {

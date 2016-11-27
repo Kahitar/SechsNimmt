@@ -165,7 +165,6 @@ sf::Vector2f Reihen::CalculateCardPosition(int CardRow, int CardColumn)
 void Reihen::setRowCardPositions(){
     for(int i = 0;i<4;i++){
         for(int j = 0; j<Reihenlaenge[i];j++){
-
             ReihenKarten[i*5+j].setPosition(CalculateCardPosition(i,j));
         }
     }

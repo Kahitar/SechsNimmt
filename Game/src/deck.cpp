@@ -17,30 +17,30 @@ deck::deck(){
     }
 }
 
-deck::~deck()
-{
+card deck::getCard(int a) {
+    return pDeck[a];
+}
+
+deck::~deck(){
     delete pDeck;
     pDeck = NULL;
 }
 
 void deck::mischen(){
     srand(time(0)+rand());
-    card *Puffer;
-    Puffer = new card;
+    card Puffer;
     int random1,random2;
-    for(int i = 0;i<1000;i++){
+    for(int i = 0;i<100;i++){
         random1 = rand()%104;
         random2 = rand()%104;
-        *Puffer = pDeck[random1];
+        Puffer = pDeck[random1];
         pDeck[random1] = pDeck[random2];
-        pDeck[random2] = *Puffer;
+        pDeck[random2] = Puffer;
     }
-    delete Puffer;
-    Puffer = NULL;
 }
 
 card deck::austeilen(){
-    card give = pDeck[mAusgeteilt];
+    card give(pDeck[mAusgeteilt]);
     mAusgeteilt++;
     return give;
 }

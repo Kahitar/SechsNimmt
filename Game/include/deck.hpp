@@ -14,7 +14,7 @@ class deck
         void mischen();
         card austeilen();
 
-        card getCard(int a) {return pDeck[a];};
+        card getCard(int a);
 
     protected:
 

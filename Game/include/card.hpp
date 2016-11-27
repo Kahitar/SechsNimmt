@@ -12,7 +12,7 @@ public:
     card();
     ~card();
     card(const card& other);
-//    card& operator=(const card& other);
+    card& operator=(const card& other);
 
     void            update();
     void            handle(sf::Event *Event);
