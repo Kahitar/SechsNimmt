@@ -41,10 +41,13 @@
 			<Add directory="E:/OneDrive/c++/SFML-2.4.1/include" />
 			<Add directory="C:/Users/Nik-Netbook/OneDrive/c++/SFML-2.4.1/include" />
 			<Add directory="C:/Users/Niklas/Documents/GitHub/SechsNimmt/Game/include" />
+			<Add directory="C:/Users/Niklas/OneDrive/c++/SechsNimmt/Game/include" />
+			<Add directory="C:/Users/Niklas/OneDrive/c++/SFML-2.4.1/include" />
 		</Compiler>
 		<Linker>
 			<Add directory="E:/OneDrive/c++/SFML-2.4.1/lib" />
 			<Add directory="C:/Users/Nik-Netbook/OneDrive/c++/SFML-2.4.1/lib" />
+			<Add directory="C:/Users/Niklas/OneDrive/c++/SFML-2.4.1/lib" />
 		</Linker>
 		<Unit filename="include/Framework.hpp" />
 		<Unit filename="include/GameManager.hpp" />
