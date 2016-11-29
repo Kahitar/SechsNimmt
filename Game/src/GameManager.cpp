@@ -1,4 +1,5 @@
 #include "GameManager.hpp"
+#include <math.h>
 
 
 GameManager::GameManager()//:pSpieler1("Niklas",1)
@@ -7,6 +8,10 @@ GameManager::GameManager()//:pSpieler1("Niklas",1)
     AnzahlKIs = 1;//cin >> AnzahlKIs;
     cout << AnzahlKIs << endl << endl;
     AnzahlStartkarten = 10;
+
+    sortiert        = new card[AnzahlKIs+1];
+    isPlayerTurn    = true;
+    isKITurn        = true;
 
     pGameDeck       = new deck;
     pSpiel1         = new Reihen;
@@ -54,12 +59,15 @@ GameManager::GameManager()//:pSpieler1("Niklas",1)
 
 void GameManager::update()
 {
-
     // KI Spielen lassen und Karten anlegen, wenn der Spieler NICHT am Zug ist, danach ist der Spieler wieder am Zug.
     if(!pSpieler1->getPlayerTurn())
     {
-        KITurn();
-        EvaluatePlayed();
+        if(isKITurn){
+            KITurn();
+        }
+        isPlayerTurn = EvaluatePlayed();
+        isKITurn = isPlayerTurn;
+
 
         // Sieger ausgeben
         if(!pSpieler1->getNumberCards()){
@@ -70,15 +78,21 @@ void GameManager::update()
                 cout << "KI-" << pKI[i].getSpielerNr()-1 << " has " << pKI[i].getHornochsen() << " Hornochsen!\n";
             }
         }
-        pSpieler1->setTurn();
 
-        pSpiel1->printReihen();
-        pSpieler1->giveUpdate();
+        if(isPlayerTurn){
+            pSpieler1->setTurn();
+            pSpiel1->printReihen();
+            pSpieler1->giveUpdate();
+        }
     }
 
 
     pSpieler1->update();
     pSpiel1->update();
+
+    for(int i = 0;i<AnzahlKIs+1;i++){
+        sortiert[i].update();
+    }
 }
 
 void GameManager::handle(sf::Event *event)
@@ -86,9 +100,9 @@ void GameManager::handle(sf::Event *event)
     // Wenn der Spieler klickt, überprüfen ob die Maus auf einer Karte war und wenn ja diese Karte Spielen
     if(pSpieler1->getPlayerTurn() && event->type == sf::Event::MouseButtonPressed && event->mouseButton.button == sf::Mouse::Left){
         // Nach zu spielenden Karten fragen
-        SpielerWantPlay = pSpieler1->askCard(event);
+        *SpielerWantPlay = pSpieler1->askCard(event);
         if(!pSpieler1->getPlayerTurn()){
-            SpielerPlay = SpielerWantPlay;
+            *SpielerPlay = *SpielerWantPlay;
         }
     }
     // Wenn Spieler keine neue Karte gespielt hat, ist nach handle() noch die ALTE Karte im Zeiger "SpielerPlay" und der Spieler ist noch am Zug
@@ -102,6 +116,9 @@ void GameManager::render(sf::RenderWindow *rw)
 {
     pSpiel1->render(rw);
     pSpieler1->render(rw);
+    for(int i = 0;i<AnzahlKIs+1;i++){
+        sortiert[i].render(rw);
+    }
 }
 
 void GameManager::KITurn(){
@@ -118,48 +135,75 @@ void GameManager::KITurn(){
     delete[] Reihenlaenge;
 }
 
-void GameManager::EvaluatePlayed(){
+bool GameManager::EvaluatePlayed()
+{
+    bool AnimationEnded = false;
+    AnimationEnded = MoveCardToHold(sortiert, AnzahlKIs+1);
 
-    //Zu spielende Karten nach Value (aufsteigend) sortieren
-    card sortiert[AnzahlKIs+1];
-//    sortiert = new card[AnzahlKIs + 1];
-    for(int i = 0;i<AnzahlKIs+1;i++){
-        if(i<AnzahlKIs) {
-            sortiert[i] = KIPlay[i];
-        } else {
-            sortiert[i] = SpielerPlay;
+    if(AnimationEnded){
+        //Zu spielende Karten nach Value (aufsteigend) sortieren
+        for(int i = 0;i<AnzahlKIs+1;i++){
+            if(i<AnzahlKIs) {
+                sortiert[i] = KIPlay[i];
+                sortiert[i].setCard(sortiert[i].getValue());
+            } else {
+                sortiert[i] = SpielerPlay;
+            }
         }
+        sort(sortiert,sortiert+AnzahlKIs+1,sort_ByValue);
+        cout << endl;
+
+        for(int i = 0;i<AnzahlKIs+1;i++){
+            if(sortiert[i].getSpielerNr() == 1){
+                cout << "You played: " << sortiert[i].getValue() << endl;
+            } else {
+                cout << "KI-"<< sortiert[i].getSpielerNr()-1 << " played: " << sortiert[i].getValue() << endl;
+            }
+        }
+        cout << endl;
+
+        // Karten anlegen
+        for(int i = 0;i<AnzahlKIs+1;i++){
+            if(sortiert[i].getSpielerNr() == 1){
+                pSpieler1->addHornochsen(pSpiel1->anlegen(sortiert[i]));
+            } else {
+                pKI[sortiert[i].getSpielerNr()-2].addHornochsen(pSpiel1->anlegen(sortiert[i]));
+            }
+        }
+
+        return true;    //Spieler kann weiterspielen
+    } else {
+        return false;   //Animation wird im nächsten Frame fortgesetzt, Spieler kann noch nicht weiterspielen
     }
-    sort(sortiert,sortiert+AnzahlKIs+1,sort_ByValue);
-    cout << endl;
+}
 
-    for(int i = 0;i<AnzahlKIs+1;i++){
-        if(sortiert[i].getSpielerNr() == 1){
-            cout << "You played: " << sortiert[i].getValue() << endl;
-        } else {
-            cout << "KI-"<< sortiert[i].getSpielerNr()-1 << " played: " << sortiert[i].getValue() << endl;
-        }
+bool GameManager::MoveCardToHold(card ToPlay[], int Size)
+{
+    float CardW = 134.0, CardH = 205.0, WindowW = 1600.0;//, WindowH = 900.0;
+    float SpacingH = 0.8, SpacingW = 1.5;
+
+    sf::Vector2f    Target[Size];
+    sf::Vector2f    Direction[Size];
+    float           PathLength[Size];
+    sf::Vector2f    DirectionUnit[Size];
+
+    for(int i = 0;i<Size;i++){
+        Target[i].x = WindowW - CardW*SpacingW;
+        Target[i].y = i*CardH*SpacingH;
+
+        Direction[i].x = Target[i].x - ToPlay[i].getPosition().x; //std::cout << "Directionvektor x: " << Target[i].x << std::endl;
+        Direction[i].y = Target[i].y - ToPlay[i].getPosition().y; //std::cout << "Directionvektor y: " << Target[i].x << std::endl;
+
+        PathLength[i] = sqrt(Direction[i].x * Direction[i].x + Direction[i].y * Direction[i].y);
+
+        DirectionUnit[i].x = Direction[i].x/PathLength[i]/10;
+        DirectionUnit[i].y = Direction[i].y/PathLength[i]/10;
+
+        ToPlay[i].setMoving(DirectionUnit[i],PathLength[i]);
     }
-    cout << endl;
-
-    // Karten anlegen
-    for(int i = 0;i<AnzahlKIs+1;i++){
-//        if(sortiert[i].getSpielerNr() == 1){
-//            pSpieler1->addHornochsen(pSpiel1->anlegen(sortiert[i]));
-//        } else {
-//            pKI[i-2].addHornochsen(pSpiel1->anlegen(sortiert[i]));
-//        }
-        switch(sortiert[i].getSpielerNr()){
-            case 1: pSpieler1->addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-            case 2: pKI[0].addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-            case 3: pKI[1].addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-            case 4: pKI[2].addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-            case 5: pKI[3].addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-            case 6: pKI[4].addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-            case 7: pKI[5].addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-            case 8: pKI[6].addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-            case 9: pKI[7].addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-            case 10: pKI[8].addHornochsen(pSpiel1->anlegen(sortiert[i])); break;
-        }
+    if(Direction[0].x < 300 && Direction[0].y < 300 && Direction[0].x > -300 && Direction[0].y > -300){
+        return true; //Animation ended
+    } else {
+        return false;   //Animation didn't end yet!
     }
 }

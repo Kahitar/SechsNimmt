@@ -30,7 +30,8 @@ public:
 
 private:
     void KITurn();
-    void EvaluatePlayed();
+    bool EvaluatePlayed();
+    bool MoveCardToHold(card ToPlay[], int Size);
 
     int AnzahlStartkarten;
     int AnzahlKIs;
@@ -43,8 +44,13 @@ private:
     card            SpielerWantPlay;
     card            SpielerPlay;
     card            *KIPlay;
+    card            *sortiert;
+
     card            *reihenKarten;
     int             *Reihenlaenge;
+
+    bool isPlayerTurn;
+    bool isKITurn;
 };
 
 

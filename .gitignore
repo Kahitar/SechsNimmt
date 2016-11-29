@@ -51,3 +51,6 @@ Game/sechsNimmtV2.layout
 *.layout
 *.depend
 Game/sechsNimmtV2.layout
+*.o
+Game/obj/Debug/src/deck.o
+*.o

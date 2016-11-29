@@ -28,7 +28,7 @@ class Spieler
 
         void    giveUpdate();
         void    sortCards();
-        card    askCard(sf::Event *event);
+        card*   askCard(sf::Event *event);
 
         void    update();
         void    handle(sf::Event *event);
