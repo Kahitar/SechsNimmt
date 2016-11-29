@@ -3,6 +3,7 @@
 card::card()
 {
     mMouseOnCard    = false;
+    mMoving     = false;
     pPosition       = new sf::Vector2f;
     pPosition->x    = 0;
     pPosition->y    = 0;
@@ -15,7 +16,7 @@ card::card()
     pBlackSprite    = new sf::Sprite;
     pBlackSprite->setTexture(*pBlackTexture);
 
-    std::cout << "Constructed!\n";
+//    std::cout << "Constructed!\n";
 }
 
 card::~card()
@@ -31,12 +32,12 @@ card::~card()
     pBlackTexture = NULL;
     delete pPosition;
     pPosition = NULL;
-    std::cout << "Deleted!\n";
+//    std::cout << "Deleted!\n";
 }
 
 card::card(const card& other)
     :pPosition(new sf::Vector2f),pTexture(new sf::Texture),pSprite(new sf::Sprite),pBlackTexture(new sf::Texture),pBlackSprite(new sf::Sprite)
-    ,mMouseOnCard(other.mMouseOnCard),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr)
+    ,mMouseOnCard(other.mMouseOnCard),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr),mMoving(other.mMoving)
 {
     *pPosition = *other.pPosition;
     *pTexture = *other.pTexture;
@@ -45,7 +46,7 @@ card::card(const card& other)
     *pBlackTexture = *other.pBlackTexture;
     *pBlackSprite = *other.pBlackSprite;
 
-    std::cout << "Copied!\n";
+//    std::cout << "Copied!\n";
 }
 
 //Copy assignment operator?! Is this right?
@@ -67,11 +68,12 @@ card& card::operator=(const card& other) // other = old card objekt
         *pBlackSprite   = *other.pBlackSprite;
 
         mMouseOnCard    = other.mMouseOnCard;
+        mMoving         = other.mMoving;
         mValue          = other.mValue;
         mHornochsen     = other.mHornochsen;
         mSpielerNr      = other.mSpielerNr;
 
-        std::cout << "Assigned!\n";
+//        std::cout << "Assigned!\n";
     }
 
     return *this;
@@ -79,12 +81,19 @@ card& card::operator=(const card& other) // other = old card objekt
 
 void card::update()
 {
-    if(mMouseOnCard && pSprite->getPosition().y > pPosition->y-30){
-        pSprite->move(0,-1);
-        pBlackSprite->move(0,-1);
-    } else if (!mMouseOnCard && pSprite->getPosition().y < pPosition->y){
-        pSprite->move(0,1);
-        pBlackSprite->move(0,1);
+    if(mMoving){
+        pSprite->move(mMoveDirection);
+        pBlackSprite->move(mMoveDirection);
+        std::cout << "Moving!\n";
+        std::cout << pSprite->getPosition().x << "\n";
+    } else {
+        if(mMouseOnCard && pSprite->getPosition().y > pPosition->y-30){
+            pSprite->move(0,-1);
+            pBlackSprite->move(0,-1);
+        } else if (!mMouseOnCard && pSprite->getPosition().y < pPosition->y){
+            pSprite->move(0,1);
+            pBlackSprite->move(0,1);
+        }
     }
 }
 
@@ -256,3 +265,9 @@ void card::setPosition(sf::Vector2f newPosition)
      pBlackSprite->setPosition(sf::Vector2f(pPosition->x - 10,pPosition->y - 10));
      pBlackSprite->setColor(sf::Color(255,255,255,150));
  }
+
+void card::setMoving(sf::Vector2f Direction, int pathLength)
+{
+    mMoveDirection = Direction;
+    mMoving = true;
+}

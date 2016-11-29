@@ -18,15 +18,18 @@ public:
     void            handle(sf::Event *Event);
     void            render(sf::RenderWindow *rw);
 
-    const sf::Vector2f    getPosition()   {return *pPosition;};
-    const int             getValue()      {return mValue;};
-    const int             getHornochsen() {return mHornochsen;};
-    const int             getSpielerNr()  {return mSpielerNr;};
-    const bool            getMouseOnCard(){return mMouseOnCard;};
+    const sf::Vector2f    getPosition()         const {return *pPosition;};
+    const int             getValue()            const {return mValue;};
+    const int             getHornochsen()       const {return mHornochsen;};
+    const int             getSpielerNr()        const {return mSpielerNr;};
+    const bool            getMouseOnCard()      const {return mMouseOnCard;};
+    const bool            getMovestatus()       const {return mMoving;};
+    const sf::Vector2f    getMoveDirection()    const {return mMoveDirection;};
 
     void            setSpielerNr(int SpielerNr);
     void            setPosition(sf::Vector2f Position);
     void            setCard(int value);
+    void            setMoving(sf::Vector2f Direction, int pathLength);
 
 private:
     void            LoadCardTexture(int CardValue);
@@ -39,6 +42,8 @@ private:
     sf::Sprite      *pBlackSprite;
 
     bool            mMouseOnCard;
+    bool            mMoving;
+    sf::Vector2f    mMoveDirection;
 
     int             mValue;
     int             mHornochsen;

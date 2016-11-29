@@ -31,7 +31,7 @@ void Spieler::giveUpdate(){
     cout << "Your Hornochsen: " << mHornochsen << "\n\n";
 }
 
-card Spieler::askCard(sf::Event *event){
+card* Spieler::askCard(sf::Event *event){
 
     int a;
     int play_index = 0;
@@ -52,12 +52,12 @@ card Spieler::askCard(sf::Event *event){
             play->setCard(a);
             play->setSpielerNr(mSpielerNr);
             std::cout << "You should play " << play->getValue() << endl;
-            return *play;
+            return play;
         }
     }
 
     // Wenn die Maus auf keiner Karte war, eine Dummy-Karte zurückgeben
-    return *play;
+    return play;
 }
 
 void Spieler::sortCards(){
