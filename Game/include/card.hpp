@@ -18,11 +18,11 @@ public:
     void            handle(sf::Event *Event);
     void            render(sf::RenderWindow *rw);
 
-    const sf::Vector2f    getPosition()   {return *pPosition;};
-    const int             getValue()      {return mValue;};
-    const int             getHornochsen() {return mHornochsen;};
-    const int             getSpielerNr()  {return mSpielerNr;};
-    const bool            getMouseOnCard(){return mMouseOnCard;};
+    sf::Vector2f    getPosition()     const {return *pPosition;};
+    int             getValue()        const {return mValue;};
+    int             getHornochsen()   const {return mHornochsen;};
+    int             getSpielerNr()    const {return mSpielerNr;};
+    bool            getMouseOnCard()  const {return mMouseOnCard;};
 
     void            setSpielerNr(int SpielerNr);
     void            setPosition(sf::Vector2f Position);

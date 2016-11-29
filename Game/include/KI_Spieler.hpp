@@ -16,7 +16,7 @@ class KI_Spieler: public Spieler
 
         void giveUpdate();
 
-        card askCard(card Reihen[4*5], int Reihenlaenge[]);
+        card askCard(const card &Reihen[4*5], const int &Reihenlaenge[]);
 
     private:
         int mKInr;

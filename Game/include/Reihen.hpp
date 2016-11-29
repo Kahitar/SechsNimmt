@@ -10,7 +10,7 @@ class Reihen{
 		Reihen();
 		~Reihen();
 
-        int anlegen(card play);
+        int anlegen(const card &play); //TODO: Ist "const" und pass-by-reference hier nötig/richtig/gut???
 
 		void printReihen();
 

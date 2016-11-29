@@ -494,7 +494,7 @@
 	"Reihen.hpp"
 	"GameManager.hpp"
 
-1480264618 c:\users\niklas\documents\github\sechsnimmt\game\include\card.hpp
+1480324170 c:\users\niklas\documents\github\sechsnimmt\game\include\card.hpp
 	<iostream>
 	<string>
 	<sstream>
@@ -504,7 +504,7 @@
 	<iostream>
 	"card.hpp"
 
-1480189045 c:\users\niklas\documents\github\sechsnimmt\game\include\reihen.hpp
+1480325018 c:\users\niklas\documents\github\sechsnimmt\game\include\reihen.hpp
 	<iostream>
 	"card.hpp"
 
@@ -528,12 +528,12 @@
 	<iostream>
 	"card.hpp"
 
-1480281020 c:\users\niklas\documents\github\sechsnimmt\game\include\ki_spieler.hpp
+1480325559 c:\users\niklas\documents\github\sechsnimmt\game\include\ki_spieler.hpp
 	<iostream>
 	"Spieler.hpp"
 	"card.hpp"
 
-1480157447 c:\users\niklas\documents\github\sechsnimmt\game\include\functions.hpp
+1480324055 c:\users\niklas\documents\github\sechsnimmt\game\include\functions.hpp
 	<iostream>
 	"card.hpp"
 
@@ -551,7 +551,7 @@
 	<iostream>
 	"functions.hpp"
 
-1480282557 source:c:\users\niklas\documents\github\sechsnimmt\game\src\gamemanager.cpp
+1480282694 source:c:\users\niklas\documents\github\sechsnimmt\game\src\gamemanager.cpp
 	"GameManager.hpp"
 
 1480282377 source:c:\users\niklas\documents\github\sechsnimmt\game\src\ki_spieler.cpp
@@ -564,10 +564,10 @@
 
 1480012303 source:c:\users\niklas\documents\github\sechsnimmt\game\src\matrix.cpp
 
-1480270167 source:c:\users\niklas\documents\github\sechsnimmt\game\src\reihen.cpp
+1480324679 source:c:\users\niklas\documents\github\sechsnimmt\game\src\reihen.cpp
 	"Reihen.hpp"
 
-1480281446 source:c:\users\niklas\documents\github\sechsnimmt\game\src\spieler.cpp
+1480324478 source:c:\users\niklas\documents\github\sechsnimmt\game\src\spieler.cpp
 	<iostream>
 	<algorithm>
 	"Spieler.hpp"

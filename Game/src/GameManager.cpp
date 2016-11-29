@@ -16,8 +16,8 @@ GameManager::GameManager()//:pSpieler1("Niklas",1)
 //    SpielerWantPlay = new card;
 //    SpielerPlay     = new card;
     KIPlay          = new card[AnzahlKIs];
-    reihenKarten    = new card[4*5];
-    Reihenlaenge    = new int[4];
+//    reihenKarten    = new card[4*5]; //---> moved to KITurn()
+//    Reihenlaenge    = new int[4];
 
     // Deck initialisieren und mischen
     pGameDeck->mischen();
@@ -106,10 +106,16 @@ void GameManager::render(sf::RenderWindow *rw)
 
 void GameManager::KITurn(){
 
+    reihenKarten    = new card[4*5];
+    Reihenlaenge    = new int[4];
+
     pSpiel1->getReihen(reihenKarten,Reihenlaenge);
     for(int i = 0;i<AnzahlKIs;i++){
        KIPlay[i] =  pKI[i].askCard(reihenKarten,Reihenlaenge);
     }
+
+    delete[] reihenKarten;
+    delete[] Reihenlaenge;
 }
 
 void GameManager::EvaluatePlayed(){

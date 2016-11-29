@@ -35,7 +35,7 @@ void Reihen::getReihen(card MultiArr[4*5], int arr[4]){
     }
 }
 
-int Reihen::anlegen(card play){
+int Reihen::anlegen(const card &play){
     int difference[4];
     int mindiff_index = 0;
     int mieseHornochsen = 0;
@@ -58,7 +58,7 @@ int Reihen::anlegen(card play){
             int a;
             std::cout << "Your Card is to low to append to a row! Choose the row (by number) you want to take: \n\n";
             this->printReihen();
-            std::cout << "Take Row number: 1\n";
+            std::cout << "Take Row number: 1\n"; //TODO: Let Player decide!
             a = 1;
 //            std::cin >> a;
 //            std::cout << std::endl;
@@ -152,7 +152,6 @@ void Reihen::render(sf::RenderWindow *rw)
             ReihenKarten[i*5+j].render(rw);
         }
     }
-//    printReihen();
 }
 
 sf::Vector2f Reihen::CalculateCardPosition(int CardRow, int CardColumn)
