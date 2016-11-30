@@ -47,8 +47,8 @@ card* Spieler::askCard(sf::Event *event){
             this->mNumberCards--;
             for(int j = 0;j<mNumberCards;j++)
                 mHandkarten[j].setPosition(GetCardPosition(j));
-            this->PlayerTurn = false;
 
+            this->PlayerTurn = false;
             play->setCard(a);
             play->setSpielerNr(mSpielerNr);
             std::cout << "You should play " << play->getValue() << endl;

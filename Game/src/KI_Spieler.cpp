@@ -37,7 +37,7 @@ void KI_Spieler::giveUpdate(){
     cout << "Hornochsen: " << mHornochsen << "\n\n";
 }
 
-card KI_Spieler::askCard(card Reihen[4*5], int Reihenlaenge[]){
+card KI_Spieler::askCard(const card &Reihen[4*5], const int &Reihenlaenge[]){
     // Karten-Reihen-Paar mit kleinster Differenz finden und entsprechende Karte spielen
     card play;
     int diff_min = 104;
