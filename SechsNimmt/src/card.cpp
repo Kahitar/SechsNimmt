@@ -262,7 +262,7 @@ void card::setPosition(sf::Vector2f newPosition)
  {
      *pPosition = newPosition;
      pSprite->setPosition(*pPosition);
-     pBlackSprite->setPosition(sf::Vector2f(pPosition->x - 10,pPosition->y - 10));
+     pBlackSprite->setPosition(sf::Vector2f(pPosition->x - 6,pPosition->y - 6));
      pBlackSprite->setColor(sf::Color(255,255,255,150));
  }
 

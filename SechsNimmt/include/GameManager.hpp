@@ -52,6 +52,7 @@ private:
 
     sf::Font        *font;
     sf::Text        *StatusText;
+    sf::Text        *PlayedText;
 
     bool isPlayerTurn;
     bool isKITurn;

@@ -12,7 +12,7 @@ Framework::Framework(){
     mRun            = true;
 
     pBackground     = new sf::Texture;
-    pBackground->loadFromFile("Resources\\background.png");
+    pBackground->loadFromFile("Resources\\Tisch_Hintergrund.png");
     pBackSprite     = new sf::Sprite;
     pBackSprite->setTexture(*pBackground);
 
@@ -60,6 +60,7 @@ void Framework::handleEvents()
 
 void Framework::render(){
     pRenderWindow->clear(sf::Color::Green);
+    pRenderWindow->draw(*pBackSprite);
 
     pGM->render(pRenderWindow);
 

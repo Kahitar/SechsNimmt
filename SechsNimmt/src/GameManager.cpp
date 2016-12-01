@@ -11,10 +11,17 @@ GameManager::GameManager()
     font->loadFromFile("Resources\\PAPYRUS.TTF");
     StatusText      = new sf::Text;
     StatusText->setFont(*font);
-    StatusText->setCharacterSize(20);
-    StatusText->setColor(sf::Color::Red);
-    StatusText->setPosition(sf::Vector2f(30,30));
+    StatusText->setCharacterSize(25);
+    StatusText->setColor(sf::Color::Black);
+    StatusText->setPosition(sf::Vector2f(30,300));
     StatusText->setStyle(sf::Text::Bold);
+
+    PlayedText      = new sf::Text;
+    PlayedText->setFont(*font);
+    PlayedText->setCharacterSize(25);
+    PlayedText->setColor(sf::Color::Green);
+    PlayedText->setPosition(sf::Vector2f(1300,450));
+    PlayedText->setStyle(sf::Text::Bold);
 
     sortiert        = new card[AnzahlKIs+1];
     isPlayerTurn    = true;
@@ -137,6 +144,7 @@ void GameManager::render(sf::RenderWindow *rw)
 //    }
 
     rw->draw(*StatusText);
+    rw->draw(*PlayedText);
 }
 
 void GameManager::KITurn(){
@@ -169,7 +177,18 @@ void GameManager::EvaluatePlayed()
             }
         }
         sort(sortiert,sortiert+AnzahlKIs+1,sort_ByValue);
-        cout << endl;
+
+        std::stringstream ssPlayedString;
+        for(int i = 0;i<AnzahlKIs+1;i++){
+            if(sortiert[i].getSpielerNr() == 1){
+                ssPlayedString << "You played: " << sortiert[i].getValue() << std::endl;
+            } else {
+                ssPlayedString << "KI-" << sortiert[i].getSpielerNr()-1 << "played: " << sortiert[i].getValue() << std::endl;
+            }
+        }
+        std::string PlayedString = ssPlayedString.str();
+        PlayedText->setString(PlayedString);
+
 
         for(int i = 0;i<AnzahlKIs+1;i++){
             if(sortiert[i].getSpielerNr() == 1){

@@ -163,7 +163,7 @@ sf::Vector2f Reihen::CalculateCardPosition(int CardRow, int CardColumn)
     float SpacingW = 1.5, SpacingH = 0.8;
 
     sf::Vector2f Position;
-    Position.x = (WindowW-5.0*CardW*SpacingW)/2.0 + CardColumn*CardW*SpacingW;
+    Position.x = (WindowW-4.0*CardW*SpacingW)/2.0 + CardColumn*CardW*SpacingW;
     Position.y = (WindowH-4.0*CardH*SpacingH-CardH/2.0)/5.0 + CardRow*CardH*SpacingH;
 
     return Position;
