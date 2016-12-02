@@ -12,6 +12,8 @@ class Spieler
     public:
         Spieler(){};
         Spieler(string name, int number);
+        virtual ~Spieler();
+
 
         void    giveCard(card karte);
         void    addHornochsen(int neueHornochsen) {mHornochsen += neueHornochsen;};

@@ -9,11 +9,6 @@
 
 using namespace std;
 
-//KI_Spieler::KI_Spieler()
-//{
-//    mNumberCards = 0;
-//}
-
 KI_Spieler::KI_Spieler()
 {
     mName = "KI";
@@ -24,6 +19,11 @@ KI_Spieler::KI_Spieler()
     mHandkarten = new card[10];
 }
 
+KI_Spieler::~KI_Spieler()
+{
+//    delete play;
+//    delete[] mHandkarten;
+}
 
 void KI_Spieler::giveUpdate(){
     cout <<  "KI-" << mKInr+1 << ": ";
@@ -49,7 +49,7 @@ card KI_Spieler::askCard(const card Reihen[4*5], const int Reihenlaenge[]){
             if(diff > 0 && diff < diff_min){
                 play = mHandkarten[j];
                 play_index = j;
-                diff_min = diff; // ohne diese Zeile auch gute KI -> etwas random
+                diff_min = diff;
             }
         }
     }

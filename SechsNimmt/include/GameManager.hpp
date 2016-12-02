@@ -23,7 +23,7 @@ class GameManager
 {
 public:
      GameManager();
-    ~GameManager(){};
+    ~GameManager();
 
     void update();
     void handle(sf::Event *event);

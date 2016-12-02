@@ -13,6 +13,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add library="sfml-graphics-d" />
@@ -27,6 +28,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -44,6 +46,7 @@
 		<Linker>
 			<Add directory="C:/Users/Niklas/OneDrive/c++/SFML-2.4.1/lib" />
 		</Linker>
+		<Unit filename="include/Button.hpp" />
 		<Unit filename="include/Framework.hpp" />
 		<Unit filename="include/GameManager.hpp" />
 		<Unit filename="include/KI_Spieler.hpp" />
@@ -53,6 +56,7 @@
 		<Unit filename="include/deck.hpp" />
 		<Unit filename="include/functions.hpp" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Button.cpp" />
 		<Unit filename="src/Framework.cpp" />
 		<Unit filename="src/GameManager.cpp" />
 		<Unit filename="src/KI_Spieler.cpp" />

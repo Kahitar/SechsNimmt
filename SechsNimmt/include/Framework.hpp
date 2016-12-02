@@ -8,6 +8,7 @@
 #include "Spieler.hpp"
 #include "Reihen.hpp"
 #include "GameManager.hpp"
+#include "Button.hpp"
 
 class Framework
 {
@@ -23,6 +24,8 @@ private:
     void handleEvents();
     void render();
 
+    void NewGame(bool start);
+
     void CalculateFrameTime();
     void CalculateScale();
 
@@ -36,9 +39,10 @@ private:
     float   mFrameTime;
     bool    mRun;
 
-    bool    MouseOnCard;
+    bool    mGameRunning;
 
     GameManager *pGM;
+    Button      *pButton;
 };
 
 #endif // FRAMEWORK_HPP

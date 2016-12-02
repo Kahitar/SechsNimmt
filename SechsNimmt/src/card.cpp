@@ -3,7 +3,8 @@
 card::card()
 {
     mMouseOnCard    = false;
-    mMoving     = false;
+    mMoving         = false;
+    mSpielerNr      = 0;
     pPosition       = new sf::Vector2f;
     pPosition->x    = 0;
     pPosition->y    = 0;
@@ -21,15 +22,14 @@ card::card()
 
 card::~card()
 {
-// Deleting these will result in program crash. Why?? - Weil ich das Wissen um den Copy-Constructor noch nicht überall eingebaut habe??
-    delete pSprite;
-    pSprite = NULL;
     delete pTexture;
     pTexture = NULL;
-    delete pBlackSprite;
-    pBlackSprite = NULL;
     delete pBlackTexture;
     pBlackTexture = NULL;
+    delete pSprite;
+    pSprite = NULL;
+    delete pBlackSprite;
+    pBlackSprite = NULL;
     delete pPosition;
     pPosition = NULL;
 //    std::cout << "Deleted!\n";
@@ -49,8 +49,7 @@ card::card(const card& other)
 //    std::cout << "Copied!\n";
 }
 
-//Copy assignment operator?! Is this right?
-card& card::operator=(const card& other) // other = old card objekt
+card& card::operator=(const card& other) // other = old card object
 {
     if (this != &other) // protect against invalid self-assignment
     {

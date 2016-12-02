@@ -76,7 +76,7 @@ int Reihen::anlegen(const card &play){
         // KI muss Reihe nehmen
         } else*/ if (i == 3 && mindiff_index == 0){
             //Auswahl einer Reihe von KI (in Zukunft von KI_Spieler Klasse erledigen lassen
-            int HornochsenGesamt[4];
+            int HornochsenGesamt[] = {0, 0, 0, 0};
 //            int minHornochsen = HornochsenGesamt[0];
             int minHornochsen_index = 0;
             for(int j = 0;j<4;j++){

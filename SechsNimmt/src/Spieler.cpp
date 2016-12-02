@@ -12,14 +12,21 @@ Spieler::Spieler(string name="KI", int SpielerNr = 0)
     mHandkarten = new card[10];
 }
 
+Spieler::~Spieler()
+{
+    delete play;
+    delete[] mHandkarten;
+}
 
-void Spieler::giveCard(card karte){
+void Spieler::giveCard(card karte)
+{
     mHandkarten[mNumberCards] = karte;
     mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
     mNumberCards++;
 }
 
-void Spieler::giveUpdate(){
+void Spieler::giveUpdate()
+{
     cout <<  "Your Cards: ";
     for(int i = 0;i<mNumberCards;i++){
         if(i!=(mNumberCards-1)){
@@ -31,9 +38,8 @@ void Spieler::giveUpdate(){
     cout << "Your Hornochsen: " << mHornochsen << "\n\n";
 }
 
-card* Spieler::askCard(sf::Event *event){
-
-//    int a;
+card* Spieler::askCard(sf::Event *event)
+{
     int play_index = 0;
 
     // Wenn die Maus auf einer Karte war, diese Karte zurückgeben und Spieler ist nicht mehr am Zug
@@ -59,7 +65,8 @@ card* Spieler::askCard(sf::Event *event){
     return play;
 }
 
-void Spieler::sortCards(){
+void Spieler::sortCards()
+{
     sort(mHandkarten,mHandkarten+mNumberCards,sort_ByValue);
     for(int i = 0;i<10;i++){
         mHandkarten[i].setPosition(GetCardPosition(i));

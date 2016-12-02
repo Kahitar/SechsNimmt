@@ -17,13 +17,12 @@ deck::deck(){
     }
 }
 
-card deck::getCard(int a) {
-    return pDeck[a];
+deck::~deck(){
+    delete[] pDeck;
 }
 
-deck::~deck(){
-    delete pDeck;
-    pDeck = NULL;
+card deck::getCard(int a) {
+    return pDeck[a];
 }
 
 void deck::mischen(){

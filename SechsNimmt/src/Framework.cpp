@@ -2,10 +2,10 @@
 
 using namespace std;
 
-Framework::Framework(){
-    MouseOnCard = false;
-
-    pRenderWindow   = new sf::RenderWindow(sf::VideoMode(1600,800,32),"Little Game");
+Framework::Framework()
+    :mGameRunning(false)
+{
+    pRenderWindow   = new sf::RenderWindow(sf::VideoMode(1600,800,32),"Sechs Nimmt!");
     pRenderWindow->setPosition(sf::Vector2i(0,0));
     pMainEvent      = new sf::Event;
     pClock          = new sf::Clock;
@@ -16,11 +16,29 @@ Framework::Framework(){
     pBackSprite     = new sf::Sprite;
     pBackSprite->setTexture(*pBackground);
 
-    pGM             = new GameManager;
+//    NewGame(!mGameRunning);
+    pButton         = new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"New Game");
 }
 
 Framework::~Framework(){
+    delete pRenderWindow;
+    delete pMainEvent;
+    delete pClock;
+    delete pBackground;
+    delete pBackSprite;
+    delete pButton;
+//    delete pGM;
+}
 
+void Framework::NewGame(bool start)
+{
+    if(!start){
+        delete pGM;
+        pGM = NULL;
+    }
+
+    pGM         = new GameManager;
+    mGameRunning = true;
 }
 
 void Framework::run(){
@@ -40,9 +58,12 @@ void Framework::quit(){
         pRenderWindow->close();
 }
 
-void Framework::update(float FrameTime){
-
-    pGM->update();
+void Framework::update(float FrameTime)
+{
+    if(mGameRunning){
+        pGM->update();
+    }
+    pButton->update();
 
     this->CalculateFrameTime();
 }
@@ -51,7 +72,16 @@ void Framework::handleEvents()
 {
     while(pRenderWindow->pollEvent(*pMainEvent))
     {
-        pGM->handle(pMainEvent);
+        if(pMainEvent->type == sf::Event::MouseButtonPressed && pMainEvent->mouseButton.button == sf::Mouse::Left){
+            if(pButton->getMouseOnButton())
+                NewGame(!mGameRunning);
+        }
+
+        if(mGameRunning){
+            pGM->handle(pMainEvent);
+        }
+
+        pButton->handle(pMainEvent);
 
         if(pMainEvent->type == sf::Event::Closed)
             mRun = false;
@@ -59,10 +89,15 @@ void Framework::handleEvents()
 }
 
 void Framework::render(){
-    pRenderWindow->clear(sf::Color::Green);
+    pRenderWindow->clear();
+
     pRenderWindow->draw(*pBackSprite);
 
-    pGM->render(pRenderWindow);
+    if(mGameRunning){
+        pGM->render(pRenderWindow);
+    }
+
+    pButton->render(pRenderWindow);
 
     pRenderWindow->display();
 }

@@ -71,6 +71,21 @@ GameManager::GameManager()
     pSpieler1->giveUpdate();
 }
 
+GameManager::~GameManager()
+{
+    delete font;
+    delete StatusText;
+    delete PlayedText;
+    delete[] sortiert;
+    delete pGameDeck;
+    delete pSpiel1;
+    delete pSpieler1;
+    delete SpielerWantPlay;
+    delete SpielerPlay;
+    delete[] KIPlay;
+    delete[] pKI;
+}
+
 void GameManager::update()
 {
     // KI Spielen lassen und Karten anlegen, wenn der Spieler NICHT am Zug ist, danach ist der Spieler wieder am Zug.

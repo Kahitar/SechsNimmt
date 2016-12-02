@@ -9,8 +9,8 @@
 class KI_Spieler: public Spieler
 {
     public:
-//        KI_Spieler();
         KI_Spieler();
+        ~KI_Spieler();
 
         void setnr(int KInr) {mKInr = KInr;};
 
