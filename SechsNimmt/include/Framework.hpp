@@ -24,7 +24,7 @@ private:
     void handleEvents();
     void render();
 
-    void NewGame(bool start);
+    void NewGame();
 
     void CalculateFrameTime();
     void CalculateScale();
@@ -42,7 +42,7 @@ private:
     bool    mGameRunning;
 
     GameManager *pGM;
-    Button      *pButton;
+    Button      *pNewGameButton;
 };
 
 #endif // FRAMEWORK_HPP

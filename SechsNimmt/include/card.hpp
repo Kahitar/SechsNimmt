@@ -9,6 +9,9 @@
 class card
 {
 public:
+    static int mCardsCreated;
+    static int mCardsDeleted;
+
     card();
     ~card();
     card(const card& other);
@@ -30,6 +33,7 @@ public:
     void            setPosition(sf::Vector2f Position);
     void            setCard(int value);
     void            setMoving(sf::Vector2f Direction, int pathLength);
+    void            setValue(int value){mValue = value;};
 
 private:
     void            LoadCardTexture(int CardValue);
@@ -48,6 +52,7 @@ private:
     int             mValue;
     int             mHornochsen;
     int             mSpielerNr;
+
 };
 
 #endif // CARD_HPP

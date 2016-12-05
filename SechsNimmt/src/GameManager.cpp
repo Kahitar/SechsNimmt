@@ -3,7 +3,7 @@
 GameManager::GameManager()
 {
     cout << "Mit wie vielen KI-Gegnern moechtest du spielen? (0-9): ";
-    AnzahlKIs = 3;//cin >> AnzahlKIs;
+    AnzahlKIs = 9;//cin >> AnzahlKIs;
     cout << AnzahlKIs << endl << endl;
     AnzahlStartkarten = 10;
 
@@ -35,8 +35,6 @@ GameManager::GameManager()
     SpielerWantPlay = new card;
     SpielerPlay     = new card;
     KIPlay          = new card[AnzahlKIs];
-//    reihenKarten    = new card[4*5]; //---> moved to KITurn()
-//    Reihenlaenge    = new int[4];
 
     // Deck initialisieren und mischen
     pGameDeck->mischen();
@@ -49,12 +47,12 @@ GameManager::GameManager()
     card *ForRows;
     ForRows = new card[4];
     for(int i = 0;i<AnzahlStartkarten;i++){
-        pSpieler1->giveCard(pGameDeck->austeilen()); //Copy, Assign, Delete
+        pSpieler1->giveCard(pGameDeck->austeilen());
         for(int j = 0;j < AnzahlKIs;j++){
             pKI[j].giveCard(pGameDeck->austeilen());
         }
         if(i<4){
-            ForRows[i] = pGameDeck->austeilen(); //Copy, Assign, Delete
+            ForRows[i] = pGameDeck->austeilen();
         }
     }
     pSpiel1->setFirst(ForRows);
@@ -67,6 +65,7 @@ GameManager::GameManager()
     pSpieler1->sortCards();
     pSpieler1->setTurn();
 
+    //Print Gamestatus to the console
     pSpiel1->printReihen();
     pSpieler1->giveUpdate();
 }
@@ -129,7 +128,6 @@ void GameManager::update()
         ssTextString << "KI-" << pKI[i].getSpielerNr()-1 << "Hornochsen: " << pKI[i].getHornochsen() << std::endl;
     }
     std::string TextString = ssTextString.str();
-
     StatusText->setString(TextString);
 }
 
@@ -164,6 +162,7 @@ void GameManager::render(sf::RenderWindow *rw)
 
 void GameManager::KITurn(){
 
+    //Maybe don't allocate these on the heap?
     reihenKarten    = new card[4*5];
     Reihenlaenge    = new int[4];
 

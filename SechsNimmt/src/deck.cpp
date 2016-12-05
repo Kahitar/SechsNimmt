@@ -13,7 +13,7 @@ deck::deck(){
     pDeck = new card[104];
 
     for(int i = 1;i<105;i++){
-        pDeck[i-1].setCard(i);
+        pDeck[i-1].setValue(i);
     }
 }
 
@@ -29,7 +29,7 @@ void deck::mischen(){
     srand(time(0)+rand());
     card Puffer;
     int random1,random2;
-    for(int i = 0;i<100;i++){
+    for(int i = 0;i<200;i++){
         random1 = rand()%104;
         random2 = rand()%104;
         Puffer = pDeck[random1];
@@ -39,7 +39,7 @@ void deck::mischen(){
 }
 
 card deck::austeilen(){
-    card give(pDeck[mAusgeteilt]);
+    card give = pDeck[mAusgeteilt];
     mAusgeteilt++;
     return give;
 }

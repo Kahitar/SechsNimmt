@@ -3,52 +3,27 @@
 
 #include <iostream>
 
+#include "SpielerVirtual.hpp"
 #include "card.hpp"
 
 using namespace std;
 
-class Spieler
+class Spieler:public SpielerVirtual
 {
     public:
         Spieler(){};
         Spieler(string name, int number);
-        virtual ~Spieler();
-
+        ~Spieler();
 
         void    giveCard(card karte);
         void    addHornochsen(int neueHornochsen) {mHornochsen += neueHornochsen;};
 
-        void    setSpielerNr(int SpNr)  {mSpielerNr = SpNr;};
-        void    setName(string name)    {mName = name;};
-        void    setTurn()               {PlayerTurn = true;};
-
-        int     getNumberCards() {return mNumberCards;};
-        int     getHornochsen()  {return mHornochsen;};
-        int     getSpielerNr()   {return mSpielerNr;};
-        bool    getPlayerTurn()  {return PlayerTurn;};
-        string  getName()        {return mName;};
-
         void    giveUpdate();
-        void    sortCards();
-        card*   askCard(sf::Event *event);
 
-        void    update();
-        void    handle(sf::Event *event);
-        void    render(sf::RenderWindow *rw);
-
-    private:
         sf::Vector2f GetCardPosition(int CardIndex);
 
-    protected:
-        string  mName;
-        int     mHornochsen;
-        int     mNumberCards;
-        int     mSpielerNr;
-        card    *mHandkarten;
+        card* askCard(sf::Event *event);
 
-        bool    PlayerTurn;
-
-        card    *play;
 };
 
 

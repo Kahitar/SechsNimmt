@@ -53,28 +53,7 @@ int Reihen::anlegen(const card &play){
             break;
         }
 
-/*        //Spieler muss Reihe nehmen:
-        if(i == 3 && mindiff_index == 0 && play.getSpielerNr() == 1){
-            int a;
-            std::cout << "Your Card is to low to append to a row! Choose the row (by number) you want to take: \n\n";
-            this->printReihen();
-            std::cout << "Take Row number: 1\n"; //TODO: Let Player decide!
-            a = 1;
-//            std::cin >> a;
-//            std::cout << std::endl;
-
-            //Hornochsen der Reihe ausrechnen, Reihe "löschen" und mit gespielter Karte neu starten
-            for(int j=0;j<Reihenlaenge[a-1];j++){
-                mieseHornochsen+= ReihenKarten[(a-1)*5+j].getHornochsen();
-            }
-            ReihenKarten[(a-1)*5+0] = play;
-            Reihenlaenge[a-1] = 1;
-            angelegt = true;
-            setRowCardPositions();
-            break;
-
-        // KI muss Reihe nehmen
-        } else*/ if (i == 3 && mindiff_index == 0){
+        if (i == 3 && mindiff_index == 0){
             //Auswahl einer Reihe von KI (in Zukunft von KI_Spieler Klasse erledigen lassen
             int HornochsenGesamt[] = {0, 0, 0, 0};
 //            int minHornochsen = HornochsenGesamt[0];
@@ -133,6 +112,7 @@ void Reihen::setFirst(card ErsteSpalte[4]){
     for(int i=0;i<4;i++){
         Reihenlaenge[i] = 1;
         ReihenKarten[i*5+0] = ErsteSpalte[i];
+        ReihenKarten[i*5+0].setCard(ErsteSpalte[i].getValue());
     }
     setRowCardPositions();
 }

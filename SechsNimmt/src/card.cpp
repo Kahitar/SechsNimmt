@@ -1,10 +1,11 @@
 #include "card.hpp"
 
+int card::mCardsCreated;
+int card::mCardsDeleted;
+
 card::card()
+    :mMouseOnCard(false),mMoving(false),mSpielerNr(0)
 {
-    mMouseOnCard    = false;
-    mMoving         = false;
-    mSpielerNr      = 0;
     pPosition       = new sf::Vector2f;
     pPosition->x    = 0;
     pPosition->y    = 0;
@@ -17,6 +18,7 @@ card::card()
     pBlackSprite    = new sf::Sprite;
     pBlackSprite->setTexture(*pBlackTexture);
 
+    mCardsCreated++;
 //    std::cout << "Constructed!\n";
 }
 
@@ -32,6 +34,8 @@ card::~card()
     pBlackSprite = NULL;
     delete pPosition;
     pPosition = NULL;
+
+    mCardsDeleted++;
 //    std::cout << "Deleted!\n";
 }
 
@@ -46,13 +50,27 @@ card::card(const card& other)
     *pBlackTexture = *other.pBlackTexture;
     *pBlackSprite = *other.pBlackSprite;
 
+    mCardsCreated++;
+
 //    std::cout << "Copied!\n";
 }
 
-card& card::operator=(const card& other) // other = old card object
+card& card::operator=(const card& other) // other = old card object (right hand side)
 {
     if (this != &other) // protect against invalid self-assignment
     {
+        delete pPosition;
+        delete pTexture;
+        delete pSprite;
+        delete pBlackTexture;
+        delete pBlackSprite;
+
+        pPosition = NULL;
+        pTexture = NULL;
+        pSprite = NULL;
+        pBlackTexture = NULL;
+        pBlackSprite = NULL;
+
         pPosition       = new sf::Vector2f;
         pTexture        = new sf::Texture;
         pSprite         = new sf::Sprite;
@@ -62,9 +80,11 @@ card& card::operator=(const card& other) // other = old card object
         *pPosition      = *other.pPosition;
         *pTexture       = *other.pTexture;
         *pSprite        = *other.pSprite;
-
         *pBlackTexture  = *other.pBlackTexture;
         *pBlackSprite   = *other.pBlackSprite;
+
+        pSprite->setTexture(*pTexture);
+        pBlackSprite->setTexture(*pBlackTexture);
 
         mMouseOnCard    = other.mMouseOnCard;
         mMoving         = other.mMoving;
@@ -231,7 +251,7 @@ void card::LoadCardTexture(int CardValue)
     pSprite->setTexture(*pTexture);
 
     pSprite->setTextureRect(sf::IntRect(coordsx,coordsy,134,204));
-    pSprite->setPosition(sf::Vector2f(300, 200));
+//    pSprite->setPosition(sf::Vector2f(300, 200));
 }
 
 void card::setCard(int value)

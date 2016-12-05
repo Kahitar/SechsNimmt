@@ -4,6 +4,6 @@
 #include <iostream>
 #include "card.hpp"
 
-static bool sort_ByValue(card &lhs, card &rhs) { return lhs.getValue() < rhs.getValue(); };
+static bool sort_ByValue(const card &lhs,const card &rhs) { return lhs.getValue() < rhs.getValue(); };
 
 #endif // FUNCTIONS_HPP_INCLUDED

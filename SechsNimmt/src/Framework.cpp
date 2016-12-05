@@ -16,8 +16,8 @@ Framework::Framework()
     pBackSprite     = new sf::Sprite;
     pBackSprite->setTexture(*pBackground);
 
-//    NewGame(!mGameRunning);
-    pButton         = new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"New Game");
+//    NewGame();
+    pNewGameButton  = new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"New Game");
 }
 
 Framework::~Framework(){
@@ -26,19 +26,26 @@ Framework::~Framework(){
     delete pClock;
     delete pBackground;
     delete pBackSprite;
-    delete pButton;
-//    delete pGM;
+    delete pNewGameButton;
+    delete pGM;
 }
 
-void Framework::NewGame(bool start)
+void Framework::NewGame()
 {
-    if(!start){
+    if(mGameRunning){
         delete pGM;
         pGM = NULL;
     }
 
     pGM         = new GameManager;
     mGameRunning = true;
+
+    cout << "Test start"  << endl;
+    card tester0;
+    card tester1(tester0);
+    cout << "Test end"  << endl;
+    cout << "Cards Constructed: " << tester0.mCardsCreated << endl;
+    cout << "Cards Deleted:     " << tester0.mCardsDeleted << endl << endl;
 }
 
 void Framework::run(){
@@ -63,7 +70,7 @@ void Framework::update(float FrameTime)
     if(mGameRunning){
         pGM->update();
     }
-    pButton->update();
+    pNewGameButton->update();
 
     this->CalculateFrameTime();
 }
@@ -73,15 +80,15 @@ void Framework::handleEvents()
     while(pRenderWindow->pollEvent(*pMainEvent))
     {
         if(pMainEvent->type == sf::Event::MouseButtonPressed && pMainEvent->mouseButton.button == sf::Mouse::Left){
-            if(pButton->getMouseOnButton())
-                NewGame(!mGameRunning);
+            if(pNewGameButton->getMouseOnButton())
+                NewGame();
         }
 
         if(mGameRunning){
             pGM->handle(pMainEvent);
         }
 
-        pButton->handle(pMainEvent);
+        pNewGameButton->handle(pMainEvent);
 
         if(pMainEvent->type == sf::Event::Closed)
             mRun = false;
@@ -97,7 +104,7 @@ void Framework::render(){
         pGM->render(pRenderWindow);
     }
 
-    pButton->render(pRenderWindow);
+    pNewGameButton->render(pRenderWindow);
 
     pRenderWindow->display();
 }

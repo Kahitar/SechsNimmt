@@ -21,8 +21,8 @@ KI_Spieler::KI_Spieler()
 
 KI_Spieler::~KI_Spieler()
 {
-//    delete play;
-//    delete[] mHandkarten;
+    delete play;
+    delete[] mHandkarten;
 }
 
 void KI_Spieler::giveUpdate(){
@@ -77,4 +77,12 @@ card KI_Spieler::askCard(const card Reihen[4*5], const int Reihenlaenge[]){
     play.setSpielerNr(this->mSpielerNr);
 
     return play;
+}
+
+void KI_Spieler::giveCard(card karte)
+{
+    mHandkarten[mNumberCards] = karte;
+    mHandkarten[mNumberCards].setCard(karte.getValue());
+    mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
+    mNumberCards++;
 }
