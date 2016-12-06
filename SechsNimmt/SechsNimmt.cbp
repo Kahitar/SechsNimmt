@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="SechsNimmt" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/SechsNimmt" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add library="sfml-graphics-d" />
+					<Add library="sfml-window-d" />
+					<Add library="sfml-system-d" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/SechsNimmt" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add library="sfml-graphics" />
+					<Add library="sfml-window" />
+					<Add library="sfml-system" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="C:/Users/Niklas/OneDrive/c++/SFML-2.4.1/include" />
+			<Add directory="C:/Users/Niklas/OneDrive/c++/SechsNimmt/SechsNimmt/include" />
+		</Compiler>
+		<Linker>
+			<Add directory="C:/Users/Niklas/OneDrive/c++/SFML-2.4.1/lib" />
+		</Linker>
+		<Unit filename="include/Button.hpp" />
+		<Unit filename="include/Framework.hpp" />
+		<Unit filename="include/GameManager.hpp" />
+		<Unit filename="include/KI_Spieler.hpp" />
+		<Unit filename="include/Reihen.hpp" />
+		<Unit filename="include/Spieler.hpp" />
+		<Unit filename="include/SpielerVirtual.hpp" />
+		<Unit filename="include/card.hpp" />
+		<Unit filename="include/deck.hpp" />
+		<Unit filename="include/functions.hpp" />
+		<Unit filename="main.cpp" />
+		<Unit filename="src/Button.cpp" />
+		<Unit filename="src/Framework.cpp" />
+		<Unit filename="src/GameManager.cpp" />
+		<Unit filename="src/KI_Spieler.cpp" />
+		<Unit filename="src/Matrix.cpp" />
+		<Unit filename="src/Reihen.cpp" />
+		<Unit filename="src/Spieler.cpp" />
+		<Unit filename="src/SpielerVirtual.cpp" />
+		<Unit filename="src/card.cpp" />
+		<Unit filename="src/deck.cpp" />
+		<Unit filename="src/functions.cpp" />
+		<Unit filename="test.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
