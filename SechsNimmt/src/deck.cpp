@@ -12,8 +12,9 @@ deck::deck(){
 
     pDeck = new card[104];
 
-    for(int i = 1;i<105;i++){
-        pDeck[i-1].setValue(i);
+    for(int i = 0;i<104;i++){
+        pDeck[i].setCard(i+1);
+        DealNextIndex[i] = i;
     }
 }
 
@@ -25,21 +26,42 @@ card deck::getCard(int a) {
     return pDeck[a];
 }
 
+//void deck::mischen(){
+//    srand(time(0)+rand());
+//    card Puffer;
+//    int random1,random2;
+//    for(int i = 0;i<200;i++){
+//        random1 = rand()%104;
+//        random2 = rand()%104;
+//        Puffer = pDeck[random1];
+//        pDeck[random1] = pDeck[random2];
+//        pDeck[random2] = Puffer;
+//    }
+//    mAusgeteilt = 0;
+//}
+
+//card deck::austeilen(){
+//    card give = pDeck[mAusgeteilt];
+//    mAusgeteilt++;
+//    return give;
+//}
+
 void deck::mischen(){
     srand(time(0)+rand());
-    card Puffer;
+    int Puffer;
     int random1,random2;
     for(int i = 0;i<200;i++){
         random1 = rand()%104;
         random2 = rand()%104;
-        Puffer = pDeck[random1];
-        pDeck[random1] = pDeck[random2];
-        pDeck[random2] = Puffer;
+        Puffer = DealNextIndex[random1];
+        DealNextIndex[random1] = DealNextIndex[random2];
+        DealNextIndex[random2] = Puffer;
     }
+    mAusgeteilt = 0;
 }
 
 card deck::austeilen(){
-    card give = pDeck[mAusgeteilt];
+    card give = pDeck[DealNextIndex[mAusgeteilt]];
     mAusgeteilt++;
     return give;
 }

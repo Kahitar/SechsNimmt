@@ -4,11 +4,9 @@
 #include <iostream>
 #include <SFML\Graphics.hpp>
 
-#include "card.hpp"
-#include "Spieler.hpp"
-#include "Reihen.hpp"
+#include "Gamestate.hpp"
+#include "MainMenu.hpp"
 #include "GameManager.hpp"
-#include "Button.hpp"
 
 class Framework
 {
@@ -16,7 +14,16 @@ public:
      Framework();
     ~Framework();
 
+    enum class gameStates {GAMESTART, MAINMENU, PLAY};
+
     void run();
+    void ChangeState(gameStates newstate);
+
+    sf::RenderWindow *pRenderWindow;
+    sf::Event        *pMainEvent;
+
+    //TODO: Make private (see error in MainMenu.handle())
+    std::unique_ptr<Gamestate> CurrentState;
 
 private:
     void quit();
@@ -24,13 +31,9 @@ private:
     void handleEvents();
     void render();
 
-    void NewGame();
-
     void CalculateFrameTime();
     void CalculateScale();
 
-    sf::RenderWindow *pRenderWindow;
-    sf::Event        *pMainEvent;
     sf::Clock        *pClock;
 
     sf::Texture      *pBackground;
@@ -40,9 +43,6 @@ private:
     bool    mRun;
 
     bool    mGameRunning;
-
-    GameManager *pGM;
-    Button      *pNewGameButton;
 };
 
 #endif // FRAMEWORK_HPP

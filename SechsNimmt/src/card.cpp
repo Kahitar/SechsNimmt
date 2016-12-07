@@ -1,47 +1,53 @@
 #include "card.hpp"
 
-int card::mCardsCreated;
-int card::mCardsDeleted;
+//Implemented here to avoid circular "includation"
+#include "ResourceManager.hpp"
 
 card::card()
     :mMouseOnCard(false),mMoving(false),mSpielerNr(0)
 {
-    pPosition       = new sf::Vector2f;
+    pPosition = std::shared_ptr<sf::Vector2f>(new sf::Vector2f);
+    pTexture  = std::shared_ptr<sf::Texture>(new sf::Texture);
+    pSprite  = std::shared_ptr<sf::Sprite>(new sf::Sprite);
+
+    pBlackTexture  = std::shared_ptr<sf::Texture>(new sf::Texture);
+    pBlackSprite  = std::shared_ptr<sf::Sprite>(new sf::Sprite);
+
+
+//    pPosition       = new sf::Vector2f;
     pPosition->x    = 0;
     pPosition->y    = 0;
 
-    pTexture        = new sf::Texture;
-    pSprite         = new sf::Sprite;
-
-    pBlackTexture   = new sf::Texture;
-    pBlackTexture->loadFromFile("Resources\\CardBlack.png");
-    pBlackSprite    = new sf::Sprite;
+//    pTexture        = new sf::Texture;
+//    pSprite         = new sf::Sprite;
+//
+//    pBlackTexture   = new sf::Texture;
+    *pBlackTexture  = ResourceManager::getTexture("Resources\\CardBlack.png");//pBlackTexture->loadFromFile("Resources\\CardBlack.png");
+//    pBlackSprite    = new sf::Sprite;
     pBlackSprite->setTexture(*pBlackTexture);
 
-    mCardsCreated++;
 //    std::cout << "Constructed!\n";
 }
 
 card::~card()
 {
-    delete pTexture;
-    pTexture = NULL;
-    delete pBlackTexture;
-    pBlackTexture = NULL;
-    delete pSprite;
-    pSprite = NULL;
-    delete pBlackSprite;
-    pBlackSprite = NULL;
-    delete pPosition;
-    pPosition = NULL;
+//    delete pBlackSprite;
+//    pBlackSprite = NULL;
+//    delete pBlackTexture;
+//    pBlackTexture = NULL;
+//    delete pSprite;
+//    pSprite = NULL;
+//    delete pTexture;
+//    pTexture = NULL;
+//    delete pPosition;
+//    pPosition = NULL;
 
-    mCardsDeleted++;
 //    std::cout << "Deleted!\n";
 }
 
 card::card(const card& other)
     :pPosition(new sf::Vector2f),pTexture(new sf::Texture),pSprite(new sf::Sprite),pBlackTexture(new sf::Texture),pBlackSprite(new sf::Sprite)
-    ,mMouseOnCard(other.mMouseOnCard),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr),mMoving(other.mMoving)
+    ,mMouseOnCard(other.mMouseOnCard),mMoving(other.mMoving),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr)
 {
     *pPosition = *other.pPosition;
     *pTexture = *other.pTexture;
@@ -50,8 +56,6 @@ card::card(const card& other)
     *pBlackTexture = *other.pBlackTexture;
     *pBlackSprite = *other.pBlackSprite;
 
-    mCardsCreated++;
-
 //    std::cout << "Copied!\n";
 }
 
@@ -59,23 +63,30 @@ card& card::operator=(const card& other) // other = old card object (right hand 
 {
     if (this != &other) // protect against invalid self-assignment
     {
-        delete pPosition;
-        delete pTexture;
-        delete pSprite;
-        delete pBlackTexture;
-        delete pBlackSprite;
+//        delete pPosition;
+//        delete pTexture;
+//        delete pSprite;
+//        delete pBlackTexture;
+//        delete pBlackSprite;
+//
+//        pPosition = NULL;
+//        pTexture = NULL;
+//        pSprite = NULL;
+//        pBlackTexture = NULL;
+//        pBlackSprite = NULL;
+//
+//        pPosition       = new sf::Vector2f;
+//        pTexture        = new sf::Texture;
+//        pSprite         = new sf::Sprite;
+//        pBlackTexture   = new sf::Texture;
+//        pBlackSprite    = new sf::Sprite;
 
-        pPosition = NULL;
-        pTexture = NULL;
-        pSprite = NULL;
-        pBlackTexture = NULL;
-        pBlackSprite = NULL;
+        pPosition       = std::shared_ptr<sf::Vector2f> (new sf::Vector2f);
+        pTexture        = std::shared_ptr<sf::Texture>  (new sf::Texture);
+        pSprite         = std::shared_ptr<sf::Sprite>   (new sf::Sprite);
 
-        pPosition       = new sf::Vector2f;
-        pTexture        = new sf::Texture;
-        pSprite         = new sf::Sprite;
-        pBlackTexture   = new sf::Texture;
-        pBlackSprite    = new sf::Sprite;
+        pBlackTexture   = std::shared_ptr<sf::Texture>  (new sf::Texture);
+        pBlackSprite    = std::shared_ptr<sf::Sprite>   (new sf::Sprite);
 
         *pPosition      = *other.pPosition;
         *pTexture       = *other.pTexture;
@@ -119,14 +130,17 @@ void card::update()
 void card::handle(sf::Event *Event)
 {
     if (Event->type == sf::Event::MouseMoved)
+    {
+        if(Event->mouseMove.x > pSprite->getPosition().x
+           && Event->mouseMove.y > pSprite->getPosition().y
+           && Event->mouseMove.x < pSprite->getPosition().x+134
+           && Event->mouseMove.y < pPosition->y+204)
         {
-            if(Event->mouseMove.x > pSprite->getPosition().x && Event->mouseMove.x < pSprite->getPosition().x+134
-                && Event->mouseMove.y > pSprite->getPosition().y && Event->mouseMove.y < pPosition->y+204){
-                mMouseOnCard = true;
-            } else{
-                mMouseOnCard = false;
-            }
+            mMouseOnCard = true;
+        } else{
+            mMouseOnCard = false;
         }
+    }
 }
 
 void card::render(sf::RenderWindow *rw)
@@ -243,11 +257,11 @@ void card::LoadCardTexture(int CardValue)
         }
     }
 
-    std::stringstream ssfilename;
-    ssfilename << Filedirectory << File << FileType;
-    std::string filename = ssfilename.str();
+    std::stringstream ssfilepath;
+    ssfilepath << Filedirectory << File << FileType;
+    std::string filepath = ssfilepath.str();
 
-    pTexture->loadFromFile(filename);
+    *pTexture  = ResourceManager::getTexture(filepath);//pTexture->loadFromFile(filename);
     pSprite->setTexture(*pTexture);
 
     pSprite->setTextureRect(sf::IntRect(coordsx,coordsy,134,204));

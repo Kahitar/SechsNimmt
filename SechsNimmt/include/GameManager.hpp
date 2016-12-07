@@ -11,23 +11,27 @@
 #include <math.h>
 #include <SFML/Graphics.hpp>
 
-#include "deck.hpp"
 #include "card.hpp"
 #include "Spieler.hpp"
 #include "KI_Spieler.hpp"
 #include "Reihen.hpp"
-
 #include "functions.hpp"
+#include "Button.hpp"
 
-class GameManager
+#include "Gamestate.hpp"
+
+class Framework;
+class deck;
+
+class GameManager : public Gamestate
 {
 public:
      GameManager();
     ~GameManager();
 
-    void update();
-    void handle(sf::Event *event);
-    void render(sf::RenderWindow *rw);
+    void update(Framework &frmwrk);
+    void handle(Framework &frmwrk);
+    void render(Framework &frmwrk);
 
 private:
     void KITurn();
@@ -37,10 +41,10 @@ private:
     int AnzahlStartkarten;
     int AnzahlKIs;
 
-    deck            *pGameDeck;
-    Reihen          *pSpiel1;
+    std::shared_ptr<deck> pGameDeck;
     Spieler         *pSpieler1;
     KI_Spieler      *pKI;
+    Reihen          *pSpiel1;
 
     card            *SpielerWantPlay;
     card            *SpielerPlay;
@@ -50,12 +54,15 @@ private:
     card            *reihenKarten;
     int             *Reihenlaenge;
 
-    sf::Font        *font;
+    std::shared_ptr<sf::Font> font;
+//    sf::Font        *font;
     sf::Text        *StatusText;
     sf::Text        *PlayedText;
 
     bool isPlayerTurn;
     bool isKITurn;
+
+    std::unique_ptr<Button> upMainMenuButton;
 };
 
 

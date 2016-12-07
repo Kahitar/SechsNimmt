@@ -49,7 +49,10 @@
 		<Unit filename="include/Button.hpp" />
 		<Unit filename="include/Framework.hpp" />
 		<Unit filename="include/GameManager.hpp" />
+		<Unit filename="include/Gamestate.hpp" />
 		<Unit filename="include/KI_Spieler.hpp" />
+		<Unit filename="include/LoadingScreen.hpp" />
+		<Unit filename="include/MainMenu.hpp" />
 		<Unit filename="include/Reihen.hpp" />
 		<Unit filename="include/Spieler.hpp" />
 		<Unit filename="include/SpielerVirtual.hpp" />
@@ -61,7 +64,8 @@
 		<Unit filename="src/Framework.cpp" />
 		<Unit filename="src/GameManager.cpp" />
 		<Unit filename="src/KI_Spieler.cpp" />
-		<Unit filename="src/Matrix.cpp" />
+		<Unit filename="src/LoadingScreen.cpp" />
+		<Unit filename="src/MainMenu.cpp" />
 		<Unit filename="src/Reihen.cpp" />
 		<Unit filename="src/Spieler.cpp" />
 		<Unit filename="src/SpielerVirtual.cpp" />

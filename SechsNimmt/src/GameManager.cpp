@@ -1,33 +1,43 @@
 #include "GameManager.hpp"
 
+#include "Framework.hpp"
+#include "ResourceManager.hpp"
+
 GameManager::GameManager()
 {
+    sf::Clock test;
+    upMainMenuButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"Main Menu")));
+
     cout << "Mit wie vielen KI-Gegnern moechtest du spielen? (0-9): ";
-    AnzahlKIs = 9;//cin >> AnzahlKIs;
+    AnzahlKIs = 9;
     cout << AnzahlKIs << endl << endl;
     AnzahlStartkarten = 10;
 
-    font            = new sf::Font;
+//    font            = new sf::Font;
+    font = std::move(std::shared_ptr<sf::Font>(new sf::Font));
+
     font->loadFromFile("Resources\\PAPYRUS.TTF");
     StatusText      = new sf::Text;
     StatusText->setFont(*font);
     StatusText->setCharacterSize(25);
-    StatusText->setColor(sf::Color::Black);
-    StatusText->setPosition(sf::Vector2f(30,300));
+    StatusText->setFillColor(sf::Color::Black);
+    StatusText->setPosition(sf::Vector2f(30,250));
     StatusText->setStyle(sf::Text::Bold);
 
     PlayedText      = new sf::Text;
     PlayedText->setFont(*font);
     PlayedText->setCharacterSize(25);
-    PlayedText->setColor(sf::Color::Green);
-    PlayedText->setPosition(sf::Vector2f(1300,450));
+    PlayedText->setFillColor(sf::Color::Green);
+    PlayedText->setPosition(sf::Vector2f(1350,250));
     PlayedText->setStyle(sf::Text::Bold);
 
+test.restart();
+    //3.7 Sekunden:
     sortiert        = new card[AnzahlKIs+1];
     isPlayerTurn    = true;
     isKITurn        = true;
 
-    pGameDeck       = new deck;
+    pGameDeck       = ResourceManager::getNewDeckPTR();//pGameDeck = std::shared_ptr<deck>(new deck);//pGameDeck       = new deck;
     pSpiel1         = new Reihen;
     pSpieler1       = new Spieler("Niklas",1);
     pKI             = new KI_Spieler[AnzahlKIs];
@@ -35,14 +45,18 @@ GameManager::GameManager()
     SpielerWantPlay = new card;
     SpielerPlay     = new card;
     KIPlay          = new card[AnzahlKIs];
+cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
+    //2.8 Sekunden
     // Deck initialisieren und mischen
-    pGameDeck->mischen();
+//    pGameDeck->mischen();
     for(int i = 0;i<AnzahlKIs;i++){
         pKI[i].setnr(i);
         pKI[i].setSpielerNr(i+2);
     }
+cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
+    // 1 Sekunde
     // Karten an Spieler, KI und Reihen austeilen
     card *ForRows;
     ForRows = new card[4];
@@ -55,6 +69,9 @@ GameManager::GameManager()
             ForRows[i] = pGameDeck->austeilen();
         }
     }
+cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
+
+    // 2 Sekunden
     pSpiel1->setFirst(ForRows);
     delete[] ForRows;
     ForRows = NULL;
@@ -64,19 +81,21 @@ GameManager::GameManager()
     }
     pSpieler1->sortCards();
     pSpieler1->setTurn();
+cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
     //Print Gamestatus to the console
     pSpiel1->printReihen();
     pSpieler1->giveUpdate();
+
 }
 
 GameManager::~GameManager()
 {
-    delete font;
+//    delete font;
     delete StatusText;
     delete PlayedText;
     delete[] sortiert;
-    delete pGameDeck;
+//    delete pGameDeck;
     delete pSpiel1;
     delete pSpieler1;
     delete SpielerWantPlay;
@@ -85,8 +104,10 @@ GameManager::~GameManager()
     delete[] pKI;
 }
 
-void GameManager::update()
+void GameManager::update(Framework &frmwrk)//update()
 {
+    upMainMenuButton->update();
+
     // KI Spielen lassen und Karten anlegen, wenn der Spieler NICHT am Zug ist, danach ist der Spieler wieder am Zug.
     if(!pSpieler1->getPlayerTurn())
     {
@@ -131,33 +152,51 @@ void GameManager::update()
     StatusText->setString(TextString);
 }
 
-void GameManager::handle(sf::Event *event)
+void GameManager::handle(Framework &frmwrk)//handle(sf::Event *event)
 {
-    // Wenn der Spieler klickt, überprüfen ob die Maus auf einer Karte war und wenn ja diese Karte Spielen
-    if(pSpieler1->getPlayerTurn() && event->type == sf::Event::MouseButtonPressed && event->mouseButton.button == sf::Mouse::Left){
-        // Nach zu spielenden Karten fragen
-        SpielerWantPlay = pSpieler1->askCard(event);
-        if(!pSpieler1->getPlayerTurn()){
-            *SpielerPlay = *SpielerWantPlay;
+    upMainMenuButton->handle(frmwrk.pMainEvent);
+    if(frmwrk.pMainEvent->type == sf::Event::MouseButtonPressed && frmwrk.pMainEvent->mouseButton.button == sf::Mouse::Left){
+        if(upMainMenuButton->getMouseOnButton()){
+            //TODO: solve error ("frmwrk is not a class,..."), make Framework::CurrentState() private
+//            frmwrk.ChangeState(frmwrk::gameStates::PLAY);
+            frmwrk.CurrentState = std::move(std::unique_ptr<MainMenu>(new MainMenu));
+        } else if(pSpieler1->getPlayerTurn()){
+            // Nach zu spielenden Karten fragen
+            SpielerWantPlay = pSpieler1->askCard(frmwrk.pMainEvent);
+            if(!pSpieler1->getPlayerTurn()){
+                *SpielerPlay = *SpielerWantPlay;
+            }
         }
     }
-    // Wenn Spieler keine neue Karte gespielt hat, ist nach handle() noch die ALTE Karte im Zeiger "SpielerPlay" und der Spieler ist noch am Zug
 
-
-    pSpieler1->handle(event);
-    pSpiel1->handle(event);
-}
-
-void GameManager::render(sf::RenderWindow *rw)
-{
-    pSpiel1->render(rw);
-    pSpieler1->render(rw);
-//    for(int i = 0;i<AnzahlKIs+1;i++){
-//        sortiert[i].render(rw);
+    // Wenn der Spieler klickt, überprüfen ob die Maus auf einer Karte war und wenn ja diese Karte Spielen
+//    if(pSpieler1->getPlayerTurn()
+//       && frmwrk.pMainEvent->type == sf::Event::MouseButtonPressed
+//       && frmwrk.pMainEvent->mouseButton.button == sf::Mouse::Left)
+//    {
+//        // Nach zu spielenden Karten fragen
+//        SpielerWantPlay = pSpieler1->askCard(frmwrk.pMainEvent);
+//        if(!pSpieler1->getPlayerTurn()){
+//            *SpielerPlay = *SpielerWantPlay;
+//        }
 //    }
 
-    rw->draw(*StatusText);
-    rw->draw(*PlayedText);
+    pSpieler1->handle(frmwrk.pMainEvent);//handle(event);
+    pSpiel1->handle(frmwrk.pMainEvent);//handle(event);
+}
+
+void GameManager::render(Framework &frmwrk)//render(sf::RenderWindow *rw)
+{
+    upMainMenuButton->render(frmwrk.pRenderWindow);
+
+    pSpiel1->render(frmwrk.pRenderWindow);//render(rw);
+    pSpieler1->render(frmwrk.pRenderWindow);//render(rw);
+//    for(int i = 0;i<AnzahlKIs+1;i++){
+//        sortiert[i].render(frmwrk.pRenderWindow);//render(rw);
+//    }
+
+    frmwrk.pRenderWindow->draw(*StatusText);//rw->draw(*StatusText);
+    frmwrk.pRenderWindow->draw(*PlayedText);//rw->draw(*PlayedText);
 }
 
 void GameManager::KITurn(){

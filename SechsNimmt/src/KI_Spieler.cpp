@@ -79,10 +79,10 @@ card KI_Spieler::askCard(const card Reihen[4*5], const int Reihenlaenge[]){
     return play;
 }
 
-void KI_Spieler::giveCard(card karte)
-{
-    mHandkarten[mNumberCards] = karte;
-    mHandkarten[mNumberCards].setCard(karte.getValue());
-    mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
-    mNumberCards++;
-}
+//void KI_Spieler::giveCard(card karte)
+//{
+//    mHandkarten[mNumberCards] = karte;
+//    mHandkarten[mNumberCards].setCard(karte.getValue());
+//    mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
+//    mNumberCards++;
+//}

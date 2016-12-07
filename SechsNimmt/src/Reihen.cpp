@@ -112,7 +112,6 @@ void Reihen::setFirst(card ErsteSpalte[4]){
     for(int i=0;i<4;i++){
         Reihenlaenge[i] = 1;
         ReihenKarten[i*5+0] = ErsteSpalte[i];
-        ReihenKarten[i*5+0].setCard(ErsteSpalte[i].getValue());
     }
     setRowCardPositions();
 }

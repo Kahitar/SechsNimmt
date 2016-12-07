@@ -8,7 +8,7 @@
 void SpielerVirtual::giveCard(card karte)
 {
     mHandkarten[mNumberCards] = karte;
-    mHandkarten[mNumberCards].setCard(karte.getValue());
+//    mHandkarten[mNumberCards].setCard(karte.getValue());
     mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
     mNumberCards++;
 }

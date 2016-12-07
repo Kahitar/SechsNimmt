@@ -6,12 +6,11 @@
 #include <sstream>
 #include <SFML/Graphics.hpp>
 
+#include <memory>
+
 class card
 {
 public:
-    static int mCardsCreated;
-    static int mCardsDeleted;
-
     card();
     ~card();
     card(const card& other);
@@ -38,12 +37,19 @@ public:
 private:
     void            LoadCardTexture(int CardValue);
 
-    sf::Vector2f    *pPosition;
-    sf::Texture     *pTexture;
-    sf::Sprite      *pSprite;
+    std::shared_ptr<sf::Vector2f> pPosition;
+    std::shared_ptr<sf::Texture>  pTexture;
+    std::shared_ptr<sf::Sprite>   pSprite;
 
-    sf::Texture     *pBlackTexture;
-    sf::Sprite      *pBlackSprite;
+    std::shared_ptr<sf::Texture>  pBlackTexture;
+    std::shared_ptr<sf::Sprite>   pBlackSprite;
+
+//    sf::Vector2f    *pPosition;
+//    sf::Texture     *pTexture;
+//    sf::Sprite      *pSprite;
+//
+//    sf::Texture     *pBlackTexture;
+//    sf::Sprite      *pBlackSprite;
 
     bool            mMouseOnCard;
     bool            mMoving;

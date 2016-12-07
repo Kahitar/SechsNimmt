@@ -1,5 +1,5 @@
-#ifndef KI_SPIELER_HPP//_INCLUDED
-#define KI_SPIELER_HPP//_INCLUDED
+#ifndef KI_SPIELER_HPP
+#define KI_SPIELER_HPP
 
 #include <iostream>
 
@@ -18,7 +18,7 @@ class KI_Spieler: public SpielerVirtual
 
         card askCard(const card Reihen[4*5], const int Reihenlaenge[]);
 
-        void giveCard(card karte);
+//        void giveCard(card karte);
 
         void    addHornochsen(int neueHornochsen) {mHornochsen += neueHornochsen;};
 
@@ -27,4 +27,4 @@ class KI_Spieler: public SpielerVirtual
 };
 
 
-#endif // KI_SPIELER_HPP_INCLUDED
+#endif // KI_SPIELER_HPP

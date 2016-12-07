@@ -6,9 +6,11 @@ Button::Button(sf::Vector2f pos, sf::Vector2f Size, std::string text = "Button")
     pFont               = new sf::Font;
     pText               = new sf::Text;
 
+    this->setText(text);
+
     pFont->loadFromFile("Resources\\PAPYRUS.TTF");
     pText->setFont(*pFont);
-    pText->setColor(sf::Color::Black);
+    pText->setFillColor(sf::Color::Black);
     pText->setStyle(sf::Text::Bold);
 
     pTexture            = new sf::Texture;
@@ -20,7 +22,6 @@ Button::Button(sf::Vector2f pos, sf::Vector2f Size, std::string text = "Button")
     subImage.createMaskFromColor(sf::Color::White);
 
     pTexture->loadFromImage(subImage);
-    //pTexture->loadFromFile("Resources\\Button.png");
     TextureHeight = 50.0;
     TextureWidth = 200.0;
 
@@ -36,8 +37,6 @@ Button::Button(sf::Vector2f pos, sf::Vector2f Size, std::string text = "Button")
     pSize               = new sf::Vector2f;
     setSize(Size);
     setPosition(pos);
-
-    this->setText(text);
 }
 
 Button::~Button()
@@ -70,7 +69,8 @@ void Button::setPosition(sf::Vector2f pos)
     pSpriteNotHovered->setPosition(pos);
     pSpriteHovered->setPosition(pos);
 
-    pText->setPosition(pos.x + 0.1*pSize->x, pos.y + 0.1*pSize->y);
+    pText->setOrigin(pText->getGlobalBounds().width/2, pText->getGlobalBounds().height/2);
+    pText->setPosition(pos.x + pSpriteNotHovered->getGlobalBounds().width/2, pos.y + pSpriteNotHovered->getGlobalBounds().height/2);
 }
 
 void Button::setSize(sf::Vector2f Size)

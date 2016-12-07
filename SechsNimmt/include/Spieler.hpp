@@ -15,7 +15,7 @@ class Spieler:public SpielerVirtual
         Spieler(string name, int number);
         ~Spieler();
 
-        void    giveCard(card karte);
+//        void    giveCard(card karte);
         void    addHornochsen(int neueHornochsen) {mHornochsen += neueHornochsen;};
 
         void    giveUpdate();

@@ -21,6 +21,8 @@ class deck
     private:
         card *pDeck;
         int mAusgeteilt;
+
+        int DealNextIndex[104];
 };
 
 #endif // DECK_HPP

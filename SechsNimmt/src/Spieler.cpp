@@ -73,10 +73,10 @@ sf::Vector2f Spieler::GetCardPosition(int CardIndex)
     return Position;
 }
 
-void Spieler::giveCard(card karte)
-{
-    mHandkarten[mNumberCards] = karte;
-    mHandkarten[mNumberCards].setCard(karte.getValue());
-    mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
-    mNumberCards++;
-}
+//void Spieler::giveCard(card karte)
+//{
+//    mHandkarten[mNumberCards] = karte;
+////    mHandkarten[mNumberCards].setCard(karte.getValue());
+//    mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
+//    mNumberCards++;
+//}

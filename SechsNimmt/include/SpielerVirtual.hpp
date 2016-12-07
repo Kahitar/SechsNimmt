@@ -10,7 +10,9 @@ using namespace std;
 class SpielerVirtual
 {
     public:
-        virtual void    giveCard(card karte) = 0;
+        virtual         ~SpielerVirtual() {};
+
+        virtual void    giveCard(card karte) ;//= 0;
         virtual void    addHornochsen(int neueHornochsen) = 0;
 
         void    setSpielerNr(int SpNr)  {mSpielerNr = SpNr;};

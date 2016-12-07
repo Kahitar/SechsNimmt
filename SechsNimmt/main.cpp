@@ -1,11 +1,12 @@
 #include <iostream>
-#include <SFML\Graphics.hpp>
 
 #include "Framework.hpp"
+#include "ResourceManager.hpp"
 
 int main()
 {
     Framework frmwrk;
+    frmwrk.ChangeState(Framework::gameStates::GAMESTART);
 
     frmwrk.run();
 
