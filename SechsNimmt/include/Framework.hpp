@@ -6,6 +6,7 @@
 
 #include "Gamestate.hpp"
 #include "MainMenu.hpp"
+#include "SettingsMenu.hpp"
 #include "GameManager.hpp"
 
 class Framework
@@ -14,19 +15,16 @@ public:
      Framework();
     ~Framework();
 
-    enum class gameStates {GAMESTART, MAINMENU, PLAY};
+    enum class gameStates {SETTINGS, MAINMENU, PLAY};
 
     void run();
+    void quit();
     void ChangeState(gameStates newstate);
 
     sf::RenderWindow *pRenderWindow;
     sf::Event        *pMainEvent;
 
-    //TODO: Make private (see error in MainMenu.handle())
-    std::unique_ptr<Gamestate> CurrentState;
-
 private:
-    void quit();
     void update(float mFrameTime);
     void handleEvents();
     void render();
@@ -34,15 +32,15 @@ private:
     void CalculateFrameTime();
     void CalculateScale();
 
+    std::unique_ptr<Gamestate> CurrentState;
+
     sf::Clock        *pClock;
 
     sf::Texture      *pBackground;
     sf::Sprite       *pBackSprite;
 
     float   mFrameTime;
-    bool    mRun;
-
-    bool    mGameRunning;
+    bool    mRunning;
 };
 
 #endif // FRAMEWORK_HPP

@@ -8,7 +8,7 @@ class testclass
 
 public:
     testclass(){test++;}
-    int getTest(){cout << test << endl;}
+    void printTest(){cout << test << endl;}
 private:
     static int test;
 };
@@ -19,11 +19,11 @@ int tmain(){
 
     {
         testclass obj1;
-        obj1.getTest();
+        obj1.printTest();
     }
 
     testclass obj2;
-    obj2.getTest();
+    obj2.printTest();
 
 
     return 0;

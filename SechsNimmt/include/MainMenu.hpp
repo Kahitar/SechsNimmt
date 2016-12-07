@@ -18,7 +18,7 @@ public:
 
 private:
     std::unique_ptr<Button> pNewGameButton;
-    std::unique_ptr<Button> pSettings;
+    std::unique_ptr<Button> pSettingsButton;
     std::unique_ptr<Button> pExitButton;
 };
 

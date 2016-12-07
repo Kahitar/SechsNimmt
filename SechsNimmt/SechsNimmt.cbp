@@ -47,13 +47,17 @@
 			<Add directory="C:/Users/Niklas/OneDrive/c++/SFML-2.4.1/lib" />
 		</Linker>
 		<Unit filename="include/Button.hpp" />
+		<Unit filename="include/DataCache.hpp" />
 		<Unit filename="include/Framework.hpp" />
 		<Unit filename="include/GameManager.hpp" />
 		<Unit filename="include/Gamestate.hpp" />
 		<Unit filename="include/KI_Spieler.hpp" />
-		<Unit filename="include/LoadingScreen.hpp" />
 		<Unit filename="include/MainMenu.hpp" />
 		<Unit filename="include/Reihen.hpp" />
+		<Unit filename="include/ResourceCache.hpp" />
+		<Unit filename="include/ResourceManager.hpp" />
+		<Unit filename="include/SettingsCache.hpp" />
+		<Unit filename="include/SettingsMenu.hpp" />
 		<Unit filename="include/Spieler.hpp" />
 		<Unit filename="include/SpielerVirtual.hpp" />
 		<Unit filename="include/card.hpp" />
@@ -61,17 +65,20 @@
 		<Unit filename="include/functions.hpp" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Button.cpp" />
+		<Unit filename="src/DataCache.cpp" />
 		<Unit filename="src/Framework.cpp" />
 		<Unit filename="src/GameManager.cpp" />
 		<Unit filename="src/KI_Spieler.cpp" />
-		<Unit filename="src/LoadingScreen.cpp" />
 		<Unit filename="src/MainMenu.cpp" />
 		<Unit filename="src/Reihen.cpp" />
+		<Unit filename="src/ResourceCache.cpp" />
+		<Unit filename="src/ResourceManager.cpp" />
+		<Unit filename="src/SettingsCache.cpp" />
+		<Unit filename="src/SettingsMenu.cpp" />
 		<Unit filename="src/Spieler.cpp" />
 		<Unit filename="src/SpielerVirtual.cpp" />
 		<Unit filename="src/card.cpp" />
 		<Unit filename="src/deck.cpp" />
-		<Unit filename="src/functions.cpp" />
 		<Unit filename="test.cpp" />
 		<Extensions>
 			<code_completion />

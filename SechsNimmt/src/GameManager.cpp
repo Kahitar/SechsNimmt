@@ -3,13 +3,13 @@
 #include "Framework.hpp"
 #include "ResourceManager.hpp"
 
-GameManager::GameManager()
+GameManager::GameManager(int NumberKIs)
+    :AnzahlKIs(NumberKIs)
 {
     sf::Clock test;
     upMainMenuButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"Main Menu")));
 
     cout << "Mit wie vielen KI-Gegnern moechtest du spielen? (0-9): ";
-    AnzahlKIs = 9;
     cout << AnzahlKIs << endl << endl;
     AnzahlStartkarten = 10;
 
@@ -32,12 +32,11 @@ GameManager::GameManager()
     PlayedText->setStyle(sf::Text::Bold);
 
 test.restart();
-    //3.7 Sekunden:
     sortiert        = new card[AnzahlKIs+1];
     isPlayerTurn    = true;
     isKITurn        = true;
 
-    pGameDeck       = ResourceManager::getNewDeckPTR();//pGameDeck = std::shared_ptr<deck>(new deck);//pGameDeck       = new deck;
+    pGameDeck       = ResourceManager::getNewDeckPTR();//pGameDeck = std::shared_ptr<deck>(new deck);
     pSpiel1         = new Reihen;
     pSpieler1       = new Spieler("Niklas",1);
     pKI             = new KI_Spieler[AnzahlKIs];
@@ -47,16 +46,12 @@ test.restart();
     KIPlay          = new card[AnzahlKIs];
 cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
-    //2.8 Sekunden
     // Deck initialisieren und mischen
-//    pGameDeck->mischen();
     for(int i = 0;i<AnzahlKIs;i++){
         pKI[i].setnr(i);
         pKI[i].setSpielerNr(i+2);
     }
-cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
-    // 1 Sekunde
     // Karten an Spieler, KI und Reihen austeilen
     card *ForRows;
     ForRows = new card[4];
@@ -71,10 +66,10 @@ cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
     }
 cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
-    // 2 Sekunden
     pSpiel1->setFirst(ForRows);
     delete[] ForRows;
     ForRows = NULL;
+cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
     for(int i = 0;i<AnzahlKIs;i++){
         pKI[i].sortCards();
@@ -91,11 +86,9 @@ cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
 GameManager::~GameManager()
 {
-//    delete font;
     delete StatusText;
     delete PlayedText;
     delete[] sortiert;
-//    delete pGameDeck;
     delete pSpiel1;
     delete pSpieler1;
     delete SpielerWantPlay;
@@ -104,7 +97,7 @@ GameManager::~GameManager()
     delete[] pKI;
 }
 
-void GameManager::update(Framework &frmwrk)//update()
+void GameManager::update(Framework &frmwrk)
 {
     upMainMenuButton->update();
 
@@ -157,9 +150,7 @@ void GameManager::handle(Framework &frmwrk)//handle(sf::Event *event)
     upMainMenuButton->handle(frmwrk.pMainEvent);
     if(frmwrk.pMainEvent->type == sf::Event::MouseButtonPressed && frmwrk.pMainEvent->mouseButton.button == sf::Mouse::Left){
         if(upMainMenuButton->getMouseOnButton()){
-            //TODO: solve error ("frmwrk is not a class,..."), make Framework::CurrentState() private
-//            frmwrk.ChangeState(frmwrk::gameStates::PLAY);
-            frmwrk.CurrentState = std::move(std::unique_ptr<MainMenu>(new MainMenu));
+            frmwrk.ChangeState(Framework::gameStates::MAINMENU);
         } else if(pSpieler1->getPlayerTurn()){
             // Nach zu spielenden Karten fragen
             SpielerWantPlay = pSpieler1->askCard(frmwrk.pMainEvent);

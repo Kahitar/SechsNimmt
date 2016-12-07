@@ -2,8 +2,10 @@
 #define DECK_HPP
 
 #include <iostream>
+#include <memory>
 
 #include "card.hpp"
+
 
 class deck
 {
@@ -19,7 +21,7 @@ class deck
     protected:
 
     private:
-        card *pDeck;
+        std::unique_ptr<card[]> spDeck;//card *pDeck;
         int mAusgeteilt;
 
         int DealNextIndex[104];

@@ -2,6 +2,7 @@
 
 ResourceCache ResourceManager::mResourceCache;
 DataCache ResourceManager::mDataCache;
+SettingsCache ResourceManager::mSettingsCache;
 
 ResourceManager::ResourceManager()
 {
@@ -21,4 +22,25 @@ sf::Texture ResourceManager::getTexture(std::string TexturePath)
 std::shared_ptr<deck> ResourceManager::getNewDeckPTR()
 {
     return mDataCache.getNewDeckPTR();
+}
+
+
+int ResourceManager::getKINumber()
+{
+    return mSettingsCache.getKINumber();
+}
+
+int ResourceManager::getStartCardsNumber()
+{
+    return mSettingsCache.getStartCardsNumber();
+}
+
+void ResourceManager::setKINumber(int NumberOfKIs)
+{
+    mSettingsCache.setKINumber(NumberOfKIs);
+}
+
+void ResourceManager::setStartCardsNumber(int NumberStartingCards)
+{
+    mSettingsCache.setKINumber(NumberStartingCards);
 }

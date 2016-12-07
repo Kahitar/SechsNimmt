@@ -7,7 +7,7 @@
 class Button
 {
     public:
-        Button(sf::Vector2f pos, sf::Vector2f Size, std::string text);
+        Button(sf::Vector2f pos = sf::Vector2f(0, 0), sf::Vector2f Size = sf::Vector2f(200, 50), std::string text = "Button");
         ~Button();
 
         void update();
@@ -20,6 +20,7 @@ class Button
         void setText(std::string text);
         void setPosition(sf::Vector2f pos);
         void setSize(sf::Vector2f Size);
+        void setColor(sf::Color color);
 
         ///////////Getter///////////
         sf::Vector2f getPosition()          {return *pPos;};
@@ -44,6 +45,7 @@ class Button
         float           TextureWidth;
 
         bool            mMouseOnButton;
+        bool            mClicked;
 };
 
 #endif // BUTTON_HPP

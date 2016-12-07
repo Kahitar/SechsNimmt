@@ -6,7 +6,7 @@
 int main()
 {
     Framework frmwrk;
-    frmwrk.ChangeState(Framework::gameStates::GAMESTART);
+    frmwrk.ChangeState(Framework::gameStates::MAINMENU);
 
     frmwrk.run();
 

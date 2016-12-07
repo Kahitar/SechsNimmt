@@ -15,8 +15,8 @@ card::card()
 
 
 //    pPosition       = new sf::Vector2f;
-    pPosition->x    = 0;
-    pPosition->y    = 0;
+    pPosition->x    = -134;
+    pPosition->y    = -205;
 
 //    pTexture        = new sf::Texture;
 //    pSprite         = new sf::Sprite;
