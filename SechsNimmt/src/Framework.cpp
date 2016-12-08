@@ -7,7 +7,7 @@ using namespace std;
 Framework::Framework()
 {
     pRenderWindow   = new sf::RenderWindow(sf::VideoMode(1600,800,32),"Sechs Nimmt!");
-    pRenderWindow->setPosition(sf::Vector2i(2000,100));
+    pRenderWindow->setPosition(sf::Vector2i(50,50));
     pMainEvent      = new sf::Event;
     pClock          = new sf::Clock;
     mRunning        = true;

@@ -14,8 +14,6 @@ class Button
         void handle(sf::Event *event);
         void render(sf::RenderWindow *rw);
 
-
-
         ///////////Setter///////////
         void setText(std::string text);
         void setPosition(sf::Vector2f pos);

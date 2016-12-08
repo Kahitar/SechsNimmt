@@ -28,7 +28,7 @@ void SettingsMenu::update(Framework &frmwrk)
 
     for(int i = 0;i<10;i++){
         if(ResourceManager::getKINumber() == i){
-            pNumberKIButtons[i].setColor(sf::Color::Red);
+            pNumberKIButtons[i].setColor(sf::Color::Green);
         } else {
             pNumberKIButtons[i].setColor(sf::Color::White);
         }
