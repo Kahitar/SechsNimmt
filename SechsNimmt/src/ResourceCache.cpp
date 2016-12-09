@@ -25,10 +25,8 @@ sf::Texture ResourceCache::getTexture(std::string TexturePath)
         //Insert it into the map
         mTextureMap.insert(make_pair(TexturePath, newTexture));
 
-        std::cout << "New File loaded!" << std::endl;
         return newTexture;
     }
 
-//    std::cout << "File loading avoided!" << std::endl;
     return it->second;
 }

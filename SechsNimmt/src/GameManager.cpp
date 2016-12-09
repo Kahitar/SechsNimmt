@@ -6,14 +6,10 @@
 GameManager::GameManager(int NumberKIs)
     :AnzahlKIs(NumberKIs)
 {
-    sf::Clock test;
     upMainMenuButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"Main Menu")));
 
-    cout << "Mit wie vielen KI-Gegnern moechtest du spielen? (0-9): ";
-    cout << AnzahlKIs << endl << endl;
     AnzahlStartkarten = 10;
 
-//    font            = new sf::Font;
     font = std::move(std::shared_ptr<sf::Font>(new sf::Font));
 
     font->loadFromFile("Resources\\PAPYRUS.TTF");
@@ -31,12 +27,11 @@ GameManager::GameManager(int NumberKIs)
     PlayedText->setPosition(sf::Vector2f(1350,250));
     PlayedText->setStyle(sf::Text::Bold);
 
-test.restart();
     sortiert        = new card[AnzahlKIs+1];
     isPlayerTurn    = true;
     isKITurn        = true;
 
-    pGameDeck       = ResourceManager::getNewDeckPTR();//pGameDeck = std::shared_ptr<deck>(new deck);
+    pGameDeck       = ResourceManager::getNewDeckPTR();
     pSpiel1         = new Reihen;
     pSpieler1       = new Spieler("Niklas",1);
     pKI             = new KI_Spieler[AnzahlKIs];
@@ -44,7 +39,6 @@ test.restart();
     SpielerWantPlay = new card;
     SpielerPlay     = new card;
     KIPlay          = new card[AnzahlKIs];
-cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
     // Deck initialisieren und mischen
     for(int i = 0;i<AnzahlKIs;i++){
@@ -64,19 +58,16 @@ cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
             ForRows[i] = pGameDeck->austeilen();
         }
     }
-cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
     pSpiel1->setFirst(ForRows);
     delete[] ForRows;
     ForRows = NULL;
-cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
     for(int i = 0;i<AnzahlKIs;i++){
         pKI[i].sortCards();
     }
     pSpieler1->sortCards();
     pSpieler1->setTurn();
-cout << "Zeit in Sekunden: " << test.restart().asSeconds() << std::endl;
 
     //Print Gamestatus to the console
     pSpiel1->printReihen();
@@ -160,34 +151,22 @@ void GameManager::handle(Framework &frmwrk)//handle(sf::Event *event)
         }
     }
 
-    // Wenn der Spieler klickt, überprüfen ob die Maus auf einer Karte war und wenn ja diese Karte Spielen
-//    if(pSpieler1->getPlayerTurn()
-//       && frmwrk.pMainEvent->type == sf::Event::MouseButtonPressed
-//       && frmwrk.pMainEvent->mouseButton.button == sf::Mouse::Left)
-//    {
-//        // Nach zu spielenden Karten fragen
-//        SpielerWantPlay = pSpieler1->askCard(frmwrk.pMainEvent);
-//        if(!pSpieler1->getPlayerTurn()){
-//            *SpielerPlay = *SpielerWantPlay;
-//        }
-//    }
-
-    pSpieler1->handle(frmwrk.pMainEvent);//handle(event);
-    pSpiel1->handle(frmwrk.pMainEvent);//handle(event);
+    pSpieler1->handle(frmwrk.pMainEvent);
+    pSpiel1->handle(frmwrk.pMainEvent);
 }
 
-void GameManager::render(Framework &frmwrk)//render(sf::RenderWindow *rw)
+void GameManager::render(Framework &frmwrk)
 {
     upMainMenuButton->render(frmwrk.pRenderWindow);
 
-    pSpiel1->render(frmwrk.pRenderWindow);//render(rw);
-    pSpieler1->render(frmwrk.pRenderWindow);//render(rw);
+    pSpiel1->render(frmwrk.pRenderWindow);
+    pSpieler1->render(frmwrk.pRenderWindow);
 //    for(int i = 0;i<AnzahlKIs+1;i++){
 //        sortiert[i].render(frmwrk.pRenderWindow);//render(rw);
 //    }
 
-    frmwrk.pRenderWindow->draw(*StatusText);//rw->draw(*StatusText);
-    frmwrk.pRenderWindow->draw(*PlayedText);//rw->draw(*PlayedText);
+    frmwrk.pRenderWindow->draw(*StatusText);
+    frmwrk.pRenderWindow->draw(*PlayedText);
 }
 
 void GameManager::KITurn(){
