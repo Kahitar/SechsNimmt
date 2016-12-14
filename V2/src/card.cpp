@@ -13,17 +13,10 @@ card::card()
     pBlackTexture  = std::shared_ptr<sf::Texture>(new sf::Texture);
     pBlackSprite  = std::shared_ptr<sf::Sprite>(new sf::Sprite);
 
-
-//    pPosition       = new sf::Vector2f;
     pPosition->x    = -134;
     pPosition->y    = -205;
 
-//    pTexture        = new sf::Texture;
-//    pSprite         = new sf::Sprite;
-//
-//    pBlackTexture   = new sf::Texture;
     *pBlackTexture  = ResourceManager::getTexture("Resources\\CardBlack.png");//pBlackTexture->loadFromFile("Resources\\CardBlack.png");
-//    pBlackSprite    = new sf::Sprite;
     pBlackSprite->setTexture(*pBlackTexture);
 
 //    std::cout << "Constructed!\n";
@@ -31,24 +24,21 @@ card::card()
 
 card::~card()
 {
-//    delete pBlackSprite;
-//    pBlackSprite = NULL;
-//    delete pBlackTexture;
-//    pBlackTexture = NULL;
-//    delete pSprite;
-//    pSprite = NULL;
-//    delete pTexture;
-//    pTexture = NULL;
-//    delete pPosition;
-//    pPosition = NULL;
 
 //    std::cout << "Deleted!\n";
 }
 
 card::card(const card& other)
-    :pPosition(new sf::Vector2f),pTexture(new sf::Texture),pSprite(new sf::Sprite),pBlackTexture(new sf::Texture),pBlackSprite(new sf::Sprite)
-    ,mMouseOnCard(other.mMouseOnCard),mMoving(other.mMoving),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr)
+    //:pPosition(new sf::Vector2f),pTexture(new sf::Texture),pSprite(new sf::Sprite),pBlackTexture(new sf::Texture),pBlackSprite(new sf::Sprite)
+    :mMouseOnCard(other.mMouseOnCard),mMoving(other.mMoving),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr)
 {
+    pPosition       = std::shared_ptr<sf::Vector2f> (new sf::Vector2f);
+    pTexture        = std::shared_ptr<sf::Texture>  (new sf::Texture);
+    pSprite         = std::shared_ptr<sf::Sprite>   (new sf::Sprite);
+
+    pBlackTexture   = std::shared_ptr<sf::Texture>  (new sf::Texture);
+    pBlackSprite    = std::shared_ptr<sf::Sprite>   (new sf::Sprite);
+
     *pPosition = *other.pPosition;
     *pTexture = *other.pTexture;
     *pSprite = *other.pSprite;

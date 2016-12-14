@@ -1,8 +1,9 @@
 #include "AnimatedCard.hpp"
 
-AnimatedCard::AnimatedCard()
+AnimatedCard::AnimatedCard(card &newCard)
 {
-    //ctor
+    upAnimatedCard = std::shared_ptr<card>(new card);
+    *upAnimatedCard = newCard;
 }
 
 AnimatedCard::~AnimatedCard()
@@ -10,24 +11,32 @@ AnimatedCard::~AnimatedCard()
     //dtor
 }
 
-//void AnimatedCard::addCard()
-//{
-//
-//}
-//
-//void AnimatedCard::update()
-//{
-//
-//}
-//
-//void AnimatedCard::handle()
-//{
-//
-//}
-//
-//void AnimatedCard::render()
-//{
-//
-//}
+void AnimatedCard::update()
+{
+
+}
+
+void AnimatedCard::handle(sf::Event *event)
+{
+
+}
+
+void AnimatedCard::render(sf::RenderWindow *rw)
+{
+    std::cout << "Here should be rendered!\n";
+}
+
+
+///// SETTER /////
+void AnimatedCard::setDirection(sf::Vector2f newDirection)
+{
+    mMoveDirection = newDirection;
+}
+
+///// GETTER /////
+bool AnimatedCard::getAnimationStatus()
+{
+    return mInAnimation;
+}
 
 

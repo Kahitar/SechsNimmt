@@ -12,9 +12,20 @@ class animations
         animations();
         ~animations();
 
-    private:
-        std::vector<AnimatedCard> mvAnimatedObject;
+        void addCard(card &newCard);
+        void clearCards();
 
+        void update();
+        void handle(sf::Event *event);
+        void render(sf::RenderWindow *rw);
+
+        ///// GETTER /////
+        bool AnimationFinished() {return true;};//mAnimationFinished;};
+
+    private:
+        std::unique_ptr<std::vector<AnimatedCard>> upAnimatedCards;
+
+        bool mAnimationFinished;
 };
 
 #endif // ANIMATIONS_HPP

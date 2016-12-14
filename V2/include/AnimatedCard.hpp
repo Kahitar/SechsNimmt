@@ -9,23 +9,29 @@
 class AnimatedCard
 {
     public:
-        AnimatedCard();
+        AnimatedCard() {};
+        AnimatedCard(card &newCard);
         ~AnimatedCard();
 
-        void setCard(card &newCard){};
-        void setDirection(sf::Vector2f newDirection){};
+        ///// SETTER /////
+        void setDirection(sf::Vector2f newDirection);
 
-        bool getAnimationStatus(){};
+        ///// GETTER /////
+        bool getAnimationStatus();
 
-        void update(){};
-        void handle(){};
-        void render(){};
+
+
+        void update();
+        void handle(sf::Event *event);
+        void render(sf::RenderWindow *rw);
 
     private:
-        std::unique_ptr<card> mAnimatedCard;
+        std::shared_ptr<card> upAnimatedCard;
+
+        std::string mAnimationType; // hold = move to the right after played; append = append to a row after hold;
 
         bool mInAnimation;
-        sf::Vector2f moveDirection;
+        sf::Vector2f mMoveDirection;
 };
 
 #endif // ANIMATEDCARD_HPP

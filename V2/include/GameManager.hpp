@@ -19,6 +19,7 @@
 #include "Button.hpp"
 
 #include "Gamestate.hpp"
+#include "animations.hpp"
 
 class Framework;
 class deck;
@@ -38,6 +39,9 @@ private:
     void EvaluatePlayed();
     bool MoveCardToHold(card ToPlay[], int Size);
 
+    void ShowHornochsenStatus();
+    void ShowPlayed();
+
     int AnzahlStartkarten;
     int AnzahlKIs;
 
@@ -55,7 +59,6 @@ private:
     int             *Reihenlaenge;
 
     std::shared_ptr<sf::Font> font;
-//    sf::Font        *font;
     sf::Text        *StatusText;
     sf::Text        *PlayedText;
 
@@ -63,6 +66,10 @@ private:
     bool isKITurn;
 
     std::unique_ptr<Button> upMainMenuButton;
+
+    //// Animations ////
+    std::unique_ptr<animations> upAnimatedCards;
+    ////////////////////
 };
 
 

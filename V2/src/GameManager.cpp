@@ -40,6 +40,10 @@ GameManager::GameManager(int NumberKIs)
     SpielerPlay     = new card;
     KIPlay          = new card[AnzahlKIs];
 
+     //// Animations ////
+    upAnimatedCards = move(std::unique_ptr<animations> (new animations));
+    ////////////////////
+
     // Deck initialisieren und mischen
     for(int i = 0;i<AnzahlKIs;i++){
         pKI[i].setnr(i);
@@ -97,43 +101,21 @@ void GameManager::update(Framework &frmwrk)
     {
         if(isKITurn){
             KITurn();
-        }
-        EvaluatePlayed();//isPlayerTurn = EvaluatePlayed();
-        //isKITurn = isPlayerTurn;
-
-
-        // Sieger ausgeben
-        if(!pSpieler1->getNumberCards()){
-            pSpiel1->printReihen();
-            cout << "The Game is over!\n\nYou have " << pSpieler1->getHornochsen() << " Hornochsen!\n\n";
-
-            for(int i = 0;i<AnzahlKIs;i++){
-                cout << "KI-" << pKI[i].getSpielerNr()-1 << " has " << pKI[i].getHornochsen() << " Hornochsen!\n";
-            }
+            EvaluatePlayed();
         }
 
-        if(isPlayerTurn){
+        if(upAnimatedCards->AnimationFinished()){
             pSpieler1->setTurn();
+            isKITurn = true;
             pSpiel1->printReihen();
             pSpieler1->giveUpdate();
         }
     }
 
-
     pSpieler1->update();
     pSpiel1->update();
 
-//    for(int i = 0;i<AnzahlKIs+1;i++){
-//        sortiert[i].update();
-//    }
-
-    std::stringstream ssTextString;
-    ssTextString << "Deine Hornochsen: " << pSpieler1->getHornochsen() << std::endl;
-    for(int i = 0;i<AnzahlKIs;i++){
-        ssTextString << "KI-" << pKI[i].getSpielerNr()-1 << "Hornochsen: " << pKI[i].getHornochsen() << std::endl;
-    }
-    std::string TextString = ssTextString.str();
-    StatusText->setString(TextString);
+    this->ShowHornochsenStatus();
 }
 
 void GameManager::handle(Framework &frmwrk)//handle(sf::Event *event)
@@ -161,9 +143,7 @@ void GameManager::render(Framework &frmwrk)
 
     pSpiel1->render(frmwrk.pRenderWindow);
     pSpieler1->render(frmwrk.pRenderWindow);
-//    for(int i = 0;i<AnzahlKIs+1;i++){
-//        sortiert[i].render(frmwrk.pRenderWindow);//render(rw);
-//    }
+    upAnimatedCards->render(frmwrk.pRenderWindow);
 
     frmwrk.pRenderWindow->draw(*StatusText);
     frmwrk.pRenderWindow->draw(*PlayedText);
@@ -182,59 +162,78 @@ void GameManager::KITurn(){
 
     delete[] reihenKarten;
     delete[] Reihenlaenge;
+
+    this->isKITurn = false;
 }
 
 void GameManager::EvaluatePlayed()
 {
-//    bool AnimationEnded = false;
-//    AnimationEnded = MoveCardToHold(sortiert, AnzahlKIs+1);
-//
-//    if(AnimationEnded){
-        //Zu spielende Karten nach Value (aufsteigend) sortieren
-        for(int i = 0;i<AnzahlKIs+1;i++){
-            if(i<AnzahlKIs) {
-                sortiert[i] = KIPlay[i];
-                sortiert[i].setCard(sortiert[i].getValue());
-            } else {
-                sortiert[i] = *SpielerPlay;
-            }
+    for(int i = 0;i<AnzahlKIs+1;i++){
+        if(i<AnzahlKIs) {
+            sortiert[i] = KIPlay[i];
+            sortiert[i].setCard(sortiert[i].getValue());
+        } else {
+            sortiert[i] = *SpielerPlay;
         }
-        sort(sortiert,sortiert+AnzahlKIs+1,sort_ByValue);
+    }
+    sort(sortiert,sortiert+AnzahlKIs+1,sort_ByValue);
 
-        std::stringstream ssPlayedString;
-        for(int i = 0;i<AnzahlKIs+1;i++){
-            if(sortiert[i].getSpielerNr() == 1){
-                ssPlayedString << "You played: " << sortiert[i].getValue() << std::endl;
-            } else {
-                ssPlayedString << "KI-" << sortiert[i].getSpielerNr()-1 << "played: " << sortiert[i].getValue() << std::endl;
-            }
+    //// Animations ////
+    // load all played cards to the animations (after deleting the old cards)
+    upAnimatedCards->clearCards();
+    for(int i = 0;i<AnzahlKIs+1;i++){
+        upAnimatedCards->addCard(sortiert[i]);
+        upAnimatedCards->setDirection();
+    }
+    ////////////////////
+
+
+    this->ShowPlayed();
+
+    // Karten anlegen
+    for(int i = 0;i<AnzahlKIs+1;i++){
+        if(sortiert[i].getSpielerNr() == 1){
+            pSpieler1->addHornochsen(pSpiel1->anlegen(sortiert[i]));
+        } else {
+            pKI[sortiert[i].getSpielerNr()-2].addHornochsen(pSpiel1->anlegen(sortiert[i]));
         }
-        std::string PlayedString = ssPlayedString.str();
-        PlayedText->setString(PlayedString);
+    }
+}
 
+void GameManager::ShowHornochsenStatus()
+{
+    std::stringstream ssTextString;
+    ssTextString << "Deine Hornochsen: " << pSpieler1->getHornochsen() << std::endl;
+    for(int i = 0;i<AnzahlKIs;i++){
+        ssTextString << "KI-" << pKI[i].getSpielerNr()-1 << "Hornochsen: " << pKI[i].getHornochsen() << std::endl;
+    }
+    std::string TextString = ssTextString.str();
+    StatusText->setString(TextString);
+}
 
-        for(int i = 0;i<AnzahlKIs+1;i++){
-            if(sortiert[i].getSpielerNr() == 1){
-                cout << "You played: " << sortiert[i].getValue() << endl;
-            } else {
-                cout << "KI-"<< sortiert[i].getSpielerNr()-1 << " played: " << sortiert[i].getValue() << endl;
-            }
+void GameManager::ShowPlayed()
+{
+    //Print to Window
+    std::stringstream ssPlayedString;
+    for(int i = 0;i<AnzahlKIs+1;i++){
+        if(sortiert[i].getSpielerNr() == 1){
+            ssPlayedString << "You played: " << sortiert[i].getValue() << std::endl;
+        } else {
+            ssPlayedString << "KI-" << sortiert[i].getSpielerNr()-1 << "played: " << sortiert[i].getValue() << std::endl;
         }
-        cout << endl;
+    }
+    std::string PlayedString = ssPlayedString.str();
+    PlayedText->setString(PlayedString);
 
-        // Karten anlegen
-        for(int i = 0;i<AnzahlKIs+1;i++){
-            if(sortiert[i].getSpielerNr() == 1){
-                pSpieler1->addHornochsen(pSpiel1->anlegen(sortiert[i]));
-            } else {
-                pKI[sortiert[i].getSpielerNr()-2].addHornochsen(pSpiel1->anlegen(sortiert[i]));
-            }
+    //Print to Console
+    for(int i = 0;i<AnzahlKIs+1;i++){
+        if(sortiert[i].getSpielerNr() == 1){
+            cout << "You played: " << sortiert[i].getValue() << endl;
+        } else {
+            cout << "KI-"<< sortiert[i].getSpielerNr()-1 << " played: " << sortiert[i].getValue() << endl;
         }
-
-//        return true;    //Spieler kann weiterspielen
-//    } else {
-//        return false;   //Animation wird im nächsten Frame fortgesetzt, Spieler kann noch nicht weiterspielen
-//    }
+    }
+    cout << endl;
 }
 
 bool GameManager::MoveCardToHold(card ToPlay[], int Size)
@@ -261,9 +260,9 @@ bool GameManager::MoveCardToHold(card ToPlay[], int Size)
 
         ToPlay[i].setMoving(DirectionUnit[i],PathLength[i]);
     }
-    if(Direction[0].x < 300 && Direction[0].y < 300 && Direction[0].x > -300 && Direction[0].y > -300){
-        return true; //Animation ended
-    } else {
-        return false;   //Animation didn't end yet!
-    }
+//    if(Direction[0].x < 300 && Direction[0].y < 300 && Direction[0].x > -300 && Direction[0].y > -300){
+//        return true; //Animation ended
+//    } else {
+//        return false; //Animation didn't end yet!
+//    }
 }

@@ -44,13 +44,6 @@ private:
     std::shared_ptr<sf::Texture>  pBlackTexture;
     std::shared_ptr<sf::Sprite>   pBlackSprite;
 
-//    sf::Vector2f    *pPosition;
-//    sf::Texture     *pTexture;
-//    sf::Sprite      *pSprite;
-//
-//    sf::Texture     *pBlackTexture;
-//    sf::Sprite      *pBlackSprite;
-
     bool            mMouseOnCard;
     bool            mMoving;
     sf::Vector2f    mMoveDirection;
