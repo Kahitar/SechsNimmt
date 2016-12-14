@@ -12,7 +12,9 @@ class SpielerVirtual
     public:
         virtual         ~SpielerVirtual() {};
 
-        virtual void    giveCard(card karte) ;//= 0;
+        virtual void    sortCards() = 0;
+        virtual void    giveUpdate() = 0;
+        virtual void    giveCard(card karte) = 0;
         virtual void    addHornochsen(int neueHornochsen) = 0;
 
         void    setSpielerNr(int SpNr)  {mSpielerNr = SpNr;};
@@ -24,9 +26,6 @@ class SpielerVirtual
         int     getSpielerNr()   {return mSpielerNr;};
         bool    getPlayerTurn()  {return PlayerTurn;};
         string  getName()        {return mName;};
-
-        virtual void    giveUpdate() = 0;
-        void    sortCards();
 
         void    update();
         void    handle(sf::Event *event);

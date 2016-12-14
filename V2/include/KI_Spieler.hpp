@@ -14,13 +14,13 @@ class KI_Spieler: public SpielerVirtual
 
         void setnr(int KInr) {mKInr = KInr;};
 
-        void giveUpdate();
-
+        void giveCard(card karte);
+        void sortCards();
         card askCard(const card Reihen[4*5], const int Reihenlaenge[]);
 
-//        void giveCard(card karte);
-
         void    addHornochsen(int neueHornochsen) {mHornochsen += neueHornochsen;};
+
+        void giveUpdate();
 
     private:
         int mKInr;

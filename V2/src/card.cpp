@@ -1,35 +1,29 @@
 #include "card.hpp"
-
-//Implemented here to avoid circular "includation"
 #include "ResourceManager.hpp"
 
 card::card()
     :mMouseOnCard(false),mMoving(false),mSpielerNr(0)
 {
-    pPosition = std::shared_ptr<sf::Vector2f>(new sf::Vector2f);
-    pTexture  = std::shared_ptr<sf::Texture>(new sf::Texture);
-    pSprite  = std::shared_ptr<sf::Sprite>(new sf::Sprite);
+    pPosition   = std::shared_ptr<sf::Vector2f>(new sf::Vector2f);
+    pTexture    = std::shared_ptr<sf::Texture>(new sf::Texture);
+    pSprite     = std::shared_ptr<sf::Sprite>(new sf::Sprite);
 
-    pBlackTexture  = std::shared_ptr<sf::Texture>(new sf::Texture);
-    pBlackSprite  = std::shared_ptr<sf::Sprite>(new sf::Sprite);
+    pBlackTexture   = std::shared_ptr<sf::Texture>(new sf::Texture);
+    pBlackSprite    = std::shared_ptr<sf::Sprite>(new sf::Sprite);
 
     pPosition->x    = -134;
     pPosition->y    = -205;
 
-    *pBlackTexture  = ResourceManager::getTexture("Resources\\CardBlack.png");//pBlackTexture->loadFromFile("Resources\\CardBlack.png");
+    *pBlackTexture  = ResourceManager::getTexture("Resources\\CardBlack.png");
     pBlackSprite->setTexture(*pBlackTexture);
-
-//    std::cout << "Constructed!\n";
 }
 
 card::~card()
 {
 
-//    std::cout << "Deleted!\n";
 }
 
 card::card(const card& other)
-    //:pPosition(new sf::Vector2f),pTexture(new sf::Texture),pSprite(new sf::Sprite),pBlackTexture(new sf::Texture),pBlackSprite(new sf::Sprite)
     :mMouseOnCard(other.mMouseOnCard),mMoving(other.mMoving),mValue(other.mValue),mHornochsen(other.mHornochsen),mSpielerNr(other.mSpielerNr)
 {
     pPosition       = std::shared_ptr<sf::Vector2f> (new sf::Vector2f);
@@ -39,38 +33,18 @@ card::card(const card& other)
     pBlackTexture   = std::shared_ptr<sf::Texture>  (new sf::Texture);
     pBlackSprite    = std::shared_ptr<sf::Sprite>   (new sf::Sprite);
 
-    *pPosition = *other.pPosition;
-    *pTexture = *other.pTexture;
-    *pSprite = *other.pSprite;
+    *pPosition      = *other.pPosition;
+    *pTexture       = *other.pTexture;
+    *pSprite        = *other.pSprite;
 
-    *pBlackTexture = *other.pBlackTexture;
-    *pBlackSprite = *other.pBlackSprite;
-
-//    std::cout << "Copied!\n";
+    *pBlackTexture  = *other.pBlackTexture;
+    *pBlackSprite   = *other.pBlackSprite;
 }
 
 card& card::operator=(const card& other) // other = old card object (right hand side)
 {
     if (this != &other) // protect against invalid self-assignment
     {
-//        delete pPosition;
-//        delete pTexture;
-//        delete pSprite;
-//        delete pBlackTexture;
-//        delete pBlackSprite;
-//
-//        pPosition = NULL;
-//        pTexture = NULL;
-//        pSprite = NULL;
-//        pBlackTexture = NULL;
-//        pBlackSprite = NULL;
-//
-//        pPosition       = new sf::Vector2f;
-//        pTexture        = new sf::Texture;
-//        pSprite         = new sf::Sprite;
-//        pBlackTexture   = new sf::Texture;
-//        pBlackSprite    = new sf::Sprite;
-
         pPosition       = std::shared_ptr<sf::Vector2f> (new sf::Vector2f);
         pTexture        = std::shared_ptr<sf::Texture>  (new sf::Texture);
         pSprite         = std::shared_ptr<sf::Sprite>   (new sf::Sprite);
@@ -84,16 +58,14 @@ card& card::operator=(const card& other) // other = old card object (right hand 
         *pBlackTexture  = *other.pBlackTexture;
         *pBlackSprite   = *other.pBlackSprite;
 
-        pSprite->setTexture(*pTexture);
-        pBlackSprite->setTexture(*pBlackTexture);
-
         mMouseOnCard    = other.mMouseOnCard;
         mMoving         = other.mMoving;
         mValue          = other.mValue;
         mHornochsen     = other.mHornochsen;
         mSpielerNr      = other.mSpielerNr;
 
-//        std::cout << "Assigned!\n";
+        pSprite->setTexture(*pTexture);
+        pBlackSprite->setTexture(*pBlackTexture);
     }
 
     return *this;
@@ -101,12 +73,12 @@ card& card::operator=(const card& other) // other = old card object (right hand 
 
 void card::update()
 {
-    if(mMoving){
+    if(mMoving){ //Move Cards to specific position (animated)
         pSprite->move(mMoveDirection);
         pBlackSprite->move(mMoveDirection);
         std::cout << "Moving!\n";
         std::cout << pSprite->getPosition().x << "\n";
-    } else {
+    } else { //Highlight cards on players hand
         if(mMouseOnCard && pSprite->getPosition().y > pPosition->y-30){
             pSprite->move(0,-1);
             pBlackSprite->move(0,-1);
@@ -285,7 +257,7 @@ void card::setPosition(sf::Vector2f newPosition)
  {
      *pPosition = newPosition;
      pSprite->setPosition(*pPosition);
-     pBlackSprite->setPosition(sf::Vector2f(pPosition->x - 6,pPosition->y - 6));
+     pBlackSprite->setPosition(sf::Vector2f(pPosition->x - 5,pPosition->y - 5));
      pBlackSprite->setColor(sf::Color(255,255,255,150));
  }
 

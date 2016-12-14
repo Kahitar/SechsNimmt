@@ -5,6 +5,7 @@
 #include "card.hpp"
 #include "deck.hpp"
 #include "KI_Spieler.hpp"
+#include "functions.hpp"
 
 
 using namespace std;
@@ -23,18 +24,6 @@ KI_Spieler::~KI_Spieler()
 {
     delete play;
     delete[] mHandkarten;
-}
-
-void KI_Spieler::giveUpdate(){
-    cout <<  "KI-" << mKInr+1 << ": ";
-    for(int i = 0;i<mNumberCards;i++){
-        if(i!=(mNumberCards-1)){
-            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "], ";
-        } else {
-            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "] \n";
-        }
-    }
-    cout << "Hornochsen: " << mHornochsen << "\n\n";
 }
 
 card KI_Spieler::askCard(const card Reihen[4*5], const int Reihenlaenge[]){
@@ -79,10 +68,26 @@ card KI_Spieler::askCard(const card Reihen[4*5], const int Reihenlaenge[]){
     return play;
 }
 
-//void KI_Spieler::giveCard(card karte)
-//{
-//    mHandkarten[mNumberCards] = karte;
-//    mHandkarten[mNumberCards].setCard(karte.getValue());
-//    mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
-//    mNumberCards++;
-//}
+void KI_Spieler::giveCard(card karte)
+{
+    mHandkarten[mNumberCards] = karte;
+    mNumberCards++;
+}
+
+void KI_Spieler::sortCards()
+{
+    sort(mHandkarten,mHandkarten+mNumberCards,sort_ByValue);
+}
+
+
+void KI_Spieler::giveUpdate(){
+    cout <<  "KI-" << mKInr+1 << ": ";
+    for(int i = 0;i<mNumberCards;i++){
+        if(i!=(mNumberCards-1)){
+            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "], ";
+        } else {
+            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "] \n";
+        }
+    }
+    cout << "Hornochsen: " << mHornochsen << "\n\n";
+}

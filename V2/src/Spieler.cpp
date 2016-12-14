@@ -21,19 +21,6 @@ Spieler::~Spieler()
     delete[] mHandkarten;
 }
 
-void Spieler::giveUpdate()
-{
-    cout <<  "Your Cards: ";
-    for(int i = 0;i<mNumberCards;i++){
-        if(i!=(mNumberCards-1)){
-            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "], ";
-        } else {
-            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "] \n";
-        }
-    }
-    cout << "Your Hornochsen: " << mHornochsen << "\n\n";
-}
-
 card* Spieler::askCard(sf::Event *event)
 {
     int play_index = 0;
@@ -73,10 +60,31 @@ sf::Vector2f Spieler::GetCardPosition(int CardIndex)
     return Position;
 }
 
-//void Spieler::giveCard(card karte)
-//{
-//    mHandkarten[mNumberCards] = karte;
-////    mHandkarten[mNumberCards].setCard(karte.getValue());
-//    mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
-//    mNumberCards++;
-//}
+void Spieler::giveCard(card karte)
+{
+    mHandkarten[mNumberCards] = karte;
+//    mHandkarten[mNumberCards].setCard(karte.getValue());
+    mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
+    mNumberCards++;
+}
+
+void Spieler::sortCards()
+{
+    sort(mHandkarten,mHandkarten+mNumberCards,sort_ByValue);
+    for(int i = 0;i<10;i++){
+        mHandkarten[i].setPosition(GetCardPosition(i));
+    }
+}
+
+void Spieler::giveUpdate()
+{
+    cout <<  "Your Cards: ";
+    for(int i = 0;i<mNumberCards;i++){
+        if(i!=(mNumberCards-1)){
+            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "], ";
+        } else {
+            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "] \n";
+        }
+    }
+    cout << "Your Hornochsen: " << mHornochsen << "\n\n";
+}

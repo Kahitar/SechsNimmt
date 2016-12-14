@@ -171,9 +171,11 @@ void GameManager::EvaluatePlayed()
     for(int i = 0;i<AnzahlKIs+1;i++){
         if(i<AnzahlKIs) {
             sortiert[i] = KIPlay[i];
-            sortiert[i].setCard(sortiert[i].getValue());
+                                                                                std::cout << sortiert[i].getPosition().y << std::endl;
+//            sortiert[i].setCard(sortiert[i].getValue());
         } else {
             sortiert[i] = *SpielerPlay;
+                                                                                std::cout << sortiert[i].getPosition().y << std::endl;
         }
     }
     sort(sortiert,sortiert+AnzahlKIs+1,sort_ByValue);

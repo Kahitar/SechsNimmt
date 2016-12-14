@@ -2,37 +2,7 @@
 #include <algorithm>
 
 #include "SpielerVirtual.hpp"
-#include "functions.hpp"
 #include "card.hpp"
-
-void SpielerVirtual::giveCard(card karte)
-{
-    mHandkarten[mNumberCards] = karte;
-//    mHandkarten[mNumberCards].setCard(karte.getValue());
-    mHandkarten[mNumberCards].setPosition(GetCardPosition(mNumberCards));
-    mNumberCards++;
-}
-
-void SpielerVirtual::giveUpdate()
-{
-    cout <<  "Your Cards: ";
-    for(int i = 0;i<mNumberCards;i++){
-        if(i!=(mNumberCards-1)){
-            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "], ";
-        } else {
-            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "] \n";
-        }
-    }
-    cout << "Your Hornochsen: " << mHornochsen << "\n\n";
-}
-
-void SpielerVirtual::sortCards()
-{
-    sort(mHandkarten,mHandkarten+mNumberCards,sort_ByValue);
-    for(int i = 0;i<10;i++){
-        mHandkarten[i].setPosition(GetCardPosition(i));
-    }
-}
 
 void SpielerVirtual::update()
 {
@@ -64,4 +34,17 @@ sf::Vector2f SpielerVirtual::GetCardPosition(int CardIndex)
     Position.y = WindowH-CardH/2;
 
     return Position;
+}
+
+void SpielerVirtual::giveUpdate()
+{
+    cout <<  "Your Cards: ";
+    for(int i = 0;i<mNumberCards;i++){
+        if(i!=(mNumberCards-1)){
+            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "], ";
+        } else {
+            cout << mHandkarten[i].getValue() << "[" << mHandkarten[i].getHornochsen() << "] \n";
+        }
+    }
+    cout << "Your Hornochsen: " << mHornochsen << "\n\n";
 }

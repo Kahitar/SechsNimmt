@@ -23,6 +23,7 @@ void AnimatedCard::handle(sf::Event *event)
 
 void AnimatedCard::render(sf::RenderWindow *rw)
 {
+//    upAnimatedCard->render(rw);
 //    std::cout << "Here should be rendered!\n";
 }
 
