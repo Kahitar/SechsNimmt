@@ -183,7 +183,7 @@ void GameManager::EvaluatePlayed()
     upAnimatedCards->clearCards();
     for(int i = 0;i<AnzahlKIs+1;i++){
         upAnimatedCards->addCard(sortiert[i]);
-        upAnimatedCards->setDirection();
+//        upAnimatedCards->setDirection();
     }
     ////////////////////
 

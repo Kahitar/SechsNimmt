@@ -26,7 +26,7 @@ void Reihen::printReihen(){
     }
 }
 
-void Reihen::getReihen(card &MultiArr[4*5], int &arr[4]){
+void Reihen::getReihen(card MultiArr[4*5], int arr[4]){
     for(int i=0;i<4;i++){
         for(int j=0;j<5;j++){
             MultiArr[i*5 + j] = ReihenKarten[i*5+j];
