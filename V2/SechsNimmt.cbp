@@ -64,6 +64,7 @@
 		<Unit filename="include/SpielerVirtual.hpp" />
 		<Unit filename="include/animations.hpp" />
 		<Unit filename="include/card.hpp" />
+		<Unit filename="include/constants.hpp" />
 		<Unit filename="include/deck.hpp" />
 		<Unit filename="include/functions.hpp" />
 		<Unit filename="main.cpp" />
@@ -83,6 +84,7 @@
 		<Unit filename="src/SpielerVirtual.cpp" />
 		<Unit filename="src/animations.cpp" />
 		<Unit filename="src/card.cpp" />
+		<Unit filename="src/constants.cpp" />
 		<Unit filename="src/deck.cpp" />
 		<Unit filename="test.cpp" />
 		<Extensions>
