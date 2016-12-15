@@ -36,6 +36,7 @@ public:
 private:
     void KITurn();
     void EvaluatePlayed();
+    void AppendRows();
     sf::Vector2f CalculateTargetPosition(int OrderPosition);
 
     void ShowHornochsenStatus();
@@ -67,6 +68,7 @@ private:
     bool isKITurn;
 
     std::unique_ptr<Button> upMainMenuButton;
+    std::unique_ptr<Button> upNewGameButton;
 
     //// Animations ////
     std::unique_ptr<animations> upAnimatedCards;

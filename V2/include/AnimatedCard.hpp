@@ -20,7 +20,7 @@ class AnimatedCard
         bool getAnimationStatus();
 
 
-        bool MoveCardToHold();
+        bool CalculateMoveDirection(sf::Vector2f target);
         void update();
         void handle(sf::Event *event);
         void render(sf::RenderWindow *rw);
@@ -32,6 +32,9 @@ class AnimatedCard
 
         bool mInAnimation;
         sf::Vector2f mMoveDirection;
+        sf::Vector2f mTarget;
+        float mSpeed;
+        sf::Clock FrameClock;
 };
 
 #endif // ANIMATEDCARD_HPP

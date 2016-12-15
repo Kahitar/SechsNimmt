@@ -7,7 +7,8 @@
 GameManager::GameManager(int NumberKIs)
     :AnzahlKIs(NumberKIs)
 {
-    upMainMenuButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"Main Menu")));
+    upMainMenuButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,100),sf::Vector2f(200,50),"Main Menu")));
+    upNewGameButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"New Game")));
 
     AnzahlStartkarten = 10;
 
@@ -30,6 +31,12 @@ GameManager::GameManager(int NumberKIs)
 
     StatusRect.setFillColor(sf::Color::Cyan);
     StatusRect.setPosition(20,240);
+
+    PlayedText->setString("Cards Played");
+    PlayedText->setPosition(constants::WindowW - constants::CardW*1.3,5);
+    PlayedRect.setFillColor(sf::Color::Cyan);
+    PlayedRect.setPosition(constants::WindowW - constants::CardW*1.4,0);
+    PlayedRect.setSize(sf::Vector2f(275, constants::WindowH));
 
     sortiert        = new card[AnzahlKIs+1];
     isPlayerTurn    = true;
@@ -108,11 +115,14 @@ void GameManager::update(Framework &frmwrk)
             EvaluatePlayed();
         }
 
+        upAnimatedCards->update();
+
         if(upAnimatedCards->AnimationFinished()){
             pSpieler1->setTurn();
             isKITurn = true;
             pSpiel1->printReihen();
             pSpieler1->giveUpdate();
+            AppendRows();
         }
     }
 
@@ -122,13 +132,25 @@ void GameManager::update(Framework &frmwrk)
     this->ShowHornochsenStatus();
 }
 
-void GameManager::handle(Framework &frmwrk)//handle(sf::Event *event)
+void GameManager::handle(Framework &frmwrk)
 {
     upMainMenuButton->handle(frmwrk.pMainEvent);
-    if(frmwrk.pMainEvent->type == sf::Event::MouseButtonPressed && frmwrk.pMainEvent->mouseButton.button == sf::Mouse::Left){
-        if(upMainMenuButton->getMouseOnButton()){
+    upNewGameButton->handle(frmwrk.pMainEvent);
+
+    upAnimatedCards->handle(frmwrk.pMainEvent);
+
+    if(frmwrk.pMainEvent->type == sf::Event::MouseButtonPressed && frmwrk.pMainEvent->mouseButton.button == sf::Mouse::Left)
+    {
+        if(upMainMenuButton->getMouseOnButton())
+        {
             frmwrk.ChangeState(Framework::gameStates::MAINMENU);
-        } else if(pSpieler1->getPlayerTurn()){
+        }
+        else if(upNewGameButton->getMouseOnButton())
+        {
+            frmwrk.ChangeState(Framework::gameStates::PLAY);
+        }
+        else if(pSpieler1->getPlayerTurn())
+        {
             // Nach zu spielenden Karten fragen
             SpielerWantPlay = pSpieler1->askCard(frmwrk.pMainEvent);
             if(!pSpieler1->getPlayerTurn()){
@@ -139,21 +161,22 @@ void GameManager::handle(Framework &frmwrk)//handle(sf::Event *event)
 
     pSpieler1->handle(frmwrk.pMainEvent);
     pSpiel1->handle(frmwrk.pMainEvent);
+
 }
 
 void GameManager::render(Framework &frmwrk)
 {
     upMainMenuButton->render(frmwrk.pRenderWindow);
+    upNewGameButton->render(frmwrk.pRenderWindow);
 
     frmwrk.pRenderWindow->draw(StatusRect);
     frmwrk.pRenderWindow->draw(PlayedRect);
+    frmwrk.pRenderWindow->draw(*StatusText);
+    frmwrk.pRenderWindow->draw(*PlayedText);
 
     pSpiel1->render(frmwrk.pRenderWindow);
     pSpieler1->render(frmwrk.pRenderWindow);
     upAnimatedCards->render(frmwrk.pRenderWindow);
-
-    frmwrk.pRenderWindow->draw(*StatusText);
-    frmwrk.pRenderWindow->draw(*PlayedText);
 }
 
 void GameManager::KITurn(){
@@ -178,11 +201,8 @@ void GameManager::EvaluatePlayed()
     for(int i = 0;i<AnzahlKIs+1;i++){
         if(i<AnzahlKIs) {
             sortiert[i] = KIPlay[i];
-                                                                                std::cout << sortiert[i].getPosition().y << std::endl;
-//            sortiert[i].setCard(sortiert[i].getValue());
         } else {
             sortiert[i] = *SpielerPlay;
-                                                                                std::cout << sortiert[i].getPosition().y << std::endl;
         }
     }
     sort(sortiert,sortiert+AnzahlKIs+1,sort_ByValue);
@@ -195,7 +215,10 @@ void GameManager::EvaluatePlayed()
     }
     ////////////////////
 
+}
 
+void GameManager::AppendRows()
+{
     this->ShowPlayed();
 
     // Karten anlegen
@@ -234,12 +257,6 @@ void GameManager::ShowPlayed()
 //    }
 //    std::string PlayedString = ssPlayedString.str();
 //    PlayedText->setString(PlayedString);
-
-    PlayedText->setString("Cards Played");
-    PlayedText->setPosition(constants::WindowW - constants::CardW*1.3,5);
-    PlayedRect.setFillColor(sf::Color::Cyan);
-    PlayedRect.setPosition(constants::WindowW - constants::CardW*1.4,0);
-    PlayedRect.setSize(sf::Vector2f(275, constants::WindowH));
 
     //Print to Console
     for(int i = 0;i<AnzahlKIs+1;i++){

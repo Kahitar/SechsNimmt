@@ -4,6 +4,8 @@ animations::animations()
 {
     //TODO: Initilize vector with the expected size (NumberOfKIs + 1)
     upAnimatedCards = std::move(std::unique_ptr<std::vector<AnimatedCard> > (new std::vector<AnimatedCard>));
+
+    mAnimationFinished = false;
 }
 
 animations::~animations()
@@ -23,11 +25,23 @@ void animations::clearCards()
 
 void animations::update()
 {
-
+    int NumberOfAnimationsNotFinished = 0;
+    for(auto it : *upAnimatedCards){
+        it.update();
+        NumberOfAnimationsNotFinished += it.getAnimationStatus();
+    }
+    if(NumberOfAnimationsNotFinished == 0){
+        mAnimationFinished = true;
+    } else {
+        mAnimationFinished = false;
+    }
 }
 
 void animations::handle(sf::Event *event)
 {
+    for(auto it : *upAnimatedCards){
+        it.handle(event);
+    }
     //TODO: Let Animation stop when clicked.
 }
 
