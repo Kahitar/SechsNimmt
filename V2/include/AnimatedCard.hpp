@@ -10,7 +10,7 @@ class AnimatedCard
 {
     public:
         AnimatedCard() {};
-        AnimatedCard(card &newCard);
+        AnimatedCard(card &newCard, sf::Vector2f target);
         ~AnimatedCard();
 
         ///// SETTER /////
@@ -20,13 +20,13 @@ class AnimatedCard
         bool getAnimationStatus();
 
 
-
+        bool MoveCardToHold();
         void update();
         void handle(sf::Event *event);
         void render(sf::RenderWindow *rw);
 
     private:
-        std::shared_ptr<card> upAnimatedCard;
+        std::shared_ptr<card> spAnimatedCard;
 
         std::string mAnimationType; // hold = move to the right after played; append = append to a row after hold;
 

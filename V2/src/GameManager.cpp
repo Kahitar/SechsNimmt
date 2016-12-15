@@ -1,5 +1,6 @@
+#include "constants.hpp"
+#include "functions.hpp"
 #include "GameManager.hpp"
-
 #include "Framework.hpp"
 #include "ResourceManager.hpp"
 
@@ -23,9 +24,12 @@ GameManager::GameManager(int NumberKIs)
     PlayedText      = new sf::Text;
     PlayedText->setFont(*font);
     PlayedText->setCharacterSize(25);
-    PlayedText->setFillColor(sf::Color::Green);
-    PlayedText->setPosition(sf::Vector2f(1350,250));
+    PlayedText->setFillColor(sf::Color::Black);
+//    PlayedText->setPosition(sf::Vector2f(1350,250));
     PlayedText->setStyle(sf::Text::Bold);
+
+    StatusRect.setFillColor(sf::Color::Cyan);
+    StatusRect.setPosition(20,240);
 
     sortiert        = new card[AnzahlKIs+1];
     isPlayerTurn    = true;
@@ -44,7 +48,7 @@ GameManager::GameManager(int NumberKIs)
     upAnimatedCards = move(std::unique_ptr<animations> (new animations));
     ////////////////////
 
-    // Deck initialisieren und mischen
+    // Initialize deck and shuffle
     for(int i = 0;i<AnzahlKIs;i++){
         pKI[i].setnr(i);
         pKI[i].setSpielerNr(i+2);
@@ -141,6 +145,9 @@ void GameManager::render(Framework &frmwrk)
 {
     upMainMenuButton->render(frmwrk.pRenderWindow);
 
+    frmwrk.pRenderWindow->draw(StatusRect);
+    frmwrk.pRenderWindow->draw(PlayedRect);
+
     pSpiel1->render(frmwrk.pRenderWindow);
     pSpieler1->render(frmwrk.pRenderWindow);
     upAnimatedCards->render(frmwrk.pRenderWindow);
@@ -184,8 +191,7 @@ void GameManager::EvaluatePlayed()
     // load all played cards to the animations (after deleting the old cards)
     upAnimatedCards->clearCards();
     for(int i = 0;i<AnzahlKIs+1;i++){
-        upAnimatedCards->addCard(sortiert[i]);
-//        upAnimatedCards->setDirection();
+        upAnimatedCards->addCard(sortiert[i],CalculateTargetPosition(i));
     }
     ////////////////////
 
@@ -211,21 +217,29 @@ void GameManager::ShowHornochsenStatus()
     }
     std::string TextString = ssTextString.str();
     StatusText->setString(TextString);
+
+    StatusRect.setSize(sf::Vector2f(290, StatusText->getGlobalBounds().height));
 }
 
 void GameManager::ShowPlayed()
 {
-    //Print to Window
-    std::stringstream ssPlayedString;
-    for(int i = 0;i<AnzahlKIs+1;i++){
-        if(sortiert[i].getSpielerNr() == 1){
-            ssPlayedString << "You played: " << sortiert[i].getValue() << std::endl;
-        } else {
-            ssPlayedString << "KI-" << sortiert[i].getSpielerNr()-1 << "played: " << sortiert[i].getValue() << std::endl;
-        }
-    }
-    std::string PlayedString = ssPlayedString.str();
-    PlayedText->setString(PlayedString);
+//    //Print to Window
+//    std::stringstream ssPlayedString;
+//    for(int i = 0;i<AnzahlKIs+1;i++){
+//        if(sortiert[i].getSpielerNr() == 1){
+//            ssPlayedString << "You played: " << sortiert[i].getValue() << std::endl;
+//        } else {
+//            ssPlayedString << "KI-" << sortiert[i].getSpielerNr()-1 << "played: " << sortiert[i].getValue() << std::endl;
+//        }
+//    }
+//    std::string PlayedString = ssPlayedString.str();
+//    PlayedText->setString(PlayedString);
+
+    PlayedText->setString("Cards Played");
+    PlayedText->setPosition(constants::WindowW - constants::CardW*1.3,5);
+    PlayedRect.setFillColor(sf::Color::Cyan);
+    PlayedRect.setPosition(constants::WindowW - constants::CardW*1.4,0);
+    PlayedRect.setSize(sf::Vector2f(275, constants::WindowH));
 
     //Print to Console
     for(int i = 0;i<AnzahlKIs+1;i++){
@@ -238,33 +252,15 @@ void GameManager::ShowPlayed()
     cout << endl;
 }
 
-bool GameManager::MoveCardToHold(card ToPlay[], int Size)
+sf::Vector2f GameManager::CalculateTargetPosition(int OrderPosition)
 {
-    float CardW = 134.0, CardH = 205.0, WindowW = 1600.0;//, WindowH = 900.0;
-    float SpacingH = 0.8, SpacingW = 1.5;
+    float SpacingH = 1.1 - ResourceManager::getKINumber()*(1.1-0.25)/9.0 ;
+    float SpacingW = 1.2;
 
-    sf::Vector2f    Target[Size];
-    sf::Vector2f    Direction[Size];
-    float           PathLength[Size];
-    sf::Vector2f    DirectionUnit[Size];
+    sf::Vector2f Target;
 
-    for(int i = 0;i<Size;i++){
-        Target[i].x = WindowW - CardW*SpacingW;
-        Target[i].y = i*CardH*SpacingH;
+    Target.x = constants::WindowW - constants::CardW*SpacingW;
+    Target.y = 50 + OrderPosition*constants::CardH*SpacingH;
 
-        Direction[i].x = Target[i].x - ToPlay[i].getPosition().x; //std::cout << "Directionvektor x: " << Target[i].x << std::endl;
-        Direction[i].y = Target[i].y - ToPlay[i].getPosition().y; //std::cout << "Directionvektor y: " << Target[i].x << std::endl;
-
-        PathLength[i] = sqrt(Direction[i].x * Direction[i].x + Direction[i].y * Direction[i].y);
-
-        DirectionUnit[i].x = Direction[i].x/PathLength[i]/10;
-        DirectionUnit[i].y = Direction[i].y/PathLength[i]/10;
-
-        ToPlay[i].setMoving(DirectionUnit[i],PathLength[i]);
-    }
-//    if(Direction[0].x < 300 && Direction[0].y < 300 && Direction[0].x > -300 && Direction[0].y > -300){
-//        return true; //Animation ended
-//    } else {
-//        return false; //Animation didn't end yet!
-//    }
+    return Target;
 }

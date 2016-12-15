@@ -15,7 +15,6 @@
 #include "Spieler.hpp"
 #include "KI_Spieler.hpp"
 #include "Reihen.hpp"
-#include "functions.hpp"
 #include "Button.hpp"
 
 #include "Gamestate.hpp"
@@ -37,7 +36,7 @@ public:
 private:
     void KITurn();
     void EvaluatePlayed();
-    bool MoveCardToHold(card ToPlay[], int Size);
+    sf::Vector2f CalculateTargetPosition(int OrderPosition);
 
     void ShowHornochsenStatus();
     void ShowPlayed();
@@ -61,6 +60,8 @@ private:
     std::shared_ptr<sf::Font> font;
     sf::Text        *StatusText;
     sf::Text        *PlayedText;
+    sf::RectangleShape  StatusRect;
+    sf::RectangleShape  PlayedRect;
 
     bool isPlayerTurn;
     bool isKITurn;

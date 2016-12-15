@@ -12,7 +12,7 @@ class animations
         animations();
         ~animations();
 
-        void addCard(card &newCard);
+        void addCard(card &newCard, sf::Vector2f target);
         void clearCards();
 
         void update();

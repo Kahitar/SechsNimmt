@@ -11,10 +11,9 @@ animations::~animations()
 
 }
 
-void animations::addCard(card &newCard)
+void animations::addCard(card &newCard, sf::Vector2f target)
 {
-    upAnimatedCards->push_back(AnimatedCard(newCard));
-    std::cout << "Now " << upAnimatedCards->size() << " Entries in the Animation Vector\n";
+    upAnimatedCards->push_back(AnimatedCard(newCard, target));
 }
 
 void animations::clearCards()
