@@ -15,12 +15,13 @@ class AnimatedCard
 
         ///// SETTER /////
         void setDirection(sf::Vector2f newDirection);
+        void endAnimation();
 
         ///// GETTER /////
         bool getAnimationStatus();
 
 
-        bool CalculateMoveDirection(sf::Vector2f target);
+        void CalculateMoveDirection(sf::Vector2f target);
         void update();
         void handle(sf::Event *event);
         void render(sf::RenderWindow *rw);
@@ -28,7 +29,7 @@ class AnimatedCard
     private:
         std::shared_ptr<card> spAnimatedCard;
 
-        std::string mAnimationType; // hold = move to the right after played; append = append to a row after hold;
+//        std::string mAnimationType; // hold = move to the right after played; append = append to a row after hold;
 
         bool mInAnimation;
         sf::Vector2f mMoveDirection;

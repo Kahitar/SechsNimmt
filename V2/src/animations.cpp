@@ -41,6 +41,11 @@ void animations::handle(sf::Event *event)
 {
     for(auto it : *upAnimatedCards){
         it.handle(event);
+
+        if(it.getAnimationStatus() && event->type == sf::Event::MouseButtonPressed && event->mouseButton.button == sf::Mouse::Left){
+            it.endAnimation();
+            std::cout << "Clicked!" << std::endl;
+        }
     }
     //TODO: Let Animation stop when clicked.
 }

@@ -1,7 +1,7 @@
 #include "AnimatedCard.hpp"
 
 AnimatedCard::AnimatedCard(card &newCard, sf::Vector2f target)
-    :mSpeed(10),mTarget(target)
+    :mInAnimation(true),mTarget(target),mSpeed(10)
 {
     spAnimatedCard = std::shared_ptr<card>(new card);
     *spAnimatedCard = newCard;
@@ -18,17 +18,22 @@ AnimatedCard::~AnimatedCard()
 void AnimatedCard::update()
 {
     float FrameTime = FrameClock.restart().asSeconds();
-    if(mTarget.x - spAnimatedCard->getPosition().x < 20){
+    std::cout << mInAnimation << std::endl;
+    if(mInAnimation == false){ //set cards on target position if animation was ended
+        spAnimatedCard->setPosition(mTarget);
+    } else if(mTarget.x - spAnimatedCard->getPosition().x < 10){ // set cards on target position and end animation if difference is smaller then 10 pxls
         spAnimatedCard->setPosition(mTarget);
         mInAnimation = false;
-    } else{
+    } else { //Move Card to new Position
         spAnimatedCard->setPosition(sf::Vector2f(spAnimatedCard->getPosition().x + mMoveDirection.x*mSpeed*FrameTime, spAnimatedCard->getPosition().y + mMoveDirection.y*mSpeed*FrameTime));
     }
 }
 
 void AnimatedCard::handle(sf::Event *event)
 {
-
+//    if(mInAnimation && event->type == sf::Event::MouseButtonPressed && event->mouseButton.button == sf::Mouse::Left){
+//        endAnimation();
+//    }
 }
 
 void AnimatedCard::render(sf::RenderWindow *rw)
@@ -44,13 +49,19 @@ void AnimatedCard::setDirection(sf::Vector2f newDirection)
     mMoveDirection = newDirection;
 }
 
+void AnimatedCard::endAnimation()
+{
+    mInAnimation = false;
+    std::cout << mInAnimation << std::endl;
+}
+
 ///// GETTER /////
 bool AnimatedCard::getAnimationStatus()
 {
     return mInAnimation;
 }
 
-bool AnimatedCard::CalculateMoveDirection(sf::Vector2f target)
+void AnimatedCard::CalculateMoveDirection(sf::Vector2f target)
 {
 
 //    float CardW = 134.0, CardH = 205.0, WindowW = 1600.0;//, WindowH = 900.0;
