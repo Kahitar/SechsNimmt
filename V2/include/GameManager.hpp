@@ -72,6 +72,8 @@ private:
 
     //// Animations ////
     std::unique_ptr<animations> upAnimatedCards;
+
+    int mCardsAppended;
     ////////////////////
 };
 

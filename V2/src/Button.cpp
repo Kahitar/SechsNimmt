@@ -97,13 +97,7 @@ void Button::setColor(sf::Color color)
 
 void Button::update()
 {
-//    if(mClicked){
-//        pSpriteHovered->setColor(sf::Color::Green);
-//        pSpriteNotHovered->setColor(sf::Color::Green);
-//    } else {
-//        pSpriteHovered->setColor(sf::Color::White);
-//        pSpriteNotHovered->setColor(sf::Color::White);
-//    }
+
 }
 
 void Button::handle(sf::Event *event)

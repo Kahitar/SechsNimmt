@@ -2,9 +2,6 @@
 
 animations::animations()
 {
-    //TODO: Initilize vector with the expected size (NumberOfKIs + 1)
-    upAnimatedCards = std::move(std::unique_ptr<std::vector<AnimatedCard> > (new std::vector<AnimatedCard>));
-
     mAnimationFinished = false;
 }
 
@@ -15,21 +12,24 @@ animations::~animations()
 
 void animations::addCard(card &newCard, sf::Vector2f target)
 {
-    upAnimatedCards->push_back(AnimatedCard(newCard, target));
+    upAnimatedCards.push_back(AnimatedCard(newCard, target));
 }
 
 void animations::clearCards()
 {
-    upAnimatedCards->clear();
+    upAnimatedCards.clear();
 }
 
 void animations::update()
 {
     int NumberOfAnimationsNotFinished = 0;
-    for(auto it : *upAnimatedCards){
-        it.update();
-        NumberOfAnimationsNotFinished += it.getAnimationStatus();
+
+    for(unsigned int i = 0; i<upAnimatedCards.size();i++)
+    {
+        upAnimatedCards[i].update();
+        NumberOfAnimationsNotFinished += upAnimatedCards[i].getAnimationStatus();
     }
+
     if(NumberOfAnimationsNotFinished == 0){
         mAnimationFinished = true;
     } else {
@@ -39,20 +39,20 @@ void animations::update()
 
 void animations::handle(sf::Event *event)
 {
-    for(auto it : *upAnimatedCards){
-        it.handle(event);
+    for(unsigned int i = 0; i<upAnimatedCards.size();i++)
+    {
+        upAnimatedCards[i].handle(event);
 
-        if(it.getAnimationStatus() && event->type == sf::Event::MouseButtonPressed && event->mouseButton.button == sf::Mouse::Left){
-            it.endAnimation();
+        if(upAnimatedCards[i].getAnimationStatus() && event->type == sf::Event::MouseButtonPressed && event->mouseButton.button == sf::Mouse::Left){
+            upAnimatedCards[i].endAnimation();
             std::cout << "Clicked!" << std::endl;
         }
     }
-    //TODO: Let Animation stop when clicked.
 }
 
 void animations::render(sf::RenderWindow *rw)
 {
-    for(auto it : *upAnimatedCards){
+    for(auto it : upAnimatedCards){
         it.render(rw);
     }
 }

@@ -5,7 +5,7 @@
 #include "ResourceManager.hpp"
 
 GameManager::GameManager(int NumberKIs)
-    :AnzahlKIs(NumberKIs)
+    :AnzahlKIs(NumberKIs),mCardsAppended(0)
 {
     upMainMenuButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,100),sf::Vector2f(200,50),"Main Menu")));
     upNewGameButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"New Game")));
@@ -50,10 +50,7 @@ GameManager::GameManager(int NumberKIs)
     SpielerWantPlay = new card;
     SpielerPlay     = new card;
     KIPlay          = new card[AnzahlKIs];
-
-     //// Animations ////
     upAnimatedCards = move(std::unique_ptr<animations> (new animations));
-    ////////////////////
 
     // Initialize deck and shuffle
     for(int i = 0;i<AnzahlKIs;i++){
@@ -106,6 +103,7 @@ GameManager::~GameManager()
 void GameManager::update(Framework &frmwrk)
 {
     upMainMenuButton->update();
+    upNewGameButton->update();
 
     // KI Spielen lassen und Karten anlegen, wenn der Spieler NICHT am Zug ist, danach ist der Spieler wieder am Zug.
     if(!pSpieler1->getPlayerTurn())
@@ -117,12 +115,12 @@ void GameManager::update(Framework &frmwrk)
 
         upAnimatedCards->update();
 
-        if(upAnimatedCards->AnimationFinished()){
+        if(upAnimatedCards->isAnimationFinished() && mCardsAppended == (AnzahlKIs + 1)){
             pSpieler1->setTurn();
             isKITurn = true;
             pSpiel1->printReihen();
             pSpieler1->giveUpdate();
-            AppendRows();
+            mCardsAppended = 0;
         }
     }
 
@@ -151,11 +149,15 @@ void GameManager::handle(Framework &frmwrk)
         }
         else if(pSpieler1->getPlayerTurn())
         {
-            // Nach zu spielenden Karten fragen
+            // Ask for cards to play
             SpielerWantPlay = pSpieler1->askCard(frmwrk.pMainEvent);
             if(!pSpieler1->getPlayerTurn()){
                 *SpielerPlay = *SpielerWantPlay;
             }
+        }
+        else if(upAnimatedCards->isAnimationFinished() && mCardsAppended < (AnzahlKIs + 1)) // Append one played Card to a row if clicked and playanimation finished
+        {
+            AppendRows();
         }
     }
 
@@ -174,14 +176,13 @@ void GameManager::render(Framework &frmwrk)
     frmwrk.pRenderWindow->draw(*StatusText);
     frmwrk.pRenderWindow->draw(*PlayedText);
 
+    upAnimatedCards->render(frmwrk.pRenderWindow);
     pSpiel1->render(frmwrk.pRenderWindow);
     pSpieler1->render(frmwrk.pRenderWindow);
-    upAnimatedCards->render(frmwrk.pRenderWindow);
 }
 
-void GameManager::KITurn(){
-
-    //Maybe don't allocate these on the heap?
+void GameManager::KITurn()
+{
     reihenKarten    = new card[4*5];
     Reihenlaenge    = new int[4];
 
@@ -207,28 +208,37 @@ void GameManager::EvaluatePlayed()
     }
     sort(sortiert,sortiert+AnzahlKIs+1,sort_ByValue);
 
-    //// Animations ////
     // load all played cards to the animations (after deleting the old cards)
     upAnimatedCards->clearCards();
     for(int i = 0;i<AnzahlKIs+1;i++){
         upAnimatedCards->addCard(sortiert[i],CalculateTargetPosition(i));
     }
-    ////////////////////
-
 }
 
 void GameManager::AppendRows()
 {
     this->ShowPlayed();
 
-    // Karten anlegen
-    for(int i = 0;i<AnzahlKIs+1;i++){
-        if(sortiert[i].getSpielerNr() == 1){
-            pSpieler1->addHornochsen(pSpiel1->anlegen(sortiert[i]));
-        } else {
-            pKI[sortiert[i].getSpielerNr()-2].addHornochsen(pSpiel1->anlegen(sortiert[i]));
-        }
+    // Append next card
+    if(sortiert[mCardsAppended].getSpielerNr() == 1){
+        pSpieler1->addHornochsen(pSpiel1->anlegen(sortiert[mCardsAppended]));
+        mCardsAppended++;
+    } else {
+        pKI[sortiert[mCardsAppended].getSpielerNr()-2].addHornochsen(pSpiel1->anlegen(sortiert[mCardsAppended]));
+        mCardsAppended++;
     }
+    if(mCardsAppended == AnzahlKIs + 1){
+//        mCardsAppended = 0;
+    }
+
+//    // Append cards all at once
+//    for(int i = 0;i<AnzahlKIs+1;i++){
+//        if(sortiert[i].getSpielerNr() == 1){
+//            pSpieler1->addHornochsen(pSpiel1->anlegen(sortiert[i]));
+//        } else {
+//            pKI[sortiert[i].getSpielerNr()-2].addHornochsen(pSpiel1->anlegen(sortiert[i]));
+//        }
+//    }
 }
 
 void GameManager::ShowHornochsenStatus()

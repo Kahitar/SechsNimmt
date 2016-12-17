@@ -20,10 +20,10 @@ class animations
         void render(sf::RenderWindow *rw);
 
         ///// GETTER /////
-        bool AnimationFinished() {return mAnimationFinished;};
+        bool isAnimationFinished() {return mAnimationFinished;};
 
     private:
-        std::unique_ptr<std::vector<AnimatedCard>> upAnimatedCards;
+        std::vector<AnimatedCard> upAnimatedCards;
 
         bool mAnimationFinished;
 };
