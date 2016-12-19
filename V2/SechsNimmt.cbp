@@ -29,6 +29,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-std=c++11" />
 					<Add directory="include" />
 				</Compiler>
 				<Linker>
@@ -61,6 +62,7 @@
 		<Unit filename="include/ResourceManager.hpp" />
 		<Unit filename="include/SettingsCache.hpp" />
 		<Unit filename="include/SettingsMenu.hpp" />
+		<Unit filename="include/Slider.hpp" />
 		<Unit filename="include/Spieler.hpp" />
 		<Unit filename="include/SpielerVirtual.hpp" />
 		<Unit filename="include/animations.hpp" />
@@ -81,6 +83,7 @@
 		<Unit filename="src/ResourceManager.cpp" />
 		<Unit filename="src/SettingsCache.cpp" />
 		<Unit filename="src/SettingsMenu.cpp" />
+		<Unit filename="src/Slider.cpp" />
 		<Unit filename="src/Spieler.cpp" />
 		<Unit filename="src/SpielerVirtual.cpp" />
 		<Unit filename="src/animations.cpp" />

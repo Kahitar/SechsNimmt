@@ -3,6 +3,7 @@
 
 #include "Gamestate.hpp"
 #include "Button.hpp"
+#include "Slider.hpp"
 
 class Framework;
 
@@ -20,6 +21,8 @@ private:
     std::unique_ptr<Button> pNewGameButton;
     std::unique_ptr<Button> pSettingsButton;
     std::unique_ptr<Button> pExitButton;
+
+    std::unique_ptr<Slider> upSlider;
 };
 
 #endif // MAINMENU_HPP
