@@ -12,7 +12,7 @@ Framework::Framework()
     mRunning        = true;
 
     pBackground     = new sf::Texture;
-    *pBackground    = ResourceManager::getTexture("Resources\\Tisch_Hintergrund.png");//pBackground->loadFromFile("Resources\\Tisch_Hintergrund.png");
+    *pBackground    = ResourceManager::getTexture("Resources\\Tisch_Hintergrund.png");
     pBackSprite     = new sf::Sprite;
     pBackSprite->setTexture(*pBackground);
 

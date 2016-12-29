@@ -50,5 +50,5 @@ void MainMenu::render(Framework &frmwrk)
     pSettingsButton->render(frmwrk.pRenderWindow);
     pExitButton->render(frmwrk.pRenderWindow);
 
-    upSlider->render(frmwrk.pRenderWindow);
+//    upSlider->render(frmwrk.pRenderWindow);
 }

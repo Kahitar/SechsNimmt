@@ -19,6 +19,8 @@ class Slider
         ///////////Setter///////////
         void setPosition(sf::Vector2f pos);
         void setSize(sf::Vector2f Size);
+        void setValue(int newValue);
+        void setNumberOfPositions(int newNumber);
 
         ///////////Getter///////////
         sf::Vector2f getPosition()  {return mPos;};
@@ -29,9 +31,6 @@ class Slider
 
     private:
         void ChangeSliderPosition(float newX);
-
-//        sf::Text        mText;
-//        sf::Font        mFont;
 
         sf::Vector2f    mPos;
         sf::Vector2f    mSize;
