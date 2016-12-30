@@ -4,6 +4,8 @@
 #include <iostream>
 #include <SFML/Graphics.hpp>
 
+class Framework;
+
 class Button
 {
     public:
@@ -11,7 +13,7 @@ class Button
         ~Button();
 
         void update();
-        void handle(sf::Event *event);
+        void handle(Framework &frmwrk);
         void render(sf::RenderWindow *rw);
 
         ///////////Setter///////////

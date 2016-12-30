@@ -1,5 +1,6 @@
 #include "card.hpp"
 #include "ResourceManager.hpp"
+#include "Framework.hpp"
 
 card::card()
     :mMouseOnCard(false),mMoving(false),mSpielerNr(0)
@@ -89,20 +90,19 @@ void card::update()
     }
 }
 
-void card::handle(sf::Event *Event)
+void card::handle(Framework &frmwrk)
 {
-    if (Event->type == sf::Event::MouseMoved)
-    {
-        if(Event->mouseMove.x > pSprite->getPosition().x
-           && Event->mouseMove.y > pSprite->getPosition().y
-           && Event->mouseMove.x < pSprite->getPosition().x+134
-           && Event->mouseMove.y < pPosition->y+204)
-        {
-            mMouseOnCard = true;
-        } else{
-            mMouseOnCard = false;
-        }
-    }
+    sf::RenderWindow *window = frmwrk.pRenderWindow;
+
+    // get the current mouse position in the window
+    sf::Vector2i MousePixelPos = sf::Mouse::getPosition(*window);
+    // convert it to world coordinates
+    sf::Vector2f MouseWorldPos = window->mapPixelToCoords(MousePixelPos);
+
+    if (pSprite->getGlobalBounds().contains(MouseWorldPos.x, MouseWorldPos.y))
+        mMouseOnCard = true;
+    else
+        mMouseOnCard = false;
 }
 
 void card::render(sf::RenderWindow *rw)

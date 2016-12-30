@@ -3,6 +3,7 @@
 
 #include "SpielerVirtual.hpp"
 #include "card.hpp"
+#include "Framework.hpp"
 
 void SpielerVirtual::update()
 {
@@ -11,10 +12,10 @@ void SpielerVirtual::update()
         mHandkarten[i].update();
 }
 
-void SpielerVirtual::handle(sf::Event *event)
+void SpielerVirtual::handle(Framework &frmwrk)
 {
     for(int i = 0;i<mNumberCards;i++)
-        mHandkarten[i].handle(event);
+        mHandkarten[i].handle(frmwrk);
 }
 
 void SpielerVirtual::render(sf::RenderWindow *rw)

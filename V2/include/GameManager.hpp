@@ -26,7 +26,7 @@ class deck;
 class GameManager : public Gamestate
 {
 public:
-     GameManager(int NumberKIs);
+     GameManager();
     ~GameManager();
 
     void update(Framework &frmwrk);

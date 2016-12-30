@@ -1,4 +1,5 @@
 #include "Button.hpp"
+#include "Framework.hpp"
 
 Button::Button(sf::Vector2f pos, sf::Vector2f Size, std::string text)
     :mMouseOnButton(false),mClicked(false)
@@ -100,23 +101,26 @@ void Button::update()
 
 }
 
-void Button::handle(sf::Event *event)
+void Button::handle(Framework &frmwrk)
 {
-    if (event->type == sf::Event::MouseMoved)
-    {
-        if(event->mouseMove.x > pPos->x
-            && event->mouseMove.y > pPos->y
-            && event->mouseMove.x < pPos->x + pSize->x
-            && event->mouseMove.y < pPos->y + pSize->y)
-        {
-            mMouseOnButton = true;
-        } else{
-            mMouseOnButton = false;
-        }
-    }
+    sf::Event *event = frmwrk.pMainEvent;
+    sf::RenderWindow *window = frmwrk.pRenderWindow;
+
+    // get the current mouse position in the window
+    sf::Vector2i MousePixelPos = sf::Mouse::getPosition(*window);
+    // convert it to world coordinates
+    sf::Vector2f MouseWorldPos = window->mapPixelToCoords(MousePixelPos);
+
+    if(MouseWorldPos.x > pPos->x
+        && MouseWorldPos.y > pPos->y
+        && MouseWorldPos.x < pPos->x + pSize->x
+        && MouseWorldPos.y < pPos->y + pSize->y)
+        mMouseOnButton = true;
+    else
+        mMouseOnButton = false;
+
     if(event->type == sf::Event::MouseButtonReleased && mMouseOnButton)
         mClicked = !mClicked;
-
 }
 
 void Button::render(sf::RenderWindow *rw)

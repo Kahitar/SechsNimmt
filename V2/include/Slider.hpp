@@ -13,7 +13,7 @@ class Slider
         ~Slider();
 
         void update(Framework &frmwrk);
-        void handle(sf::Event *event);
+        void handle(Framework &frmwrk);
         void render(sf::RenderWindow *rw);
 
         ///////////Setter///////////

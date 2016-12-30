@@ -8,6 +8,8 @@
 
 #include <memory>
 
+class Framework;
+
 class card
 {
 public:
@@ -17,7 +19,7 @@ public:
     card& operator=(const card& other);
 
     void            update();
-    void            handle(sf::Event *Event);
+    void            handle(Framework &frmwrk);
     void            render(sf::RenderWindow *rw);
 
     const sf::Vector2f    getPosition()         const {return *pPosition;};

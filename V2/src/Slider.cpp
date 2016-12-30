@@ -29,24 +29,36 @@ Slider::~Slider()
 
 void Slider::update(Framework &frmwrk)
 {
+    sf::RenderWindow *window = frmwrk.pRenderWindow;
+
+    // get the current mouse position in the window
+    sf::Vector2i MousePixelPos = sf::Mouse::getPosition(*window);
+    // convert it to world coordinates
+    sf::Vector2f MouseWorldPos = window->mapPixelToCoords(MousePixelPos);
+
     if(mClicked){
-        ChangeSliderPosition(sf::Mouse::getPosition(*frmwrk.pRenderWindow).x);
+        ChangeSliderPosition(MouseWorldPos.x);
     }
 }
 
-void Slider::handle(sf::Event *event)
+void Slider::handle(Framework &frmwrk)
 {
-    if (event->type == sf::Event::MouseMoved)
+    sf::Event *event = frmwrk.pMainEvent;
+    sf::RenderWindow *window = frmwrk.pRenderWindow;
+
+    // get the current mouse position in the window
+    sf::Vector2i MousePixelPos = sf::Mouse::getPosition(*window);
+    // convert it to world coordinates
+    sf::Vector2f MouseWorldPos = window->mapPixelToCoords(MousePixelPos);
+
+    if(MouseWorldPos.x > mPos.x
+        && MouseWorldPos.y > mPos.y
+        && MouseWorldPos.x < mPos.x + mSize.x
+        && MouseWorldPos.y < mPos.y + mSize.y)
     {
-        if(event->mouseMove.x > mPos.x
-            && event->mouseMove.y > mPos.y
-            && event->mouseMove.x < mPos.x + mSize.x
-            && event->mouseMove.y < mPos.y + mSize.y)
-        {
-            mMouseOnSlider = true;
-        } else{
-            mMouseOnSlider = false;
-        }
+        mMouseOnSlider = true;
+    } else{
+        mMouseOnSlider = false;
     }
 
     if(event->type == sf::Event::MouseButtonPressed && mMouseOnSlider)

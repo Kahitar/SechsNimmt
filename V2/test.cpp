@@ -1,30 +1,52 @@
 #include <iostream>
+#include <SFML/Graphics.hpp>
 
-
-using namespace std;
-
-class testclass
+int tmain()
 {
+    sf::RenderWindow window(sf::VideoMode(800, 600), "Example");
 
-public:
-    testclass(){test++;}
-    void printTest(){cout << test << endl;}
-private:
-    static int test;
-};
+    sf::Event event;
 
-int testclass::test = 0;
+    sf::RectangleShape mousePoint;
+    mousePoint.setSize(sf::Vector2f(1, 1));
+    mousePoint.setFillColor(sf::Color::Red);
 
-int tmain(){
-
+    while (window.isOpen())
     {
-        testclass obj1;
-        obj1.printTest();
+        while (window.pollEvent(event))
+        {
+            if (event.type == sf::Event::Closed) //Close window
+            {
+                window.close();
+                return 0;
+            }
+            if (event.type == sf::Event::MouseButtonPressed)
+            {
+                if (event.mouseButton.button == sf::Mouse::Left)
+                {
+//                    //Get the mouse position:
+//                    sf::Vector2i mouse = sf::Mouse::getPosition(window);
+//                    //Map Pixel to Coords:
+//                    window.mapPixelToCoords(mouse);
+//                    //Set position of the mouse to the rectangle:
+//                    mousePoint.setPosition(mouse.x, mouse.y);
+
+                    //Get the mouse position:
+                    sf::Vector2i mouse = sf::Mouse::getPosition(window);
+                    //Map Pixel to Coords:
+                    sf::Vector2f mouse_world = window.mapPixelToCoords(mouse);
+                    //Set position of the mouse to the rectangle:
+                    mousePoint.setPosition(mouse_world);
+                }
+            }
+            if (event.type == sf::Event::Resized)
+            {
+
+            }
+        }
+
+        window.clear();
+        window.draw(mousePoint);
+        window.display();
     }
-
-    testclass obj2;
-    obj2.printTest();
-
-
-    return 0;
 }

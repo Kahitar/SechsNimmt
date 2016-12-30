@@ -7,6 +7,8 @@
 
 using namespace std;
 
+class Framework;
+
 class SpielerVirtual
 {
     public:
@@ -28,7 +30,7 @@ class SpielerVirtual
         string  getName()        {return mName;};
 
         void    update();
-        void    handle(sf::Event *event);
+        void    handle(Framework &frmwrk);
         void    render(sf::RenderWindow *rw);
 
     //private:

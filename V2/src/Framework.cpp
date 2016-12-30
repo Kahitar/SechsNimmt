@@ -54,7 +54,7 @@ void Framework::ChangeState(gameStates newstate)
         CurrentState = std::move(std::unique_ptr<SettingsMenu>(new SettingsMenu));
     break;
     case gameStates::PLAY:
-        CurrentState = std::move(std::unique_ptr<GameManager>(new GameManager(ResourceManager::getKINumber())));
+        CurrentState = std::move(std::unique_ptr<GameManager>(new GameManager));
     break;
     }
 }
@@ -83,8 +83,14 @@ void Framework::handleEvents()
 
             }
         }
+
         if(pMainEvent->type == sf::Event::Closed)
             mRunning = false;
+
+        if (pMainEvent->type == sf::Event::Resized)
+        {
+
+        }
     }
 }
 

@@ -26,8 +26,8 @@ void SettingsMenu::update(Framework &frmwrk)
 
 void SettingsMenu::handle(Framework &frmwrk)
 {
-    pBackButton->handle(frmwrk.pMainEvent);
-    upKISlider->handle(frmwrk.pMainEvent);
+    pBackButton->handle(frmwrk);
+    upKISlider->handle(frmwrk);
 
     if(frmwrk.pMainEvent->type == sf::Event::MouseButtonPressed
        && frmwrk.pMainEvent->mouseButton.button == sf::Mouse::Left)

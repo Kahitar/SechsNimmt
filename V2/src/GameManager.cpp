@@ -4,9 +4,11 @@
 #include "Framework.hpp"
 #include "ResourceManager.hpp"
 
-GameManager::GameManager(int NumberKIs)
-    :AnzahlKIs(NumberKIs),mCardsAppended(0)
+GameManager::GameManager()
+    :mCardsAppended(0)
 {
+    AnzahlKIs = ResourceManager::getKINumber();
+
     upMainMenuButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,100),sf::Vector2f(200,50),"Main Menu")));
     upNewGameButton = std::move(std::unique_ptr<Button>(new Button(sf::Vector2f(25,25),sf::Vector2f(200,50),"New Game")));
 
@@ -132,8 +134,8 @@ void GameManager::update(Framework &frmwrk)
 
 void GameManager::handle(Framework &frmwrk)
 {
-    upMainMenuButton->handle(frmwrk.pMainEvent);
-    upNewGameButton->handle(frmwrk.pMainEvent);
+    upMainMenuButton->handle(frmwrk);
+    upNewGameButton->handle(frmwrk);
 
     upAnimatedCards->handle(frmwrk.pMainEvent);
 
@@ -161,7 +163,7 @@ void GameManager::handle(Framework &frmwrk)
         }
     }
 
-    pSpieler1->handle(frmwrk.pMainEvent);
+    pSpieler1->handle(frmwrk);
     pSpiel1->handle(frmwrk.pMainEvent);
 
 }
