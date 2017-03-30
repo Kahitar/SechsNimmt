@@ -157,9 +157,16 @@ void GameManager::handle(Framework &frmwrk)
                 *SpielerPlay = *SpielerWantPlay;
             }
         }
-        else if(upAnimatedCards->isAnimationFinished() && mCardsAppended < (AnzahlKIs + 1)) // Append one played Card to a row if clicked and playanimation finished
+        else if(upAnimatedCards->isAnimationFinished() && mCardsAppended < (AnzahlKIs + 1))
+            // Append one played Card to a row if clicked and playanimation finished
         {
             AppendRows();
+
+            //delete animatedCards and reload only remaining cards to be appended
+            upAnimatedCards->clearCards();
+            for(int i = mCardsAppended;i<AnzahlKIs+1;i++){
+                upAnimatedCards->addCardOnPosition(sortiert[i],CalculateTargetPosition(i));
+            }
         }
     }
 
@@ -213,7 +220,7 @@ void GameManager::EvaluatePlayed()
     // load all played cards to the animations (after deleting the old cards)
     upAnimatedCards->clearCards();
     for(int i = 0;i<AnzahlKIs+1;i++){
-        upAnimatedCards->addCard(sortiert[i],CalculateTargetPosition(i));
+        upAnimatedCards->addCardWithTarget(sortiert[i],CalculateTargetPosition(i));
     }
 }
 

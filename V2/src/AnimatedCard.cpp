@@ -19,13 +19,18 @@ void AnimatedCard::update()
 {
     float FrameTime = FrameClock.restart().asSeconds();
 
-    if(mInAnimation == false){                                      //set cards on target position if animation was ended
+    if(mInAnimation == false){
+    //set cards on target position if animation was ended
         spAnimatedCard->setPosition(mTarget);
-    } else if(mTarget.x - spAnimatedCard->getPosition().x < 10){    // set cards on target position and end animation if difference is smaller than 10 pxls
+    } else if(mTarget.x - spAnimatedCard->getPosition().x < 10){
+    // set cards on target position and end animation if difference is smaller than 10 pxls
         spAnimatedCard->setPosition(mTarget);
         mInAnimation = false;
-    } else {                                                        //Move Card to new Position
-        spAnimatedCard->setPosition(sf::Vector2f(spAnimatedCard->getPosition().x + mMoveDirection.x*mSpeed*FrameTime, spAnimatedCard->getPosition().y + mMoveDirection.y*mSpeed*FrameTime));
+    } else {
+    //Move Card to new Position
+        sf::Vector2f newPosition = {spAnimatedCard->getPosition().x + mMoveDirection.x*mSpeed*FrameTime,
+                                    spAnimatedCard->getPosition().y + mMoveDirection.y*mSpeed*FrameTime};
+        spAnimatedCard->setPosition(newPosition);
     }
 }
 

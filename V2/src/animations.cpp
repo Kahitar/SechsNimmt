@@ -10,9 +10,14 @@ animations::~animations()
 
 }
 
-void animations::addCard(card &newCard, sf::Vector2f target)
+void animations::addCardWithTarget(card &newCard, sf::Vector2f target)
 {
     upAnimatedCards.push_back(AnimatedCard(newCard, target));
+}
+
+void animations::addCardOnPosition(card &newCard, sf::Vector2f position)
+{
+    upAnimatedCards.push_back(AnimatedCard(newCard, position));
 }
 
 void animations::clearCards()
@@ -45,7 +50,7 @@ void animations::handle(sf::Event *event)
 
         if(upAnimatedCards[i].getAnimationStatus() && event->type == sf::Event::MouseButtonPressed && event->mouseButton.button == sf::Mouse::Left){
             upAnimatedCards[i].endAnimation();
-            std::cout << "Clicked!" << std::endl;
+//            std::cout << "Clicked!" << std::endl;
         }
     }
 }

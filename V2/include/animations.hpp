@@ -12,7 +12,9 @@ class animations
         animations();
         ~animations();
 
-        void addCard(card &newCard, sf::Vector2f target);
+        void addCardWithTarget(card &newCard, sf::Vector2f target);
+        void addCardOnPosition(card &newCard, sf::Vector2f position);
+
         void clearCards();
 
         void update();
