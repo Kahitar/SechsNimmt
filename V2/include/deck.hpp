@@ -21,7 +21,7 @@ class deck
     protected:
 
     private:
-        std::unique_ptr<card[]> spDeck;//card *pDeck;
+        std::unique_ptr<card[]> spDeck;
         int mAusgeteilt;
 
         int DealNextIndex[104];

@@ -165,7 +165,10 @@ void GameManager::handle(Framework &frmwrk)
             //delete animatedCards and reload only remaining cards to be appended
             upAnimatedCards->clearCards();
             for(int i = mCardsAppended;i<AnzahlKIs+1;i++){
-                upAnimatedCards->addCardOnPosition(sortiert[i],CalculateTargetPosition(i));
+                // set a copy of the card at the target position so it doesn't have to move there (again)
+                card CardAtTargetPosition = sortiert[i];
+                CardAtTargetPosition.setPosition(CalculateTargetPosition(i));
+                upAnimatedCards->addCardOnPosition(CardAtTargetPosition,CalculateTargetPosition(i));
             }
         }
     }
